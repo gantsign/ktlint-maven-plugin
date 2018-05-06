@@ -1,0 +1,41 @@
+# EditorConfig: http://EditorConfig.org
+
+# Top-most EditorConfig file
+root = true
+
+# Defaults for all editor files
+[*]
+insert_final_newline = true
+indent_style = space
+indent_size = 4
+continuation_indent_size = 8
+trim_trailing_whitespace = true
+max_line_length=120
+
+# YAML is fussy about indenting and charset
+[*.yml]
+indent_style = space
+indent_size = 2
+continuation_indent_size = unset
+charset = utf-8
+
+# YAML is fussy about indenting
+[*.md]
+indent_style = space
+indent_size = 4
+trim_trailing_whitespaces = false
+
+# Follow Kotlin Coding Conventions
+[*.{kt,kts}]
+indent_size=4
+continuation_indent_size=4
+charset = utf-8
+
+# Files with a smaller indent
+[*.{java,xml}]
+indent_size = 2
+continuation_indent_size = 4
+
+# Java file encoding
+[*.java]
+charset = utf-8
