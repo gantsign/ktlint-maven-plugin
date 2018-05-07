@@ -33,7 +33,10 @@ abstract class AbstractLintMojo : AbstractBaseMojo() {
     @Parameter
     private var reporters: Set<ReporterConfig>? = null
 
-    @Parameter(defaultValue = "false")
+    /**
+     * Show error codes.
+     */
+    @Parameter(property = "ktlint.verbose", defaultValue = "false", required = true)
     private var verbose: Boolean = false
 
     override fun execute() =

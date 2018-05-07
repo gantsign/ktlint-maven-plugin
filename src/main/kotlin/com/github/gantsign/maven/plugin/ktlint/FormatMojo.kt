@@ -24,6 +24,9 @@ import org.apache.maven.plugins.annotations.Mojo
 import org.apache.maven.plugins.annotations.Parameter
 import org.apache.maven.plugins.annotations.ResolutionScope
 
+/**
+ * Automatically fixes violations of the code style (when possible) in the production sources.
+ */
 @Mojo(
     name = "format",
     defaultPhase = LifecyclePhase.PROCESS_SOURCES,

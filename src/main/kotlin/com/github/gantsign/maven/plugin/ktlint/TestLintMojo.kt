@@ -25,6 +25,9 @@ import org.apache.maven.plugins.annotations.Mojo
 import org.apache.maven.plugins.annotations.Parameter
 import org.apache.maven.plugins.annotations.ResolutionScope
 
+/**
+ * Checks the test sources for violations of the code style.
+ */
 @Mojo(
     name = "testLint",
     defaultPhase = LifecyclePhase.PROCESS_TEST_CLASSES,

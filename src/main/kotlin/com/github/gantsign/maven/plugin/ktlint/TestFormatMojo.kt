@@ -24,6 +24,9 @@ import org.apache.maven.plugins.annotations.Mojo
 import org.apache.maven.plugins.annotations.Parameter
 import org.apache.maven.plugins.annotations.ResolutionScope
 
+/**
+ * Automatically fixes violations of the code style (when possible) in the test sources.
+ */
 @Mojo(
     name = "testFormat",
     defaultPhase = LifecyclePhase.PROCESS_TEST_SOURCES,

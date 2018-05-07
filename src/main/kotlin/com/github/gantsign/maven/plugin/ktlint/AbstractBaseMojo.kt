@@ -43,11 +43,14 @@ abstract class AbstractBaseMojo : AbstractMojo() {
     protected var includes: Set<String>? = null
 
     /**
-     * A list of exclusion filters for the source files to be processed
+     * A list of exclusion filters for the source files to be processed.
      */
     @Parameter
     protected var excludes: Set<String>? = null
 
-    @Parameter(defaultValue = "false", required = true)
+    /**
+     * Enable Android Kotlin Style Guide compatibility.
+     */
+    @Parameter(property = "ktlint.android", defaultValue = "false", required = true)
     protected var android: Boolean = false
 }

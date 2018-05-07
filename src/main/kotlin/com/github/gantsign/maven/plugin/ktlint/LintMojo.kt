@@ -24,6 +24,9 @@ import org.apache.maven.plugins.annotations.Mojo
 import org.apache.maven.plugins.annotations.Parameter
 import org.apache.maven.plugins.annotations.ResolutionScope
 
+/**
+ * Checks the production sources for violations of the code style.
+ */
 @Mojo(
     name = "lint",
     defaultPhase = LifecyclePhase.PROCESS_CLASSES,
