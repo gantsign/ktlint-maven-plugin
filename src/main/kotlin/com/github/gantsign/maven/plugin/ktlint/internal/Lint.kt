@@ -45,7 +45,8 @@ internal class Lint(
     private val excludes: Set<String>,
     android: Boolean,
     private val reporterConfig: Set<ReporterConfig>,
-    private val verbose: Boolean
+    private val verbose: Boolean,
+    private val failOnViolation: Boolean
 ) : LintBase(log, basedir, android) {
 
     private val reporter: Reporter by lazy {
@@ -192,7 +193,7 @@ internal class Lint(
             }
             reporter.afterAll()
         }
-        if (hasErrors) {
+        if (hasErrors && failOnViolation) {
             throw MojoFailureException("Kotlin source failed lint check.")
         }
     }

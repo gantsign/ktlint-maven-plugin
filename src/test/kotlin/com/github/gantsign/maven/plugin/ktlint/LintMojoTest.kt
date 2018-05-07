@@ -120,6 +120,38 @@ class LintMojoTest {
     }
 
     @Test
+    fun proceedWithErrors() {
+        val pom = File("target/test-classes/unit/lint-proceed-with-errors/pom.xml")
+
+        Assertions.assertThat(pom.isFile).isTrue()
+
+        val project = rule.readMavenProject(pom.parentFile)
+
+        val lintMojo = rule.lookupConfiguredMojo(project, "lint") as LintMojo
+
+        val log = mock<Log>()
+        lintMojo.log = log
+        whenever(log.isDebugEnabled).thenReturn(true)
+
+        assertThat(lintMojo).isNotNull
+        lintMojo.execute()
+
+        verify(log, atLeastOnce()).isDebugEnabled
+        verify(log).debug("Discovered .editorconfig ()")
+        verify(log).debug("{charset=utf-8, continuation_indent_size=4, indent_size=4, indent_style=space, insert_final_newline=true, max_line_length=120, trim_trailing_whitespace=true} loaded from .editorconfig")
+        verify(log).debug("Discovered ruleset 'standard'")
+        verify(log).debug("Discovered reporter 'maven'")
+        verify(log).debug("Discovered reporter 'plain'")
+        verify(log).debug("Discovered reporter 'json'")
+        verify(log).debug("Discovered reporter 'checkstyle'")
+        verify(log).debug("Initializing 'maven' reporter with {verbose=false}")
+        verify(log).debug("linting: src/main/kotlin/example/Example.kt")
+        verify(log).debug("Lint error > src/main/kotlin/example/Example.kt:23:39: Unnecessary semicolon")
+        verify(log).error("src/main/kotlin/example/Example.kt:23:39: Unnecessary semicolon")
+        verifyNoMoreInteractions(log)
+    }
+
+    @Test
     fun outputFile() {
         val basedir = File("target/test-classes/unit/lint-output-file")
         val pom = File(basedir, "pom.xml")

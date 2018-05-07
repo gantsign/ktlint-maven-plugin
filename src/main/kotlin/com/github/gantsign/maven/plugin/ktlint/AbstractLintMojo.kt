@@ -39,6 +39,12 @@ abstract class AbstractLintMojo : AbstractBaseMojo() {
     @Parameter(property = "ktlint.verbose", defaultValue = "false", required = true)
     private var verbose: Boolean = false
 
+    /**
+     * Whether to fail the build if the linter finds violations of the code style.
+     */
+    @Parameter(property = "ktlint.failOnViolation", defaultValue = "true", required = true)
+    private var failOnViolation: Boolean = true
+
     override fun execute() =
         Lint(
             log = log,
@@ -51,6 +57,7 @@ abstract class AbstractLintMojo : AbstractBaseMojo() {
             excludes = excludes ?: emptySet(),
             android = android,
             reporterConfig = reporters ?: emptySet(),
-            verbose = verbose
+            verbose = verbose,
+            failOnViolation = failOnViolation
         )()
 }
