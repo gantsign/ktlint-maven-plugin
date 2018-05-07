@@ -450,7 +450,7 @@
     <inspection_tool class="OverwrittenKey" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="PackageDirectoryMismatch" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="PackageName" enabled="true" level="ERROR" enabled_by_default="true">
-      <option name="namePattern" value="([a-z]+[0-9]*)+" />
+      <option name="namePattern" value="([a-z]+[0-9]*)(\.[a-z]+[0-9]*)*" />
     </inspection_tool>
     <inspection_tool class="PackageNamingConvention" enabled="true" level="ERROR" enabled_by_default="true">
       <option name="m_regex" value="([a-z]+[0-9]*)+" />

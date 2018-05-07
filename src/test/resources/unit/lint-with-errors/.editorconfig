@@ -1,0 +1,60 @@
+###
+# #%L
+# ktlint-maven-plugin
+# %%
+# Copyright (C) 2018 GantSign Ltd.
+# %%
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+# 
+#      http://www.apache.org/licenses/LICENSE-2.0
+# 
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# #L%
+###
+# EditorConfig: http://EditorConfig.org
+
+# Top-most EditorConfig file
+root = true
+
+# Defaults for all editor files
+[*]
+insert_final_newline = true
+indent_style = space
+indent_size = 4
+continuation_indent_size = 8
+trim_trailing_whitespace = true
+max_line_length=120
+
+# YAML is fussy about indenting and charset
+[*.yml]
+indent_style = space
+indent_size = 2
+continuation_indent_size = unset
+charset = utf-8
+
+# YAML is fussy about indenting
+[*.md]
+indent_style = space
+indent_size = 4
+trim_trailing_whitespaces = false
+
+# Follow Kotlin Coding Conventions
+[*.{kt,kts}]
+indent_size=4
+continuation_indent_size=4
+charset = utf-8
+
+# Files with a smaller indent
+[*.{java,xml}]
+indent_size = 2
+continuation_indent_size = 4
+
+# Java file encoding
+[*.java]
+charset = utf-8
