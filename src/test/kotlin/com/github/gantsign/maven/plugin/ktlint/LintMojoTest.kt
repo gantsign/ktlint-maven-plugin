@@ -215,4 +215,23 @@ class LintMojoTest {
         verify(log).warn("Source root doesn't exist: src/main/kotlin")
         verifyNoMoreInteractions(log)
     }
+
+    @Test
+    fun skip() {
+        val pom = File("target/test-classes/unit/lint-skip/pom.xml")
+
+        Assertions.assertThat(pom.isFile).isTrue()
+
+        val project = rule.readMavenProject(pom.parentFile)
+
+        val lintMojo = rule.lookupConfiguredMojo(project, "lint") as LintMojo
+
+        val log = mock<Log>()
+        lintMojo.log = log
+
+        Assertions.assertThat(lintMojo).isNotNull
+        lintMojo.execute()
+
+        verifyNoMoreInteractions(log)
+    }
 }

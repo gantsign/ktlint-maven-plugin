@@ -20,13 +20,23 @@
 package com.github.gantsign.maven.plugin.ktlint
 
 import com.github.gantsign.maven.plugin.ktlint.internal.Format
+import org.apache.maven.plugins.annotations.Parameter
 import java.io.File
 import java.nio.charset.Charset
 import java.nio.charset.StandardCharsets.UTF_8
 
 abstract class AbstractFormatMojo : AbstractBaseMojo() {
 
-    override fun execute() =
+    /**
+     * Skips automatic code style fixes.
+     */
+    @Parameter(property = "ktlint.skip", defaultValue = "false", required = true)
+    private var skip: Boolean = false
+
+    override fun execute() {
+        if (skip) {
+            return
+        }
         Format(
             log = log,
             basedir = basedir,
@@ -38,4 +48,5 @@ abstract class AbstractFormatMojo : AbstractBaseMojo() {
             excludes = excludes ?: emptySet(),
             android = android
         )()
+    }
 }

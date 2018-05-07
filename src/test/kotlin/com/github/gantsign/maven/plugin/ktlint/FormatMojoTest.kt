@@ -102,4 +102,23 @@ class FormatMojoTest {
         verify(log).warn("Source root doesn't exist: src/main/kotlin")
         verifyNoMoreInteractions(log)
     }
+
+    @Test
+    fun skip() {
+        val pom = File("target/test-classes/unit/format-skip/pom.xml")
+
+        assertThat(pom.isFile).isTrue()
+
+        val project = rule.readMavenProject(pom.parentFile)
+
+        val formatMojo = rule.lookupConfiguredMojo(project, "format") as FormatMojo
+
+        val log = mock<Log>()
+        formatMojo.log = log
+
+        assertThat(formatMojo).isNotNull
+        formatMojo.execute()
+
+        verifyNoMoreInteractions(log)
+    }
 }

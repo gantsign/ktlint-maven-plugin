@@ -45,7 +45,16 @@ abstract class AbstractLintMojo : AbstractBaseMojo() {
     @Parameter(property = "ktlint.failOnViolation", defaultValue = "true", required = true)
     private var failOnViolation: Boolean = true
 
-    override fun execute() =
+    /**
+     * Skips and code style checks.
+     */
+    @Parameter(property = "ktlint.skip", defaultValue = "false", required = true)
+    private var skip: Boolean = false
+
+    override fun execute() {
+        if (skip) {
+            return
+        }
         Lint(
             log = log,
             basedir = basedir,
@@ -60,4 +69,5 @@ abstract class AbstractLintMojo : AbstractBaseMojo() {
             verbose = verbose,
             failOnViolation = failOnViolation
         )()
+    }
 }
