@@ -42,7 +42,7 @@ class TestLintMojoTest {
 
     @Test
     fun hasErrors() {
-        val pom = File("target/test-classes/unit/test-lint-with-errors/pom.xml")
+        val pom = File("target/test-scenarios/test-lint-with-errors/pom.xml")
 
         Assertions.assertThat(pom.isFile).isTrue()
 

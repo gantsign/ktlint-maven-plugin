@@ -39,7 +39,7 @@ class FormatMojoTest {
 
     @Test
     fun happy() {
-        val pom = File("target/test-classes/unit/format-happy/pom.xml")
+        val pom = File("target/test-scenarios/format-happy/pom.xml")
 
         assertThat(pom.isFile).isTrue()
 
@@ -62,7 +62,7 @@ class FormatMojoTest {
 
     @Test
     fun includeScripts() {
-        val pom = File("target/test-classes/unit/format-include-scripts/pom.xml")
+        val pom = File("target/test-scenarios/format-include-scripts/pom.xml")
 
         assertThat(pom.isFile).isTrue()
 
@@ -85,7 +85,7 @@ class FormatMojoTest {
 
     @Test
     fun rootNotFound() {
-        val pom = File("target/test-classes/unit/root-not-found/pom.xml")
+        val pom = File("target/test-scenarios/root-not-found/pom.xml")
 
         assertThat(pom.isFile).isTrue()
 
@@ -105,7 +105,7 @@ class FormatMojoTest {
 
     @Test
     fun skip() {
-        val pom = File("target/test-classes/unit/format-skip/pom.xml")
+        val pom = File("target/test-scenarios/format-skip/pom.xml")
 
         assertThat(pom.isFile).isTrue()
 

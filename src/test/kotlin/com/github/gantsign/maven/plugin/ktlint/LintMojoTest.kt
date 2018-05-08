@@ -46,7 +46,7 @@ class LintMojoTest {
 
     @Test
     fun hasErrors() {
-        val pom = File("target/test-classes/unit/lint-with-errors/pom.xml")
+        val pom = File("target/test-scenarios/lint-with-errors/pom.xml")
 
         Assertions.assertThat(pom.isFile).isTrue()
 
@@ -83,7 +83,7 @@ class LintMojoTest {
 
     @Test
     fun groupByFile() {
-        val pom = File("target/test-classes/unit/lint-group-by-file/pom.xml")
+        val pom = File("target/test-scenarios/lint-group-by-file/pom.xml")
 
         Assertions.assertThat(pom.isFile).isTrue()
 
@@ -121,7 +121,7 @@ class LintMojoTest {
 
     @Test
     fun proceedWithErrors() {
-        val pom = File("target/test-classes/unit/lint-proceed-with-errors/pom.xml")
+        val pom = File("target/test-scenarios/lint-proceed-with-errors/pom.xml")
 
         Assertions.assertThat(pom.isFile).isTrue()
 
@@ -153,7 +153,7 @@ class LintMojoTest {
 
     @Test
     fun outputFile() {
-        val basedir = File("target/test-classes/unit/lint-output-file")
+        val basedir = File("target/test-scenarios/lint-output-file")
         val pom = File(basedir, "pom.xml")
 
         Assertions.assertThat(pom.isFile).isTrue()
@@ -198,7 +198,7 @@ class LintMojoTest {
 
     @Test
     fun rootNotFound() {
-        val pom = File("target/test-classes/unit/root-not-found/pom.xml")
+        val pom = File("target/test-scenarios/root-not-found/pom.xml")
 
         Assertions.assertThat(pom.isFile).isTrue()
 
@@ -218,7 +218,7 @@ class LintMojoTest {
 
     @Test
     fun skip() {
-        val pom = File("target/test-classes/unit/lint-skip/pom.xml")
+        val pom = File("target/test-scenarios/lint-skip/pom.xml")
 
         Assertions.assertThat(pom.isFile).isTrue()
 

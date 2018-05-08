@@ -39,7 +39,7 @@ class TestFormatMojoTest {
 
     @Test
     fun happy() {
-        val pom = File("target/test-classes/unit/test-format-happy/pom.xml")
+        val pom = File("target/test-scenarios/test-format-happy/pom.xml")
 
         assertThat(pom.isFile).isTrue()
 
