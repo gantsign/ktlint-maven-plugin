@@ -27,8 +27,8 @@
 
   <packaging>maven-plugin</packaging>
 
-  <name>Maven plugin for KtLint</name>
-  <description>Maven plugin for the KtLint Kotlin Linter.</description>
+  <name>Maven ktlint Plugin</name>
+  <description>Maven plugin for the ktlint Kotlin linter.</description>
 
   <prerequisites>
     <maven>3.5.3</maven>
