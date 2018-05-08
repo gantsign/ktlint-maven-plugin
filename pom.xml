@@ -319,6 +319,12 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+      <groupId>com.vaadin.external.google</groupId>
+      <artifactId>android-json</artifactId>
+      <version>0.0.20131108.vaadin1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <scope>test</scope>
@@ -361,20 +367,14 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-simple</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
       <groupId>org.skyscreamer</groupId>
       <artifactId>jsonassert</artifactId>
       <version>1.5.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>com.vaadin.external.google</groupId>
-      <artifactId>android-json</artifactId>
-      <version>0.0.20131108.vaadin1</version>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -477,20 +477,6 @@
     </pluginManagement>
 
     <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-invoker-plugin</artifactId>
-        <version>3.0.1</version>
-        <executions>
-          <execution>
-            <id>integration-test</id>
-            <goals>
-              <goal>install</goal>
-              <goal>run</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
       <plugin>
         <groupId>com.github.ekryd.sortpom</groupId>
         <artifactId>sortpom-maven-plugin</artifactId>
@@ -610,6 +596,20 @@
                 </banDuplicateClasses>
               </rules>
             </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-invoker-plugin</artifactId>
+        <version>3.0.1</version>
+        <executions>
+          <execution>
+            <id>integration-test</id>
+            <goals>
+              <goal>install</goal>
+              <goal>run</goal>
+            </goals>
           </execution>
         </executions>
       </plugin>
@@ -753,14 +753,14 @@
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
         <configuration>
-            <excludes>
-              <!-- Exclude generated HelpMojo -->
-              <exclude>com/github/gantsign/maven/plugin/ktlint/HelpMojo.*</exclude>
-              <!-- Exclude data class -->
-              <exclude>com/github/gantsign/maven/plugin/ktlint/ReporterConfig.*</exclude>
-              <!-- Exclude class with just just properties -->
-              <exclude>com/github/gantsign/maven/plugin/ktlint/AbstractBaseMojo.*</exclude>
-            </excludes>
+          <excludes>
+            <!-- Exclude generated HelpMojo -->
+            <exclude>com/github/gantsign/maven/plugin/ktlint/HelpMojo.*</exclude>
+            <!-- Exclude data class -->
+            <exclude>com/github/gantsign/maven/plugin/ktlint/ReporterConfig.*</exclude>
+            <!-- Exclude class with just just properties -->
+            <exclude>com/github/gantsign/maven/plugin/ktlint/AbstractBaseMojo.*</exclude>
+          </excludes>
         </configuration>
         <executions>
           <execution>
