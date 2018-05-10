@@ -34,8 +34,14 @@ cache:
 install: true
 script:
   - ./mvnw install --batch-mode --show-version --settings .travis/settings.xml
+  - ./mvnw site-deploy -P site-deploy  --batch-mode --show-version --settings .travis/settings.xml
 
 branches:
   only:
     - master
     - /^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)([\.\-].*)?$/
+
+env:
+  global:
+    # GITHUB_OAUTH2TOKEN
+    secure: lH4FDbihHqv9uLWIwobN8cgrDe97bKwcZ096ZnK6wRB3X9lolu9S8BzRU+gGWJoJ6liAEqH7QjApq4tECrRC9dn1apuGcxSdTZFdsrtlTbEr5KWXkUwAby+NuZCa2UDP044Y+nFsdPxfeopgUf6piE1/X7biszcnwfD99+s/tWBAApAR1ARDMvBynSfArthJuUbSkOzZqlIcdx61sCBTiiQRcWZVkufMSx9ybO41TcsV8FQRCmdiV8rFGR4p9fxN0rAL3t8MGqMzpZ6gQKWeO9G4L2hWIOsbXIkJsO8UmkwOurFH3+wp7KehngW7txO/T+HsN+tFfN8Np7guZjgzknaegSLujwRR7G9oKDi9KJzJuiFOoSuS0w3iFHbMuKjd1H5PniRfCwrFh+2r2JQh/F/5VAllQw3grSMjUQnKTTyUvL2mcdcRGbpis6iO5QrhP3oHNIcSubl/4a1tt6jKdOW1Yh1oPU8SuIyzGnfF3gigEdyIZytCmCwar0xgcGN3Wq0f90dCcK1C5KxELUBTNiYhaoBXtXoIl6dvh7wWXXQDJrcDyeyU/hVbshVIzWwTBOV0Lt9uEpIUpXb5kmOYArnwFI6LdtPtSHpkRJ8w+udZqOyw+Io+8NnWPZ2rkrJ2yj3fYMd4ATPegZgfZtxkbhJ83ITaTpGBsctXmJuI47c=

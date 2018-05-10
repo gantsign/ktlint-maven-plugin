@@ -11,4 +11,12 @@
       <mirrorOf>central</mirrorOf>
     </mirror>
   </mirrors>
+
+  <servers>
+    <server>
+      <id>github</id>
+      <password>${env.GITHUB_OAUTH2TOKEN}</password>
+    </server>
+  </servers>
+
 </settings>
