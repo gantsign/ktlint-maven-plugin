@@ -1,0 +1,64 @@
+ ------
+ Introduction
+ ------
+ John Freeman
+ ------
+ 2018-05-10
+ ------
+
+ ~~ #%L
+ ~~ kotlin-maven-plugin-tools
+ ~~ %%
+ ~~ Copyright (C) 2018 GantSign Ltd.
+ ~~ %%
+ ~~ Licensed under the Apache License, Version 2.0 (the "License");
+ ~~ you may not use this file except in compliance with the License.
+ ~~ You may obtain a copy of the License at
+ ~~
+ ~~      http://www.apache.org/licenses/LICENSE-2.0
+ ~~
+ ~~ Unless required by applicable law or agreed to in writing, software
+ ~~ distributed under the License is distributed on an "AS IS" BASIS,
+ ~~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ ~~ See the License for the specific language governing permissions and
+ ~~ limitations under the License.
+ ~~ #L%
+
+${project.name}
+
+  This plugin provides the ability to use
+  {{{https://github.com/shyiko/ktlint}ktlint}} to format and check your source
+  code against the `ktlint` anti-bikeshedding code style.
+
+* Goals Overview
+
+  * {{{./format-mojo.html}ktlint:format}} format your production Kotlin sources
+    using `ktlint`.
+
+  * {{{./testFormat-mojo.html}ktlint:testFormat}} format your test Kotlin
+    sources using `ktlint`.
+
+  * {{{./lint-mojo.html}ktlint:lint}} lint your production Kotlin sources using
+    `ktlint`.
+
+  * {{{./testLint-mojo.html}ktlint:testLint}} lint your test Kotlin sources
+    using `ktlint`.
+
+  []
+
+* Usage
+
+  General instructions on how to use the ktlint plugin can be found on the
+  {{{./usage.html}usage page}}.
+
+* License
+
+  This software is licensed under the terms in the file named "LICENSE" in the
+  root directory of this project.
+
+* Author Information
+
+  John Freeman
+
+  GantSign Ltd.
+  Company No. 06109112 (registered in England)
