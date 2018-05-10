@@ -1,0 +1,162 @@
+## #%L
+## kotlin-maven-plugin-tools
+## %%
+## Copyright (C) 2018 GantSign Ltd.
+## %%
+## Licensed under the Apache License, Version 2.0 (the "License");
+## you may not use this file except in compliance with the License.
+## You may obtain a copy of the License at
+##
+##      http://www.apache.org/licenses/LICENSE-2.0
+##
+## Unless required by applicable law or agreed to in writing, software
+## distributed under the License is distributed on an "AS IS" BASIS,
+## WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+## See the License for the specific language governing permissions and
+## limitations under the License.
+## #L%
+
+#set($h1 = '#')
+#set($h2 = '##')
+#set($h3 = '###')
+#set($h4 = '####')
+
+$h2 Usage
+
+Some brief examples on how to use this plugin.
+
+$h3 Formatting and linting
+
+Probably the most common use case is to want to both format and lint your code;
+add the following plugin configuration to your POM.
+
+```xml
+<build>
+  <plugins>
+    ...
+    <plugin>
+      <groupId>com.github.gantsign.maven</groupId>
+      <artifactId>ktlint-maven-plugin</artifactId>
+      <version>${project.version}</version>
+      <executions>
+        <execution>
+          <id>format-and-lint</id>
+          <goals>
+            <goal>format</goal>
+            <goal>testFormat</goal>
+            <goal>lint</goal>
+            <goal>testLint</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
+    ...
+  </plugins>
+</build>
+
+```
+
+$h3 Formatting only
+
+If you just want `ktlint` to automatically fix what it can, add the following
+plugin configuration to your POM.
+
+```xml
+<build>
+  <plugins>
+    ...
+    <plugin>
+      <groupId>com.github.gantsign.maven</groupId>
+      <artifactId>ktlint-maven-plugin</artifactId>
+      <version>${project.version}</version>
+      <executions>
+        <execution>
+          <id>format</id>
+          <goals>
+            <goal>format</goal>
+            <goal>testFormat</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
+    ...
+  </plugins>
+</build>
+
+```
+
+To run this from the command line (without adding the plugin to your POM) you
+can run the following from your console:
+
+```
+mvn ${project.groupId}:${project.artifactId}:${project.version}:format \
+    ${project.groupId}:${project.artifactId}:${project.version}:testFormat
+```
+
+
+$h3 Linting only
+
+If you just want to drill good habits into your developers, add the following
+plugin configuration to your POM.
+
+```xml
+<build>
+  <plugins>
+    ...
+    <plugin>
+      <groupId>com.github.gantsign.maven</groupId>
+      <artifactId>ktlint-maven-plugin</artifactId>
+      <version>${project.version}</version>
+      <executions>
+        <execution>
+          <id>lint</id>
+          <goals>
+            <goal>lint</goal>
+            <goal>testLint</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
+    ...
+  </plugins>
+</build>
+
+```
+
+To run this from the command line (without adding the plugin to your POM) you
+can run the following from your console:
+
+```
+mvn ${project.groupId}:${project.artifactId}:${project.version}:lint \
+    ${project.groupId}:${project.artifactId}:${project.version}:testLint
+```
+
+$h3 Format but only lint production sources
+
+If you have laxer standards for your test code, add the following plugin
+configuration to your POM.
+
+```xml
+<build>
+  <plugins>
+    ...
+    <plugin>
+      <groupId>com.github.gantsign.maven</groupId>
+      <artifactId>ktlint-maven-plugin</artifactId>
+      <version>${project.version}</version>
+      <executions>
+        <execution>
+          <id>format-and-lint</id>
+          <goals>
+            <goal>format</goal>
+            <goal>testFormat</goal>
+            <goal>lint</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
+    ...
+  </plugins>
+</build>
+
+```
