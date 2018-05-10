@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AbstractFormatMojo.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Maven ktlint Plugin</a> &gt; <a href="index.source.html" class="el_package">com.github.gantsign.maven.plugin.ktlint</a> &gt; <span class="el_source">AbstractFormatMojo.kt</span></div><h1>AbstractFormatMojo.kt</h1><pre class="source lang-java linenums">/*-
+ * #%L
+ * ktlint-maven-plugin
+ * %%
+ * Copyright (C) 2018 GantSign Ltd.
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+package com.github.gantsign.maven.plugin.ktlint
+
+import com.github.gantsign.maven.plugin.ktlint.internal.Format
+import org.apache.maven.plugins.annotations.Parameter
+import java.io.File
+import java.nio.charset.Charset
+import java.nio.charset.StandardCharsets.UTF_8
+
+<span class="fc" id="L28">abstract class AbstractFormatMojo : AbstractBaseMojo() {</span>
+
+    /**
+     * Skips automatic code style fixes.
+     */
+    @Parameter(property = &quot;ktlint.skip&quot;, defaultValue = &quot;false&quot;, required = true)
+    private var skip: Boolean = false
+
+    override fun execute() {
+<span class="fc bfc" id="L37" title="All 2 branches covered.">        if (skip) {</span>
+<span class="fc" id="L38">            return</span>
+        }
+<span class="fc" id="L40">        Format(</span>
+<span class="fc" id="L41">            log = log,</span>
+<span class="fc" id="L42">            basedir = basedir,</span>
+<span class="fc" id="L43">            sourceRoots = sourceRoots.asSequence().map(::File).toSet(),</span>
+<span class="pc bpc" id="L44" title="5 of 10 branches missed.">            charset = encoding?.trim()?.takeUnless(String::isEmpty)</span>
+<span class="pc bpc" id="L45" title="1 of 4 branches missed.">                ?.let { Charset.forName(it) }</span>
+<span class="fc" id="L46">                ?: UTF_8,</span>
+<span class="fc bfc" id="L47" title="All 2 branches covered.">            includes = includes ?: emptySet(),</span>
+<span class="pc bpc" id="L48" title="1 of 2 branches missed.">            excludes = excludes ?: emptySet(),</span>
+<span class="fc" id="L49">            android = android</span>
+        )()
+<span class="fc" id="L51">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>
