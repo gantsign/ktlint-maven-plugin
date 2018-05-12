@@ -36,7 +36,7 @@ import java.nio.file.Files
 import java.nio.file.Paths
 import java.util.ServiceLoader
 
-internal class Lint(
+internal class Check(
     log: Log,
     basedir: File,
     private val sourceRoots: Set<File>,
@@ -159,7 +159,7 @@ internal class Lint(
                 val relativePath = file.toRelativeString(basedir)
                 reporter.before(relativePath)
 
-                log.debug("linting: $relativePath")
+                log.debug("checking: $relativePath")
 
                 val formatFunc =
                     when (file.extension) {
@@ -183,7 +183,7 @@ internal class Lint(
                         reporter.onLintError(relativePath, error, false)
 
                         val lintError = "$relativePath:${error.line}:${error.col}: ${error.detail}"
-                        log.debug("Lint error > $lintError")
+                        log.debug("Style error > $lintError")
 
                         hasErrors = true
                     }
@@ -194,7 +194,7 @@ internal class Lint(
             reporter.afterAll()
         }
         if (hasErrors && failOnViolation) {
-            throw MojoFailureException("Kotlin source failed lint check.")
+            throw MojoFailureException("Kotlin source failed ktlint check.")
         }
     }
 

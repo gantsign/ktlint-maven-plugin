@@ -28,9 +28,9 @@ Usage
 
   Some brief examples on how to use this plugin.
 
-* Formatting and linting
+* Formatting and checking for violations as part of the build
 
-  Probably the most common use case is to want to both format and lint your
+  Probably the most common use case is to want to both format and check your
   code; add the following plugin configuration to your POM.
 
 +----------+
@@ -46,7 +46,7 @@ Usage
           <id>format-and-lint</id>
           <goals>
             <goal>format</goal>
-            <goal>lint</goal>
+            <goal>check</goal>
           </goals>
         </execution>
       </executions>
@@ -56,7 +56,7 @@ Usage
 </build>
 +----------+
 
-* Formatting only
+* Formatting
 
   If you just want `ktlint` to automatically fix what it can, add the following
   plugin configuration to your POM.
@@ -90,7 +90,7 @@ Usage
 mvn ${project.groupId}:${project.artifactId}:${project.version}:format
 +----------+
 
-* Linting only
+* Checking for violations as part of the build
 
   If you just want to drill good habits into your developers, add the following
   plugin configuration to your POM.

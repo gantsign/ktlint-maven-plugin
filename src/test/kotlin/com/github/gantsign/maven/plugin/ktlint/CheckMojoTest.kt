@@ -38,7 +38,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode
 import org.skyscreamer.jsonassert.JSONParser
 import java.io.File
 
-class LintMojoTest {
+class CheckMojoTest {
 
     @Rule
     @JvmField
@@ -46,24 +46,24 @@ class LintMojoTest {
 
     @Test
     fun hasErrors() {
-        val pom = File("target/test-scenarios/lint-with-errors/pom.xml")
+        val pom = File("target/test-scenarios/check-with-errors/pom.xml")
 
         Assertions.assertThat(pom.isFile).isTrue()
 
         val project = rule.readMavenProject(pom.parentFile)
 
-        val lintMojo = rule.lookupConfiguredMojo(project, "lint") as LintMojo
+        val checkMojo = rule.lookupConfiguredMojo(project, "check") as CheckMojo
 
         val log = mock<Log>()
-        lintMojo.log = log
+        checkMojo.log = log
         whenever(log.isDebugEnabled).thenReturn(true)
 
-        assertThat(lintMojo).isNotNull
+        assertThat(checkMojo).isNotNull
         try {
-            lintMojo.execute()
+            checkMojo.execute()
             fail("Expected ${MojoFailureException::class.qualifiedName} to be thrown")
         } catch (e: MojoFailureException) {
-            assertThat(e.message).isEqualTo("Kotlin source failed lint check.")
+            assertThat(e.message).isEqualTo("Kotlin source failed ktlint check.")
         }
 
         verify(log, atLeastOnce()).isDebugEnabled
@@ -75,8 +75,8 @@ class LintMojoTest {
         verify(log).debug("Discovered reporter 'json'")
         verify(log).debug("Discovered reporter 'checkstyle'")
         verify(log).debug("Initializing 'maven' reporter with {verbose=false}")
-        verify(log).debug("linting: src/main/kotlin/example/Example.kt")
-        verify(log).debug("Lint error > src/main/kotlin/example/Example.kt:23:39: Unnecessary semicolon")
+        verify(log).debug("checking: src/main/kotlin/example/Example.kt")
+        verify(log).debug("Style error > src/main/kotlin/example/Example.kt:23:39: Unnecessary semicolon")
         verify(log).error("src/main/kotlin/example/Example.kt:23:39: Unnecessary semicolon")
         verify(log).warn("Source root doesn't exist: src/test/kotlin")
         verifyNoMoreInteractions(log)
@@ -84,24 +84,24 @@ class LintMojoTest {
 
     @Test
     fun groupByFile() {
-        val pom = File("target/test-scenarios/lint-group-by-file/pom.xml")
+        val pom = File("target/test-scenarios/check-group-by-file/pom.xml")
 
         Assertions.assertThat(pom.isFile).isTrue()
 
         val project = rule.readMavenProject(pom.parentFile)
 
-        val lintMojo = rule.lookupConfiguredMojo(project, "lint") as LintMojo
+        val checkMojo = rule.lookupConfiguredMojo(project, "check") as CheckMojo
 
         val log = mock<Log>()
-        lintMojo.log = log
+        checkMojo.log = log
         whenever(log.isDebugEnabled).thenReturn(true)
 
-        assertThat(lintMojo).isNotNull
+        assertThat(checkMojo).isNotNull
         try {
-            lintMojo.execute()
+            checkMojo.execute()
             fail("Expected ${MojoFailureException::class.qualifiedName} to be thrown")
         } catch (e: MojoFailureException) {
-            assertThat(e.message).isEqualTo("Kotlin source failed lint check.")
+            assertThat(e.message).isEqualTo("Kotlin source failed ktlint check.")
         }
 
         verify(log, atLeastOnce()).isDebugEnabled
@@ -113,8 +113,8 @@ class LintMojoTest {
         verify(log).debug("Discovered reporter 'json'")
         verify(log).debug("Discovered reporter 'checkstyle'")
         verify(log).debug("Initializing 'maven' reporter with {verbose=true, group_by_file=true}")
-        verify(log).debug("linting: src/main/kotlin/example/Example.kt")
-        verify(log).debug("Lint error > src/main/kotlin/example/Example.kt:23:39: Unnecessary semicolon")
+        verify(log).debug("checking: src/main/kotlin/example/Example.kt")
+        verify(log).debug("Style error > src/main/kotlin/example/Example.kt:23:39: Unnecessary semicolon")
         verify(log).error("src/main/kotlin/example/Example.kt")
         verify(log).error(" 23:39 Unnecessary semicolon (no-semi)")
         verify(log).warn("Source root doesn't exist: src/test/kotlin")
@@ -123,20 +123,20 @@ class LintMojoTest {
 
     @Test
     fun proceedWithErrors() {
-        val pom = File("target/test-scenarios/lint-proceed-with-errors/pom.xml")
+        val pom = File("target/test-scenarios/check-proceed-with-errors/pom.xml")
 
         Assertions.assertThat(pom.isFile).isTrue()
 
         val project = rule.readMavenProject(pom.parentFile)
 
-        val lintMojo = rule.lookupConfiguredMojo(project, "lint") as LintMojo
+        val checkMojo = rule.lookupConfiguredMojo(project, "check") as CheckMojo
 
         val log = mock<Log>()
-        lintMojo.log = log
+        checkMojo.log = log
         whenever(log.isDebugEnabled).thenReturn(true)
 
-        assertThat(lintMojo).isNotNull
-        lintMojo.execute()
+        assertThat(checkMojo).isNotNull
+        checkMojo.execute()
 
         verify(log, atLeastOnce()).isDebugEnabled
         verify(log).debug("Discovered .editorconfig ()")
@@ -147,8 +147,8 @@ class LintMojoTest {
         verify(log).debug("Discovered reporter 'json'")
         verify(log).debug("Discovered reporter 'checkstyle'")
         verify(log).debug("Initializing 'maven' reporter with {verbose=false}")
-        verify(log).debug("linting: src/main/kotlin/example/Example.kt")
-        verify(log).debug("Lint error > src/main/kotlin/example/Example.kt:23:39: Unnecessary semicolon")
+        verify(log).debug("checking: src/main/kotlin/example/Example.kt")
+        verify(log).debug("Style error > src/main/kotlin/example/Example.kt:23:39: Unnecessary semicolon")
         verify(log).error("src/main/kotlin/example/Example.kt:23:39: Unnecessary semicolon")
         verify(log).warn("Source root doesn't exist: src/test/kotlin")
         verifyNoMoreInteractions(log)
@@ -156,25 +156,25 @@ class LintMojoTest {
 
     @Test
     fun outputFile() {
-        val basedir = File("target/test-scenarios/lint-output-file")
+        val basedir = File("target/test-scenarios/check-output-file")
         val pom = File(basedir, "pom.xml")
 
         Assertions.assertThat(pom.isFile).isTrue()
 
         val project = rule.readMavenProject(pom.parentFile)
 
-        val lintMojo = rule.lookupConfiguredMojo(project, "lint") as LintMojo
+        val checkMojo = rule.lookupConfiguredMojo(project, "check") as CheckMojo
 
         val log = mock<Log>()
-        lintMojo.log = log
+        checkMojo.log = log
         whenever(log.isDebugEnabled).thenReturn(true)
 
-        assertThat(lintMojo).isNotNull
+        assertThat(checkMojo).isNotNull
         try {
-            lintMojo.execute()
+            checkMojo.execute()
             fail("Expected ${MojoFailureException::class.qualifiedName} to be thrown")
         } catch (e: MojoFailureException) {
-            assertThat(e.message).isEqualTo("Kotlin source failed lint check.")
+            assertThat(e.message).isEqualTo("Kotlin source failed ktlint check.")
         }
 
         //language=JSON
@@ -207,13 +207,13 @@ class LintMojoTest {
 
         val project = rule.readMavenProject(pom.parentFile)
 
-        val lintMojo = rule.lookupConfiguredMojo(project, "lint") as LintMojo
+        val checkMojo = rule.lookupConfiguredMojo(project, "check") as CheckMojo
 
         val log = mock<Log>()
-        lintMojo.log = log
+        checkMojo.log = log
 
-        Assertions.assertThat(lintMojo).isNotNull
-        lintMojo.execute()
+        Assertions.assertThat(checkMojo).isNotNull
+        checkMojo.execute()
 
         verify(log).warn("Source root doesn't exist: src/main/kotlin")
         verify(log).warn("Source root doesn't exist: src/test/kotlin")
@@ -222,19 +222,19 @@ class LintMojoTest {
 
     @Test
     fun skip() {
-        val pom = File("target/test-scenarios/lint-skip/pom.xml")
+        val pom = File("target/test-scenarios/check-skip/pom.xml")
 
         Assertions.assertThat(pom.isFile).isTrue()
 
         val project = rule.readMavenProject(pom.parentFile)
 
-        val lintMojo = rule.lookupConfiguredMojo(project, "lint") as LintMojo
+        val checkMojo = rule.lookupConfiguredMojo(project, "check") as CheckMojo
 
         val log = mock<Log>()
-        lintMojo.log = log
+        checkMojo.log = log
 
-        Assertions.assertThat(lintMojo).isNotNull
-        lintMojo.execute()
+        Assertions.assertThat(checkMojo).isNotNull
+        checkMojo.execute()
 
         verifyNoMoreInteractions(log)
     }
