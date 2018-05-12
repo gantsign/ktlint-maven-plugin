@@ -41,7 +41,6 @@
             <id>lint</id>
             <goals>
               <goal>lint</goal>
-              <goal>testLint</goal>
             </goals>
           </execution>
         </executions>

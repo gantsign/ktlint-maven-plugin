@@ -28,7 +28,39 @@ abstract class AbstractBaseMojo : AbstractMojo() {
     @Parameter(defaultValue = "\${project.basedir}", readonly = true, required = true)
     protected lateinit var basedir: File
 
-    abstract val sourceRoots: List<String>
+    @Parameter(defaultValue = "\${project.compileSourceRoots}", readonly = true, required = true)
+    private lateinit var compileSourceRoots: List<String>
+
+    @Parameter(
+        defaultValue = "\${project.testCompileSourceRoots}",
+        readonly = true,
+        required = true
+    )
+    private lateinit var testCompileSourceRoots: List<String>
+
+    /**
+     * Include the production source roots.
+     */
+    @Parameter(property = "ktlint.includeSourceRoots", defaultValue = "true", required = true)
+    private var includeSourceRoots = true
+
+    /**
+     * Include the test source roots.
+     */
+    @Parameter(property = "ktlint.includeTestSourceRoots", defaultValue = "true", required = true)
+    private var includeTestSourceRoots = true
+
+    protected val sourceRoots: List<String>
+        get() {
+            var sourceRoots = emptyList<String>()
+            if (includeSourceRoots) {
+                sourceRoots += compileSourceRoots
+            }
+            if (includeTestSourceRoots) {
+                sourceRoots += testCompileSourceRoots
+            }
+            return sourceRoots
+        }
 
     /**
      * File file encoding of the Kotlin source files.

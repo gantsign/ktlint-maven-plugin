@@ -46,9 +46,7 @@ Usage
           <id>format-and-lint</id>
           <goals>
             <goal>format</goal>
-            <goal>testFormat</goal>
             <goal>lint</goal>
-            <goal>testLint</goal>
           </goals>
         </execution>
       </executions>
@@ -76,7 +74,6 @@ Usage
           <id>format</id>
           <goals>
             <goal>format</goal>
-            <goal>testFormat</goal>
           </goals>
         </execution>
       </executions>
@@ -90,8 +87,7 @@ Usage
   can run the following from your console:
 
 +----------+
-mvn ${project.groupId}:${project.artifactId}:${project.version}:format \
-    ${project.groupId}:${project.artifactId}:${project.version}:testFormat
+mvn ${project.groupId}:${project.artifactId}:${project.version}:format
 +----------+
 
 * Linting only
@@ -112,7 +108,6 @@ mvn ${project.groupId}:${project.artifactId}:${project.version}:format \
           <id>lint</id>
           <goals>
             <goal>lint</goal>
-            <goal>testLint</goal>
           </goals>
         </execution>
       </executions>
@@ -126,35 +121,5 @@ mvn ${project.groupId}:${project.artifactId}:${project.version}:format \
   can run the following from your console:
 
 +----------+
-mvn ${project.groupId}:${project.artifactId}:${project.version}:lint \
-    ${project.groupId}:${project.artifactId}:${project.version}:testLint
-+----------+
-
-* Format but only lint production sources
-
-  If you have laxer standards for your test code, add the following plugin
-  configuration to your POM.
-
-+----------+
-<build>
-  <plugins>
-    ...
-    <plugin>
-      <groupId>com.github.gantsign.maven</groupId>
-      <artifactId>ktlint-maven-plugin</artifactId>
-      <version>${project.version}</version>
-      <executions>
-        <execution>
-          <id>format-and-lint</id>
-          <goals>
-            <goal>format</goal>
-            <goal>testFormat</goal>
-            <goal>lint</goal>
-          </goals>
-        </execution>
-      </executions>
-    </plugin>
-    ...
-  </plugins>
-</build>
+mvn ${project.groupId}:${project.artifactId}:${project.version}:lint
 +----------+
