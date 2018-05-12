@@ -57,6 +57,7 @@ class FormatMojoTest {
         verify(log).debug("checking format: src/main/kotlin/example/Example.kt")
         verify(log).debug("Format could not fix > src/main/kotlin/example/Example.kt:22:1: Wildcard import")
         verify(log).debug("Format fixed > src/main/kotlin/example/Example.kt")
+        verify(log).warn("Source root doesn't exist: src/test/kotlin")
         verifyNoMoreInteractions(log)
     }
 
@@ -80,6 +81,7 @@ class FormatMojoTest {
         verify(log).debug("checking format: src/main/kotlin/example/Example.kts")
         verify(log).debug("Format could not fix > src/main/kotlin/example/Example.kts:22:1: Wildcard import")
         verify(log).debug("Format fixed > src/main/kotlin/example/Example.kts")
+        verify(log).warn("Source root doesn't exist: src/test/kotlin")
         verifyNoMoreInteractions(log)
     }
 
@@ -100,6 +102,7 @@ class FormatMojoTest {
         formatMojo.execute()
 
         verify(log).warn("Source root doesn't exist: src/main/kotlin")
+        verify(log).warn("Source root doesn't exist: src/test/kotlin")
         verifyNoMoreInteractions(log)
     }
 

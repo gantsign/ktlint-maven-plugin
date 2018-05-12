@@ -78,6 +78,7 @@ class LintMojoTest {
         verify(log).debug("linting: src/main/kotlin/example/Example.kt")
         verify(log).debug("Lint error > src/main/kotlin/example/Example.kt:23:39: Unnecessary semicolon")
         verify(log).error("src/main/kotlin/example/Example.kt:23:39: Unnecessary semicolon")
+        verify(log).warn("Source root doesn't exist: src/test/kotlin")
         verifyNoMoreInteractions(log)
     }
 
@@ -116,6 +117,7 @@ class LintMojoTest {
         verify(log).debug("Lint error > src/main/kotlin/example/Example.kt:23:39: Unnecessary semicolon")
         verify(log).error("src/main/kotlin/example/Example.kt")
         verify(log).error(" 23:39 Unnecessary semicolon (no-semi)")
+        verify(log).warn("Source root doesn't exist: src/test/kotlin")
         verifyNoMoreInteractions(log)
     }
 
@@ -148,6 +150,7 @@ class LintMojoTest {
         verify(log).debug("linting: src/main/kotlin/example/Example.kt")
         verify(log).debug("Lint error > src/main/kotlin/example/Example.kt:23:39: Unnecessary semicolon")
         verify(log).error("src/main/kotlin/example/Example.kt:23:39: Unnecessary semicolon")
+        verify(log).warn("Source root doesn't exist: src/test/kotlin")
         verifyNoMoreInteractions(log)
     }
 
@@ -213,6 +216,7 @@ class LintMojoTest {
         lintMojo.execute()
 
         verify(log).warn("Source root doesn't exist: src/main/kotlin")
+        verify(log).warn("Source root doesn't exist: src/test/kotlin")
         verifyNoMoreInteractions(log)
     }
 

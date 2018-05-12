@@ -19,26 +19,47 @@
  */
 package com.github.gantsign.maven.plugin.ktlint
 
+import com.github.gantsign.maven.plugin.ktlint.internal.Format
 import org.apache.maven.plugins.annotations.LifecyclePhase
 import org.apache.maven.plugins.annotations.Mojo
 import org.apache.maven.plugins.annotations.Parameter
 import org.apache.maven.plugins.annotations.ResolutionScope
+import java.io.File
+import java.nio.charset.Charset
+import java.nio.charset.StandardCharsets.UTF_8
 
 /**
- * Automatically fixes violations of the code style (when possible) in the production sources.
+ * Automatically fixes violations of the code style (when possible).
  */
 @Mojo(
     name = "format",
     defaultPhase = LifecyclePhase.PROCESS_SOURCES,
-    requiresDependencyResolution = ResolutionScope.COMPILE,
-    requiresDependencyCollection = ResolutionScope.COMPILE,
+    requiresDependencyResolution = ResolutionScope.TEST,
+    requiresDependencyCollection = ResolutionScope.TEST,
     requiresProject = true
 )
-class FormatMojo : AbstractFormatMojo() {
+class FormatMojo : AbstractBaseMojo() {
 
-    @Parameter(defaultValue = "\${project.compileSourceRoots}", readonly = true, required = true)
-    private lateinit var compileSourceRoots: List<String>
+    /**
+     * Skips automatic code style fixes.
+     */
+    @Parameter(property = "ktlint.skip", defaultValue = "false", required = true)
+    private var skip: Boolean = false
 
-    override val sourceRoots: List<String>
-        get() = compileSourceRoots
+    override fun execute() {
+        if (skip) {
+            return
+        }
+        Format(
+            log = log,
+            basedir = basedir,
+            sourceRoots = sourceRoots.asSequence().map(::File).toSet(),
+            charset = encoding?.trim()?.takeUnless(String::isEmpty)
+                ?.let { Charset.forName(it) }
+                ?: UTF_8,
+            includes = includes ?: emptySet(),
+            excludes = excludes ?: emptySet(),
+            android = android
+        )()
+    }
 }

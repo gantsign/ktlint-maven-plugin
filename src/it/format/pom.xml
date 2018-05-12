@@ -41,7 +41,6 @@
             <id>format</id>
             <goals>
               <goal>format</goal>
-              <goal>testFormat</goal>
             </goals>
           </execution>
         </executions>

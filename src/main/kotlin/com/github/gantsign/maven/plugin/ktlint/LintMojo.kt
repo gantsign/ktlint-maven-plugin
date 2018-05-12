@@ -19,26 +19,68 @@
  */
 package com.github.gantsign.maven.plugin.ktlint
 
+import com.github.gantsign.maven.plugin.ktlint.internal.Lint
 import org.apache.maven.plugins.annotations.LifecyclePhase
 import org.apache.maven.plugins.annotations.Mojo
 import org.apache.maven.plugins.annotations.Parameter
 import org.apache.maven.plugins.annotations.ResolutionScope
+import java.io.File
+import java.nio.charset.Charset
+import java.nio.charset.StandardCharsets.UTF_8
 
 /**
- * Checks the production sources for violations of the code style.
+ * Checks for violations of the code style.
  */
 @Mojo(
     name = "lint",
     defaultPhase = LifecyclePhase.PROCESS_CLASSES,
-    requiresDependencyResolution = ResolutionScope.COMPILE,
-    requiresDependencyCollection = ResolutionScope.COMPILE,
+    requiresDependencyResolution = ResolutionScope.TEST,
+    requiresDependencyCollection = ResolutionScope.TEST,
     requiresProject = true
 )
-class LintMojo : AbstractLintMojo() {
+class LintMojo : AbstractBaseMojo() {
 
-    @Parameter(defaultValue = "\${project.compileSourceRoots}", readonly = true, required = true)
-    private lateinit var compileSourceRoots: List<String>
+    /**
+     * A set of reporters to output the results to.
+     */
+    @Parameter
+    private var reporters: Set<ReporterConfig>? = null
 
-    override val sourceRoots: List<String>
-        get() = compileSourceRoots
+    /**
+     * Show error codes.
+     */
+    @Parameter(property = "ktlint.verbose", defaultValue = "false", required = true)
+    private var verbose: Boolean = false
+
+    /**
+     * Whether to fail the build if the linter finds violations of the code style.
+     */
+    @Parameter(property = "ktlint.failOnViolation", defaultValue = "true", required = true)
+    private var failOnViolation: Boolean = true
+
+    /**
+     * Skips and code style checks.
+     */
+    @Parameter(property = "ktlint.skip", defaultValue = "false", required = true)
+    private var skip: Boolean = false
+
+    override fun execute() {
+        if (skip) {
+            return
+        }
+        Lint(
+            log = log,
+            basedir = basedir,
+            sourceRoots = sourceRoots.asSequence().map(::File).toSet(),
+            charset = encoding?.trim()?.takeUnless(String::isEmpty)
+                ?.let { Charset.forName(it) }
+                ?: UTF_8,
+            includes = includes ?: emptySet(),
+            excludes = excludes ?: emptySet(),
+            android = android,
+            reporterConfig = reporters ?: emptySet(),
+            verbose = verbose,
+            failOnViolation = failOnViolation
+        )()
+    }
 }
