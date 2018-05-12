@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Lint.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Maven ktlint Plugin</a> &gt; <a href="index.source.html" class="el_package">com.github.gantsign.maven.plugin.ktlint.internal</a> &gt; <span class="el_source">Lint.kt</span></div><h1>Lint.kt</h1><pre class="source lang-java linenums">/*-
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Check.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Maven ktlint Plugin</a> &gt; <a href="index.source.html" class="el_package">com.github.gantsign.maven.plugin.ktlint.internal</a> &gt; <span class="el_source">Check.kt</span></div><h1>Check.kt</h1><pre class="source lang-java linenums">/*-
  * #%L
  * ktlint-maven-plugin
  * %%
@@ -36,7 +36,7 @@ import java.nio.file.Files
 import java.nio.file.Paths
 import java.util.ServiceLoader
 
-<span class="fc" id="L39">internal class Lint(</span>
+<span class="fc" id="L39">internal class Check(</span>
     log: Log,
     basedir: File,
     private val sourceRoots: Set&lt;File&gt;,
@@ -159,7 +159,7 @@ import java.util.ServiceLoader
 <span class="fc" id="L159">                val relativePath = file.toRelativeString(basedir)</span>
 <span class="fc" id="L160">                reporter.before(relativePath)</span>
 
-<span class="fc" id="L162">                log.debug(&quot;linting: $relativePath&quot;)</span>
+<span class="fc" id="L162">                log.debug(&quot;checking: $relativePath&quot;)</span>
 
 <span class="fc" id="L164">                val formatFunc =</span>
 <span class="pc bpc" id="L165" title="5 of 7 branches missed.">                    when (file.extension) {</span>
@@ -183,7 +183,7 @@ import java.util.ServiceLoader
 <span class="fc" id="L183">                        reporter.onLintError(relativePath, error, false)</span>
 
 <span class="fc" id="L185">                        val lintError = &quot;$relativePath:${error.line}:${error.col}: ${error.detail}&quot;</span>
-<span class="fc" id="L186">                        log.debug(&quot;Lint error &gt; $lintError&quot;)</span>
+<span class="fc" id="L186">                        log.debug(&quot;Style error &gt; $lintError&quot;)</span>
 
 <span class="fc" id="L188">                        hasErrors = true</span>
 <span class="fc" id="L189">                    }</span>
@@ -194,7 +194,7 @@ import java.util.ServiceLoader
 <span class="fc" id="L194">            reporter.afterAll()</span>
         }
 <span class="fc bfc" id="L196" title="All 4 branches covered.">        if (hasErrors &amp;&amp; failOnViolation) {</span>
-<span class="fc" id="L197">            throw MojoFailureException(&quot;Kotlin source failed lint check.&quot;)</span>
+<span class="fc" id="L197">            throw MojoFailureException(&quot;Kotlin source failed ktlint check.&quot;)</span>
         }
 <span class="fc" id="L199">    }</span>
 
