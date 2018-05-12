@@ -35,8 +35,8 @@ ${project.name}
   * {{{./format-mojo.html}ktlint:format}} format your Kotlin sources
     using `ktlint`.
 
-  * {{{./lint-mojo.html}ktlint:lint}} lint your Kotlin sources using
-    `ktlint`.
+  * {{{./check-mojo.html}ktlint:check}} check your Kotlin sources for code style
+    violations using `ktlint`.
 
   []
 
