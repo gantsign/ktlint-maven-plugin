@@ -33,7 +33,7 @@ import java.nio.charset.StandardCharsets.UTF_8
  */
 @Mojo(
     name = "check",
-    defaultPhase = LifecyclePhase.PROCESS_CLASSES,
+    defaultPhase = LifecyclePhase.VERIFY,
     requiresDependencyResolution = ResolutionScope.TEST,
     requiresDependencyCollection = ResolutionScope.TEST,
     requiresProject = true
