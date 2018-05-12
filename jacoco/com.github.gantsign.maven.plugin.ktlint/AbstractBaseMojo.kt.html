@@ -28,30 +28,62 @@ import java.io.File
     @Parameter(defaultValue = &quot;\${project.basedir}&quot;, readonly = true, required = true)
 <span class="pc bpc" id="L29" title="1 of 2 branches missed.">    protected lateinit var basedir: File</span>
 
-    abstract val sourceRoots: List&lt;String&gt;
+    @Parameter(defaultValue = &quot;\${project.compileSourceRoots}&quot;, readonly = true, required = true)
+    private lateinit var compileSourceRoots: List&lt;String&gt;
+
+    @Parameter(
+        defaultValue = &quot;\${project.testCompileSourceRoots}&quot;,
+        readonly = true,
+        required = true
+    )
+    private lateinit var testCompileSourceRoots: List&lt;String&gt;
+
+    /**
+     * Include the production source roots.
+     */
+    @Parameter(property = &quot;ktlint.includeSourceRoots&quot;, defaultValue = &quot;true&quot;, required = true)
+<span class="fc" id="L45">    private var includeSourceRoots = true</span>
+
+    /**
+     * Include the test source roots.
+     */
+    @Parameter(property = &quot;ktlint.includeTestSourceRoots&quot;, defaultValue = &quot;true&quot;, required = true)
+<span class="fc" id="L51">    private var includeTestSourceRoots = true</span>
+
+    protected val sourceRoots: List&lt;String&gt;
+        get() {
+<span class="fc" id="L55">            var sourceRoots = emptyList&lt;String&gt;()</span>
+<span class="pc bpc" id="L56" title="1 of 2 branches missed.">            if (includeSourceRoots) {</span>
+<span class="pc bpc" id="L57" title="1 of 2 branches missed.">                sourceRoots += compileSourceRoots</span>
+            }
+<span class="pc bpc" id="L59" title="1 of 2 branches missed.">            if (includeTestSourceRoots) {</span>
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">                sourceRoots += testCompileSourceRoots</span>
+            }
+<span class="fc" id="L62">            return sourceRoots</span>
+        }
 
     /**
      * File file encoding of the Kotlin source files.
      */
     @Parameter(property = &quot;encoding&quot;, defaultValue = &quot;\${project.build.sourceEncoding}&quot;)
-<span class="fc" id="L37">    protected val encoding: String? = null</span>
+<span class="fc" id="L69">    protected val encoding: String? = null</span>
 
     /**
      * A list of inclusion filters for the source files to be processed.
      */
     @Parameter
-<span class="pc" id="L43">    protected var includes: Set&lt;String&gt;? = null</span>
+<span class="pc" id="L75">    protected var includes: Set&lt;String&gt;? = null</span>
 
     /**
      * A list of exclusion filters for the source files to be processed.
      */
     @Parameter
-<span class="pc" id="L49">    protected var excludes: Set&lt;String&gt;? = null</span>
+<span class="pc" id="L81">    protected var excludes: Set&lt;String&gt;? = null</span>
 
     /**
      * Enable Android Kotlin Style Guide compatibility.
      */
     @Parameter(property = &quot;ktlint.android&quot;, defaultValue = &quot;false&quot;, required = true)
-<span class="pc" id="L55">    protected var android: Boolean = false</span>
+<span class="pc" id="L87">    protected var android: Boolean = false</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>
