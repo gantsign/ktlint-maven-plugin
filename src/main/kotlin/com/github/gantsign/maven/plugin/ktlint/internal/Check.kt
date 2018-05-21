@@ -19,7 +19,7 @@
  */
 package com.github.gantsign.maven.plugin.ktlint.internal
 
-import com.github.gantsign.maven.plugin.ktlint.MavenReporterProvider
+import com.github.gantsign.maven.plugin.ktlint.MavenLogReporterProvider
 import com.github.gantsign.maven.plugin.ktlint.ReporterConfig
 import com.github.shyiko.ktlint.core.KtLint
 import com.github.shyiko.ktlint.core.LintError
@@ -109,7 +109,7 @@ internal class Check(
                 } else System.out
 
             val reporter =
-                if (reporterProvider is MavenReporterProvider)
+                if (reporterProvider is MavenLogReporterProvider)
                     reporterProvider.get(log, config)
                 else reporterProvider.get(stream, config)
 

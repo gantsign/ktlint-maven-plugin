@@ -27,7 +27,7 @@ import java.io.File
 import java.util.ArrayList
 import java.util.concurrent.ConcurrentHashMap
 
-internal class MavenReporter(
+internal class MavenLogReporter(
     val log: Log,
     val verbose: Boolean,
     val groupByFile: Boolean,
