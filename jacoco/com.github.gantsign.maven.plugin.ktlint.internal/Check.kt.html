@@ -19,7 +19,7 @@
  */
 package com.github.gantsign.maven.plugin.ktlint.internal
 
-import com.github.gantsign.maven.plugin.ktlint.MavenReporterProvider
+import com.github.gantsign.maven.plugin.ktlint.MavenLogReporterProvider
 import com.github.gantsign.maven.plugin.ktlint.ReporterConfig
 import com.github.shyiko.ktlint.core.KtLint
 import com.github.shyiko.ktlint.core.LintError
@@ -109,7 +109,7 @@ import java.util.ServiceLoader
 <span class="fc" id="L109">                } else System.out</span>
 
 <span class="fc" id="L111">            val reporter =</span>
-<span class="fc bfc" id="L112" title="All 2 branches covered.">                if (reporterProvider is MavenReporterProvider)</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">                if (reporterProvider is MavenLogReporterProvider)</span>
 <span class="fc" id="L113">                    reporterProvider.get(log, config)</span>
 <span class="fc" id="L114">                else reporterProvider.get(stream, config)</span>
 

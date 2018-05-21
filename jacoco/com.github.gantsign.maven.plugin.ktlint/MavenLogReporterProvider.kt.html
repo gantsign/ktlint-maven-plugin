@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MavenReporterProvider.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Maven ktlint Plugin</a> &gt; <a href="index.source.html" class="el_package">com.github.gantsign.maven.plugin.ktlint</a> &gt; <span class="el_source">MavenReporterProvider.kt</span></div><h1>MavenReporterProvider.kt</h1><pre class="source lang-java linenums">/*-
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MavenLogReporterProvider.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Maven ktlint Plugin</a> &gt; <a href="index.source.html" class="el_package">com.github.gantsign.maven.plugin.ktlint</a> &gt; <span class="el_source">MavenLogReporterProvider.kt</span></div><h1>MavenLogReporterProvider.kt</h1><pre class="source lang-java linenums">/*-
  * #%L
  * ktlint-maven-plugin
  * %%
@@ -19,21 +19,21 @@
  */
 package com.github.gantsign.maven.plugin.ktlint
 
-import com.github.gantsign.maven.plugin.ktlint.internal.MavenReporter
+import com.github.gantsign.maven.plugin.ktlint.internal.MavenLogReporter
 import com.github.shyiko.ktlint.core.Reporter
 import com.github.shyiko.ktlint.core.ReporterProvider
 import org.apache.maven.plugin.logging.Log
 import java.io.PrintStream
 
-<span class="fc" id="L28">class MavenReporterProvider : ReporterProvider {</span>
+<span class="fc" id="L28">class MavenLogReporterProvider : ReporterProvider {</span>
 
 <span class="fc" id="L30">    override val id: String = &quot;maven&quot;</span>
 
     override fun get(out: PrintStream, opt: Map&lt;String, String&gt;): Reporter =
-<span class="nc" id="L33">        throw UnsupportedOperationException(&quot;Use MavenReporterProvider.get(Log, Map&lt;String, String&gt;) instead.&quot;)</span>
+<span class="nc" id="L33">        throw UnsupportedOperationException(&quot;Use MavenLogReporterProvider.get(Log, Map&lt;String, String&gt;) instead.&quot;)</span>
 
     fun get(log: Log, opt: Map&lt;String, String&gt;): Reporter =
-<span class="fc" id="L36">        MavenReporter(</span>
+<span class="fc" id="L36">        MavenLogReporter(</span>
 <span class="fc" id="L37">            log = log,</span>
 <span class="fc" id="L38">            verbose = opt[&quot;verbose&quot;].emptyOrTrue(),</span>
 <span class="fc" id="L39">            groupByFile = opt[&quot;group_by_file&quot;].emptyOrTrue(),</span>
