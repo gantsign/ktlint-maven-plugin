@@ -19,21 +19,21 @@
  */
 package com.github.gantsign.maven.plugin.ktlint
 
-import com.github.gantsign.maven.plugin.ktlint.internal.MavenReporter
+import com.github.gantsign.maven.plugin.ktlint.internal.MavenLogReporter
 import com.github.shyiko.ktlint.core.Reporter
 import com.github.shyiko.ktlint.core.ReporterProvider
 import org.apache.maven.plugin.logging.Log
 import java.io.PrintStream
 
-class MavenReporterProvider : ReporterProvider {
+class MavenLogReporterProvider : ReporterProvider {
 
     override val id: String = "maven"
 
     override fun get(out: PrintStream, opt: Map<String, String>): Reporter =
-        throw UnsupportedOperationException("Use MavenReporterProvider.get(Log, Map<String, String>) instead.")
+        throw UnsupportedOperationException("Use MavenLogReporterProvider.get(Log, Map<String, String>) instead.")
 
     fun get(log: Log, opt: Map<String, String>): Reporter =
-        MavenReporter(
+        MavenLogReporter(
             log = log,
             verbose = opt["verbose"].emptyOrTrue(),
             groupByFile = opt["group_by_file"].emptyOrTrue(),

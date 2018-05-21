@@ -1,1 +1,1 @@
-com.github.gantsign.maven.plugin.ktlint.MavenReporterProvider
+com.github.gantsign.maven.plugin.ktlint.MavenLogReporterProvider
