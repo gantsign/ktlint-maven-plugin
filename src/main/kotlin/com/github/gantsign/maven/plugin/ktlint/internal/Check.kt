@@ -47,7 +47,7 @@ internal class Check(
     private val reporterConfig: Set<ReporterConfig>,
     private val verbose: Boolean,
     private val failOnViolation: Boolean
-) : LintBase(log, basedir, android) {
+) : AbstractLintSupport(log, basedir, android) {
 
     private val reporter: Reporter by lazy {
         data class ReporterTemplate(

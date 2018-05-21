@@ -36,7 +36,7 @@ internal class Format(
     private val includes: Set<String>,
     private val excludes: Set<String>,
     android: Boolean
-) : LintBase(log, basedir, android) {
+) : AbstractLintSupport(log, basedir, android) {
 
     operator fun invoke() {
 
