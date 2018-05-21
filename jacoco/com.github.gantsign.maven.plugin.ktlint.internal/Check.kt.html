@@ -47,7 +47,7 @@ import java.util.ServiceLoader
     private val reporterConfig: Set&lt;ReporterConfig&gt;,
     private val verbose: Boolean,
     private val failOnViolation: Boolean
-<span class="fc" id="L50">) : LintBase(log, basedir, android) {</span>
+<span class="fc" id="L50">) : AbstractLintSupport(log, basedir, android) {</span>
 
 <span class="fc" id="L52">    private val reporter: Reporter by lazy {</span>
 <span class="fc" id="L53">        data class ReporterTemplate(</span>

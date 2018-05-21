@@ -36,7 +36,7 @@ import java.nio.charset.Charset
     private val includes: Set&lt;String&gt;,
     private val excludes: Set&lt;String&gt;,
     android: Boolean
-<span class="fc" id="L39">) : LintBase(log, basedir, android) {</span>
+<span class="fc" id="L39">) : AbstractLintSupport(log, basedir, android) {</span>
 
     operator fun invoke() {
 
