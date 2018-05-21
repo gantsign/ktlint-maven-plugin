@@ -27,7 +27,7 @@ import java.io.File
 import java.util.Comparator.comparingInt
 import java.util.ServiceLoader
 
-internal abstract class LintBase(
+internal abstract class AbstractLintSupport(
     protected val log: Log,
     protected val basedir: File,
     private val android: Boolean
