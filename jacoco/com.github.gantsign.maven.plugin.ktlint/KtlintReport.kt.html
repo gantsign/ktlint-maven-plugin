@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>KtlintReport.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Maven ktlint Plugin</a> &gt; <a href="index.source.html" class="el_package">com.github.gantsign.maven.plugin.ktlint</a> &gt; <span class="el_source">KtlintReport.kt</span></div><h1>KtlintReport.kt</h1><pre class="source lang-java linenums">/*-
+ * #%L
+ * ktlint-maven-plugin
+ * %%
+ * Copyright (C) 2018 GantSign Ltd.
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+package com.github.gantsign.maven.plugin.ktlint
+
+import com.github.gantsign.maven.plugin.ktlint.internal.KtlintReportGenerator
+import com.github.gantsign.maven.plugin.ktlint.internal.Report
+import com.github.gantsign.maven.plugin.ktlint.internal.get
+import org.apache.maven.plugins.annotations.LifecyclePhase
+import org.apache.maven.plugins.annotations.Mojo
+import org.apache.maven.plugins.annotations.Parameter
+import org.apache.maven.plugins.annotations.ResolutionScope
+import org.apache.maven.reporting.AbstractMavenReport
+import java.io.File
+import java.nio.charset.Charset
+import java.nio.charset.StandardCharsets.UTF_8
+import java.util.Locale
+import java.util.ResourceBundle
+
+/**
+ * A reporting task that performs `ktlint` analysis and generates a HTML report on any violations that `ktlint` finds.
+ */
+@Mojo(
+    name = &quot;ktlint&quot;,
+    defaultPhase = LifecyclePhase.VERIFY,
+    requiresDependencyResolution = ResolutionScope.TEST,
+    requiresDependencyCollection = ResolutionScope.TEST,
+    requiresProject = true
+)
+<span class="fc" id="L46">class KtlintReport : AbstractMavenReport() {</span>
+
+    @Parameter(defaultValue = &quot;\${project.basedir}&quot;, readonly = true, required = true)
+    private lateinit var basedir: File
+
+    @Parameter(defaultValue = &quot;\${project.compileSourceRoots}&quot;, readonly = true, required = true)
+    private lateinit var compileSourceRoots: List&lt;String&gt;
+
+    @Parameter(
+        defaultValue = &quot;\${project.testCompileSourceRoots}&quot;,
+        readonly = true,
+        required = true
+    )
+    private lateinit var testCompileSourceRoots: List&lt;String&gt;
+
+    /**
+     * Include the production source roots.
+     */
+    @Parameter(property = &quot;ktlint.includeSourceRoots&quot;, defaultValue = &quot;true&quot;, required = true)
+<span class="fc" id="L65">    private var includeSourceRoots = true</span>
+
+    /**
+     * Include the test source roots.
+     */
+    @Parameter(property = &quot;ktlint.includeTestSourceRoots&quot;, defaultValue = &quot;true&quot;, required = true)
+<span class="fc" id="L71">    private var includeTestSourceRoots = true</span>
+
+    private val sourceRoots: List&lt;String&gt;
+        get() {
+<span class="fc" id="L75">            var sourceRoots = emptyList&lt;String&gt;()</span>
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">            if (includeSourceRoots) {</span>
+<span class="pc bpc" id="L77" title="1 of 2 branches missed.">                sourceRoots += compileSourceRoots</span>
+            }
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">            if (includeTestSourceRoots) {</span>
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">                sourceRoots += testCompileSourceRoots</span>
+            }
+<span class="fc" id="L82">            return sourceRoots</span>
+        }
+
+    /**
+     * File file encoding of the Kotlin source files.
+     */
+    @Parameter(property = &quot;encoding&quot;, defaultValue = &quot;\${project.build.sourceEncoding}&quot;)
+    private val encoding: String? = null
+
+    /**
+     * A list of inclusion filters for the source files to be processed.
+     */
+    @Parameter
+    private var includes: Set&lt;String&gt;? = null
+
+    /**
+     * A list of exclusion filters for the source files to be processed.
+     */
+    @Parameter
+    private var excludes: Set&lt;String&gt;? = null
+
+    /**
+     * Enable Android Kotlin Style Guide compatibility.
+     */
+    @Parameter(property = &quot;ktlint.android&quot;, defaultValue = &quot;false&quot;, required = true)
+    private var android: Boolean = false
+
+    /**
+     * A set of reporters to output the results to.
+     */
+    @Parameter
+    private var reporters: Set&lt;ReporterConfig&gt;? = null
+
+    /**
+     * Show error codes.
+     */
+    @Parameter(property = &quot;ktlint.verbose&quot;, defaultValue = &quot;false&quot;, required = true)
+    private var verbose: Boolean = false
+
+    /**
+     * Skips and code style checks.
+     */
+    @Parameter(property = &quot;ktlint.skip&quot;, defaultValue = &quot;false&quot;, required = true)
+    private var skip: Boolean = false
+
+    private fun getBundle(locale: Locale): ResourceBundle {
+<span class="fc" id="L128">        return ResourceBundle.getBundle(</span>
+<span class="fc" id="L129">            &quot;ktlint-report&quot;,</span>
+<span class="fc" id="L130">            locale,</span>
+<span class="fc" id="L131">            AbstractMavenReport::class.java.classLoader</span>
+        )
+    }
+
+    override fun getName(locale: Locale): String =
+<span class="nc" id="L136">        getBundle(locale)[&quot;report.ktlint.name&quot;]</span>
+
+    override fun getDescription(locale: Locale): String =
+<span class="nc" id="L139">        getBundle(locale)[&quot;report.ktlint.description&quot;]</span>
+
+<span class="fc" id="L141">    override fun getOutputName(): String = &quot;ktlint&quot;</span>
+
+    override fun canGenerateReport(): Boolean = when {
+<span class="fc bfc" id="L144" title="All 2 branches covered.">        skip -&gt; false</span>
+<span class="fc bfc" id="L145" title="All 2 branches covered.">        !sourceRoots.asSequence().map(::File).any { it.isDirectory } -&gt; false</span>
+<span class="fc" id="L146">        else -&gt; true</span>
+<span class="fc" id="L147">    }</span>
+
+    override fun executeReport(locale: Locale) {
+<span class="fc" id="L150">        val results = Report(</span>
+<span class="fc" id="L151">            log = log,</span>
+<span class="pc bpc" id="L152" title="1 of 2 branches missed.">            basedir = basedir,</span>
+<span class="fc" id="L153">            sourceRoots = sourceRoots.asSequence().map(::File).toSet(),</span>
+<span class="pc bpc" id="L154" title="5 of 10 branches missed.">            charset = encoding?.trim()?.takeUnless(String::isEmpty)</span>
+<span class="pc bpc" id="L155" title="2 of 4 branches missed.">                ?.let { Charset.forName(it) }</span>
+<span class="nc" id="L156">                ?: UTF_8,</span>
+<span class="pc bpc" id="L157" title="1 of 2 branches missed.">            includes = includes ?: emptySet(),</span>
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">            excludes = excludes ?: emptySet(),</span>
+<span class="fc" id="L159">            android = android,</span>
+<span class="pc bpc" id="L160" title="1 of 2 branches missed.">            reporterConfig = reporters ?: emptySet(),</span>
+<span class="fc" id="L161">            verbose = verbose</span>
+        )()
+<span class="fc" id="L163">        KtlintReportGenerator(sink, getBundle(locale)).generatorReport(results)</span>
+<span class="fc" id="L164">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>
