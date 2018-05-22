@@ -20,12 +20,12 @@
 package com.github.gantsign.maven.plugin.ktlint.internal
 
 import com.github.gantsign.maven.plugin.ktlint.ReporterConfig
-import org.apache.maven.plugin.MojoFailureException
+import com.github.shyiko.ktlint.core.Reporter
 import org.apache.maven.plugin.logging.Log
 import java.io.File
 import java.nio.charset.Charset
 
-internal class Check(
+internal class Report(
     log: Log,
     basedir: File,
     sourceRoots: Set<File>,
@@ -34,8 +34,7 @@ internal class Check(
     excludes: Set<String>,
     android: Boolean,
     reporterConfig: Set<ReporterConfig>,
-    verbose: Boolean,
-    private val failOnViolation: Boolean
+    verbose: Boolean
 ) : AbstractCheckSupport(
     log,
     basedir,
@@ -44,27 +43,15 @@ internal class Check(
     includes,
     excludes,
     android,
-    addMavenReporter(reporterConfig),
+    reporterConfig,
     verbose
 ) {
-    operator fun invoke() {
-        val reporter = reporter
+    operator fun invoke(): CheckResults {
+        val modelReporter = ModelReporter()
+        val reporter = Reporter.from(reporter, modelReporter)
 
-        val hasErrors = hasErrors(reporter)
-        if (hasErrors && failOnViolation) {
-            throw MojoFailureException("Kotlin source failed ktlint check.")
-        }
-    }
+        hasErrors(reporter)
 
-    companion object {
-
-        @JvmStatic
-        fun addMavenReporter(reporterConfig: Set<ReporterConfig>): Set<ReporterConfig> {
-            return if (reporterConfig.any { it.name == MavenLogReporter.NAME }) {
-                reporterConfig
-            } else {
-                reporterConfig + ReporterConfig(MavenLogReporter.NAME)
-            }
-        }
+        return CheckResults(modelReporter.fileCount, modelReporter.errors)
     }
 }

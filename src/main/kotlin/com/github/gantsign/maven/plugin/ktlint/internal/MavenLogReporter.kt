@@ -91,4 +91,9 @@ internal class MavenLogReporter(
 
     private fun String.name(): String =
         substringAfterLast(File.separator)
+
+    companion object {
+        @JvmStatic
+        val NAME = "maven"
+    }
 }

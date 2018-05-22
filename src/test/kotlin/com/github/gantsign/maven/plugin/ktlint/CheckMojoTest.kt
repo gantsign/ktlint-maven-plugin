@@ -215,6 +215,11 @@ class CheckMojoTest {
         Assertions.assertThat(checkMojo).isNotNull
         checkMojo.execute()
 
+        verify(log).debug("Discovered reporter 'maven'")
+        verify(log).debug("Discovered reporter 'plain'")
+        verify(log).debug("Discovered reporter 'json'")
+        verify(log).debug("Discovered reporter 'checkstyle'")
+        verify(log).isDebugEnabled
         verify(log).warn("Source root doesn't exist: src/main/kotlin")
         verify(log).warn("Source root doesn't exist: src/test/kotlin")
         verifyNoMoreInteractions(log)

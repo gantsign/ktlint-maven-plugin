@@ -488,7 +488,7 @@
     </inspection_tool>
     <inspection_tool class="ProblematicVarargsMethodOverride" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="PropertyName" enabled="true" level="ERROR" enabled_by_default="true">
-      <option name="namePattern" value="[a-z]([a-z0-9]|[A-Z](?![A-Z]{3}))*(?&lt;![A-Z]{3})" />
+      <option name="namePattern" value="_?[a-z]([a-z0-9]|[A-Z](?![A-Z]{3}))*(?&lt;![A-Z]{3})" />
     </inspection_tool>
     <inspection_tool class="ProtectedInFinal" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="ProtectedMemberInFinalClass" enabled="true" level="ERROR" enabled_by_default="true" />
