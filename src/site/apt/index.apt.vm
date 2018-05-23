@@ -33,10 +33,13 @@ ${project.name}
 * Goals Overview
 
   * {{{./format-mojo.html}ktlint:format}} format your Kotlin sources
-    using `ktlint`.
+    using ktlint.
 
   * {{{./check-mojo.html}ktlint:check}} check your Kotlin sources for code style
-    violations using `ktlint`.
+    violations using ktlint.
+
+  * {{{./ktlint-mojo.html}ktlint:ktlint}} generate project report of code style
+    violations using ktlint.
 
   []
 
