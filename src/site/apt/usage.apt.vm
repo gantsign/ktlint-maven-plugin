@@ -142,3 +142,88 @@ mvn ${project.groupId}:${project.artifactId}:${project.version}:lint
   </plugins>
 </reporting>
 +----------+
+
+* Using ktlint reporters as part of the build
+
+  As well as Maven project reports that are part of the Maven site (see above)
+  this plugin also supports ktlint reporters:
+
++----------+
+<build>
+  <plugins>
+    ...
+    <plugin>
+      <groupId>com.github.gantsign.maven</groupId>
+      <artifactId>ktlint-maven-plugin</artifactId>
+      <version>${project.version}</version>
+      <executions>
+        <execution>
+          <id>reporter</id>
+          <goals>
+            <goal>check</goal>
+          </goals>
+          <configuration>
+            <failOnViolation>false</failOnViolation>
+            <reporters>
+              <reporter>
+                <name>plain</name>
+                <output>\${project.build.directory}/ktlint.txt</output>
+                <properties>
+                  <property>
+                    <name>group_by_file</name>
+                    <value>true</value>
+                  </property>
+                </properties>
+              </reporter>
+            </reporters>
+          </configuration>
+        </execution>
+      </executions>
+    </plugin>
+    ...
+  </plugins>
+</build>
++----------+
+
+  The built in reporters are <<<plain>>>, <<<json>>> and <<<checkstyle>>>. You
+  can also provide a customer reporter (see {{https://github.com/shyiko/ktlint
+  for details}}); to use a custom reporter it needs to be added as a Maven
+  dependency to the Maven plugin e.g.:
+
++----------+
+<build>
+  <plugins>
+    ...
+    <plugin>
+      <groupId>com.github.gantsign.maven</groupId>
+      <artifactId>ktlint-maven-plugin</artifactId>
+      <version>${project.version}</version>
+      <executions>
+        <execution>
+          <id>check</id>
+          <goals>
+            <goal>check</goal>
+          </goals>
+          <configuration>
+            <failOnViolation>false</failOnViolation>
+            <reporters>
+              <reporter>
+                <name>my-custom-reporter</name>
+                <output>\${project.build.directory}/ktlint.rpt</output>
+              </reporter>
+            </reporters>
+          </configuration>
+        </execution>
+      </executions>
+      <dependencies>
+        <dependency>
+          <groupId>com.example</groupId>
+          <artifactId>my-custom-reporter</artifactId>
+          <version>1.0</version>
+        </dependency>
+      </dependencies>
+    </plugin>
+    ...
+  </plugins>
+</build>
++----------+
