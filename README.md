@@ -1,4 +1,4 @@
-# Maven ktlint Plugin
+# ktlint Maven Plugin
 
 [![Build Status](https://travis-ci.org/gantsign/ktlint-maven-plugin.svg?branch=master)](https://travis-ci.org/gantsign/ktlint-maven-plugin)
 
