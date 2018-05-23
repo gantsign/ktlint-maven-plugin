@@ -56,7 +56,7 @@ Usage
 </build>
 +----------+
 
-* Formatting
+* Formatting as part of the build
 
   If you just want ktlint to automatically fix what it can, add the following
   plugin configuration to your POM.
