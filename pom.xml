@@ -33,7 +33,7 @@
 
   <packaging>maven-plugin</packaging>
 
-  <name>Maven ktlint Plugin</name>
+  <name>ktlint Maven Plugin</name>
   <description>Maven plugin for the ktlint Kotlin linter.</description>
 
   <prerequisites>

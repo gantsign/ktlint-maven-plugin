@@ -50,7 +50,7 @@
   </custom>
 
   <bannerLeft>
-    <name>Maven ktlint Plugin</name>
+    <name>ktlint Maven Plugin</name>
     <href>index.html</href>
   </bannerLeft>
 
