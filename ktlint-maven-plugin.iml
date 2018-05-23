@@ -33,7 +33,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Maven: com.github.gantsign.maven.doxia:doxia-sink-api-ktx:0.5.6" level="project" />
+    <orderEntry type="library" name="Maven: com.github.gantsign.maven.doxia:doxia-sink-api-ktx:0.5.7" level="project" />
     <orderEntry type="library" name="Maven: org.apache.maven.doxia:doxia-core:1.8" level="project" />
     <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpclient:4.0.2" level="project" />
     <orderEntry type="library" name="Maven: commons-logging:commons-logging:1.2" level="project" />
