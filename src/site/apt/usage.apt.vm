@@ -58,7 +58,7 @@ Usage
 
 * Formatting
 
-  If you just want `ktlint` to automatically fix what it can, add the following
+  If you just want ktlint to automatically fix what it can, add the following
   plugin configuration to your POM.
 
 +----------+
@@ -122,4 +122,23 @@ mvn ${project.groupId}:${project.artifactId}:${project.version}:format
 
 +----------+
 mvn ${project.groupId}:${project.artifactId}:${project.version}:lint
++----------+
+
+* Generate ktlint report as part of the project reports
+
+  To generate the ktlint report as part of the project reports, add the ktlint
+  plugin in the <<<\<reporting\>>>> section of your POM.
+
++----------+
+<reporting>
+  <plugins>
+    ...
+    <plugin>
+      <groupId>com.github.gantsign.maven</groupId>
+      <artifactId>ktlint-maven-plugin</artifactId>
+      <version>${project.version}</version>
+    </plugin>
+    ...
+  </plugins>
+</reporting>
 +----------+
