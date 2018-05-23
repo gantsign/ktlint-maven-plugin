@@ -4,17 +4,23 @@
  * %%
  * Copyright (C) 2018 GantSign Ltd.
  * %%
- * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the &quot;Software&quot;), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
  * #L%
  */
 package com.github.gantsign.maven.plugin.ktlint
@@ -38,7 +44,7 @@ import java.nio.charset.StandardCharsets.UTF_8
     requiresDependencyCollection = ResolutionScope.TEST,
     requiresProject = true
 )
-<span class="fc" id="L41">class FormatMojo : AbstractBaseMojo() {</span>
+<span class="fc" id="L47">class FormatMojo : AbstractBaseMojo() {</span>
 
     /**
      * Skips automatic code style fixes.
@@ -47,20 +53,20 @@ import java.nio.charset.StandardCharsets.UTF_8
     private var skip: Boolean = false
 
     override fun execute() {
-<span class="fc bfc" id="L50" title="All 2 branches covered.">        if (skip) {</span>
-<span class="fc" id="L51">            return</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">        if (skip) {</span>
+<span class="fc" id="L57">            return</span>
         }
-<span class="fc" id="L53">        Format(</span>
-<span class="fc" id="L54">            log = log,</span>
-<span class="fc" id="L55">            basedir = basedir,</span>
-<span class="fc" id="L56">            sourceRoots = sourceRoots.asSequence().map(::File).toSet(),</span>
-<span class="pc bpc" id="L57" title="5 of 10 branches missed.">            charset = encoding?.trim()?.takeUnless(String::isEmpty)</span>
-<span class="pc bpc" id="L58" title="1 of 4 branches missed.">                ?.let { Charset.forName(it) }</span>
-<span class="fc" id="L59">                ?: UTF_8,</span>
-<span class="fc bfc" id="L60" title="All 2 branches covered.">            includes = includes ?: emptySet(),</span>
-<span class="pc bpc" id="L61" title="1 of 2 branches missed.">            excludes = excludes ?: emptySet(),</span>
-<span class="fc" id="L62">            android = android</span>
+<span class="fc" id="L59">        Format(</span>
+<span class="fc" id="L60">            log = log,</span>
+<span class="fc" id="L61">            basedir = basedir,</span>
+<span class="fc" id="L62">            sourceRoots = sourceRoots.asSequence().map(::File).toSet(),</span>
+<span class="pc bpc" id="L63" title="5 of 10 branches missed.">            charset = encoding?.trim()?.takeUnless(String::isEmpty)</span>
+<span class="pc bpc" id="L64" title="1 of 4 branches missed.">                ?.let { Charset.forName(it) }</span>
+<span class="fc" id="L65">                ?: UTF_8,</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">            includes = includes ?: emptySet(),</span>
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">            excludes = excludes ?: emptySet(),</span>
+<span class="fc" id="L68">            android = android</span>
         )()
-<span class="fc" id="L64">    }</span>
+<span class="fc" id="L70">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

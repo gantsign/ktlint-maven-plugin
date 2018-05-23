@@ -4,17 +4,23 @@
  * %%
  * Copyright (C) 2018 GantSign Ltd.
  * %%
- * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the &quot;Software&quot;), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
  * #L%
  */
 package com.github.gantsign.maven.plugin.ktlint
@@ -25,21 +31,21 @@ import com.github.shyiko.ktlint.core.ReporterProvider
 import org.apache.maven.plugin.logging.Log
 import java.io.PrintStream
 
-<span class="fc" id="L28">class MavenLogReporterProvider : ReporterProvider {</span>
+<span class="fc" id="L34">class MavenLogReporterProvider : ReporterProvider {</span>
 
-<span class="fc" id="L30">    override val id: String = &quot;maven&quot;</span>
+<span class="fc" id="L36">    override val id: String = &quot;maven&quot;</span>
 
     override fun get(out: PrintStream, opt: Map&lt;String, String&gt;): Reporter =
-<span class="nc" id="L33">        throw UnsupportedOperationException(&quot;Use MavenLogReporterProvider.get(Log, Map&lt;String, String&gt;) instead.&quot;)</span>
+<span class="nc" id="L39">        throw UnsupportedOperationException(&quot;Use MavenLogReporterProvider.get(Log, Map&lt;String, String&gt;) instead.&quot;)</span>
 
     fun get(log: Log, opt: Map&lt;String, String&gt;): Reporter =
-<span class="fc" id="L36">        MavenLogReporter(</span>
-<span class="fc" id="L37">            log = log,</span>
-<span class="fc" id="L38">            verbose = opt[&quot;verbose&quot;].emptyOrTrue(),</span>
-<span class="fc" id="L39">            groupByFile = opt[&quot;group_by_file&quot;].emptyOrTrue(),</span>
-<span class="fc" id="L40">            pad = opt[&quot;pad&quot;].emptyOrTrue()</span>
-<span class="fc" id="L41">        )</span>
+<span class="fc" id="L42">        MavenLogReporter(</span>
+<span class="fc" id="L43">            log = log,</span>
+<span class="fc" id="L44">            verbose = opt[&quot;verbose&quot;].emptyOrTrue(),</span>
+<span class="fc" id="L45">            groupByFile = opt[&quot;group_by_file&quot;].emptyOrTrue(),</span>
+<span class="fc" id="L46">            pad = opt[&quot;pad&quot;].emptyOrTrue()</span>
+<span class="fc" id="L47">        )</span>
 
-<span class="pc bpc" id="L43" title="1 of 4 branches missed.">    private fun String?.emptyOrTrue() = this == &quot;&quot; || this == &quot;true&quot;</span>
+<span class="pc bpc" id="L49" title="1 of 4 branches missed.">    private fun String?.emptyOrTrue() = this == &quot;&quot; || this == &quot;true&quot;</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

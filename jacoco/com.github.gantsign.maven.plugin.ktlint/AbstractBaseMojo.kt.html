@@ -4,17 +4,23 @@
  * %%
  * Copyright (C) 2018 GantSign Ltd.
  * %%
- * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the &quot;Software&quot;), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
  * #L%
  */
 package com.github.gantsign.maven.plugin.ktlint
@@ -23,10 +29,10 @@ import org.apache.maven.plugin.AbstractMojo
 import org.apache.maven.plugins.annotations.Parameter
 import java.io.File
 
-<span class="fc" id="L26">abstract class AbstractBaseMojo : AbstractMojo() {</span>
+<span class="fc" id="L32">abstract class AbstractBaseMojo : AbstractMojo() {</span>
 
     @Parameter(defaultValue = &quot;\${project.basedir}&quot;, readonly = true, required = true)
-<span class="pc bpc" id="L29" title="1 of 2 branches missed.">    protected lateinit var basedir: File</span>
+<span class="pc bpc" id="L35" title="1 of 2 branches missed.">    protected lateinit var basedir: File</span>
 
     @Parameter(defaultValue = &quot;\${project.compileSourceRoots}&quot;, readonly = true, required = true)
     private lateinit var compileSourceRoots: List&lt;String&gt;
@@ -42,48 +48,48 @@ import java.io.File
      * Include the production source roots.
      */
     @Parameter(property = &quot;ktlint.includeSourceRoots&quot;, defaultValue = &quot;true&quot;, required = true)
-<span class="fc" id="L45">    private var includeSourceRoots = true</span>
+<span class="fc" id="L51">    private var includeSourceRoots = true</span>
 
     /**
      * Include the test source roots.
      */
     @Parameter(property = &quot;ktlint.includeTestSourceRoots&quot;, defaultValue = &quot;true&quot;, required = true)
-<span class="fc" id="L51">    private var includeTestSourceRoots = true</span>
+<span class="fc" id="L57">    private var includeTestSourceRoots = true</span>
 
     protected val sourceRoots: List&lt;String&gt;
         get() {
-<span class="fc" id="L55">            var sourceRoots = emptyList&lt;String&gt;()</span>
-<span class="pc bpc" id="L56" title="1 of 2 branches missed.">            if (includeSourceRoots) {</span>
-<span class="pc bpc" id="L57" title="1 of 2 branches missed.">                sourceRoots += compileSourceRoots</span>
+<span class="fc" id="L61">            var sourceRoots = emptyList&lt;String&gt;()</span>
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">            if (includeSourceRoots) {</span>
+<span class="pc bpc" id="L63" title="1 of 2 branches missed.">                sourceRoots += compileSourceRoots</span>
             }
-<span class="pc bpc" id="L59" title="1 of 2 branches missed.">            if (includeTestSourceRoots) {</span>
-<span class="pc bpc" id="L60" title="1 of 2 branches missed.">                sourceRoots += testCompileSourceRoots</span>
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">            if (includeTestSourceRoots) {</span>
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">                sourceRoots += testCompileSourceRoots</span>
             }
-<span class="fc" id="L62">            return sourceRoots</span>
+<span class="fc" id="L68">            return sourceRoots</span>
         }
 
     /**
      * File file encoding of the Kotlin source files.
      */
     @Parameter(property = &quot;encoding&quot;, defaultValue = &quot;\${project.build.sourceEncoding}&quot;)
-<span class="fc" id="L69">    protected val encoding: String? = null</span>
+<span class="fc" id="L75">    protected val encoding: String? = null</span>
 
     /**
      * A list of inclusion filters for the source files to be processed.
      */
     @Parameter
-<span class="pc" id="L75">    protected var includes: Set&lt;String&gt;? = null</span>
+<span class="pc" id="L81">    protected var includes: Set&lt;String&gt;? = null</span>
 
     /**
      * A list of exclusion filters for the source files to be processed.
      */
     @Parameter
-<span class="pc" id="L81">    protected var excludes: Set&lt;String&gt;? = null</span>
+<span class="pc" id="L87">    protected var excludes: Set&lt;String&gt;? = null</span>
 
     /**
      * Enable Android Kotlin Style Guide compatibility.
      */
     @Parameter(property = &quot;ktlint.android&quot;, defaultValue = &quot;false&quot;, required = true)
-<span class="pc" id="L87">    protected var android: Boolean = false</span>
+<span class="pc" id="L93">    protected var android: Boolean = false</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

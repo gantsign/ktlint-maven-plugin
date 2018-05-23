@@ -4,17 +4,23 @@
  * %%
  * Copyright (C) 2018 GantSign Ltd.
  * %%
- * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the &quot;Software&quot;), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
  * #L%
  */
 package com.github.gantsign.maven.plugin.ktlint.internal
@@ -28,7 +34,7 @@ import org.apache.maven.shared.utils.io.DirectoryScanner
 import java.io.File
 import java.nio.charset.Charset
 
-<span class="fc" id="L31">internal class Format(</span>
+<span class="fc" id="L37">internal class Format(</span>
     log: Log,
     basedir: File,
     private val sourceRoots: Set&lt;File&gt;,
@@ -36,83 +42,83 @@ import java.nio.charset.Charset
     private val includes: Set&lt;String&gt;,
     private val excludes: Set&lt;String&gt;,
     android: Boolean
-<span class="fc" id="L39">) : AbstractLintSupport(log, basedir, android) {</span>
+<span class="fc" id="L45">) : AbstractLintSupport(log, basedir, android) {</span>
 
     operator fun invoke() {
 
-<span class="fc bfc" id="L43" title="All 2 branches covered.">        for (sourceRoot in sourceRoots) {</span>
-<span class="fc bfc" id="L44" title="All 2 branches covered.">            if (!sourceRoot.exists()) {</span>
-<span class="fc" id="L45">                log.warn(&quot;Source root doesn't exist: ${sourceRoot.toRelativeString(basedir)}&quot;)</span>
-<span class="fc" id="L46">                continue</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">        for (sourceRoot in sourceRoots) {</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">            if (!sourceRoot.exists()) {</span>
+<span class="fc" id="L51">                log.warn(&quot;Source root doesn't exist: ${sourceRoot.toRelativeString(basedir)}&quot;)</span>
+<span class="fc" id="L52">                continue</span>
             }
-<span class="pc bpc" id="L48" title="1 of 2 branches missed.">            if (!sourceRoot.isDirectory) {</span>
-<span class="nc" id="L49">                throw MojoFailureException(</span>
-<span class="nc" id="L50">                    &quot;Source root is not a directory: ${sourceRoot.toRelativeString(basedir)}&quot;</span>
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">            if (!sourceRoot.isDirectory) {</span>
+<span class="nc" id="L55">                throw MojoFailureException(</span>
+<span class="nc" id="L56">                    &quot;Source root is not a directory: ${sourceRoot.toRelativeString(basedir)}&quot;</span>
                 )
             }
 
-<span class="fc" id="L54">            val includes =</span>
-<span class="fc bfc" id="L55" title="All 4 branches covered.">                includes.takeUnless(Set&lt;String&gt;::isEmpty)?.toTypedArray() ?: arrayOf(&quot;**/*.kt&quot;)</span>
-<span class="fc" id="L56">            val excludes = excludes.toTypedArray()</span>
+<span class="fc" id="L60">            val includes =</span>
+<span class="fc bfc" id="L61" title="All 4 branches covered.">                includes.takeUnless(Set&lt;String&gt;::isEmpty)?.toTypedArray() ?: arrayOf(&quot;**/*.kt&quot;)</span>
+<span class="fc" id="L62">            val excludes = excludes.toTypedArray()</span>
 
-<span class="fc" id="L58">            val ds = DirectoryScanner().apply {</span>
-<span class="fc" id="L59">                setIncludes(*includes)</span>
-<span class="fc" id="L60">                setExcludes(*excludes)</span>
-<span class="fc" id="L61">                basedir = sourceRoot</span>
-<span class="fc" id="L62">                setCaseSensitive(true)</span>
-<span class="fc" id="L63">            }</span>
-<span class="fc" id="L64">            ds.scan()</span>
+<span class="fc" id="L64">            val ds = DirectoryScanner().apply {</span>
+<span class="fc" id="L65">                setIncludes(*includes)</span>
+<span class="fc" id="L66">                setExcludes(*excludes)</span>
+<span class="fc" id="L67">                basedir = sourceRoot</span>
+<span class="fc" id="L68">                setCaseSensitive(true)</span>
+<span class="fc" id="L69">            }</span>
+<span class="fc" id="L70">            ds.scan()</span>
 
-<span class="fc" id="L66">            val sourceFiles = ds.includedFiles.map { File(sourceRoot, it) }</span>
+<span class="fc" id="L72">            val sourceFiles = ds.includedFiles.map { File(sourceRoot, it) }</span>
 
-<span class="fc" id="L68">            sourceFiles.forEach { file -&gt;</span>
-<span class="fc" id="L69">                val relativePath = file.toRelativeString(basedir)</span>
+<span class="fc" id="L74">            sourceFiles.forEach { file -&gt;</span>
+<span class="fc" id="L75">                val relativePath = file.toRelativeString(basedir)</span>
 
-<span class="fc" id="L71">                log.debug(&quot;checking format: $relativePath&quot;)</span>
+<span class="fc" id="L77">                log.debug(&quot;checking format: $relativePath&quot;)</span>
 
-<span class="fc" id="L73">                val formatFunc =</span>
-<span class="pc bpc" id="L74" title="3 of 7 branches missed.">                    when (file.extension) {</span>
-<span class="fc" id="L75">                        &quot;kt&quot; -&gt; ::formatKt</span>
-<span class="fc" id="L76">                        &quot;kts&quot; -&gt; ::formatKts</span>
+<span class="fc" id="L79">                val formatFunc =</span>
+<span class="pc bpc" id="L80" title="3 of 7 branches missed.">                    when (file.extension) {</span>
+<span class="fc" id="L81">                        &quot;kt&quot; -&gt; ::formatKt</span>
+<span class="fc" id="L82">                        &quot;kts&quot; -&gt; ::formatKts</span>
                         else -&gt; {
-<span class="nc" id="L78">                            log.debug(&quot;ignoring non Kotlin file: $relativePath&quot;)</span>
-<span class="nc" id="L79">                            return@forEach</span>
+<span class="nc" id="L84">                            log.debug(&quot;ignoring non Kotlin file: $relativePath&quot;)</span>
+<span class="nc" id="L85">                            return@forEach</span>
                         }
                     }
 
-<span class="fc" id="L83">                val userData = userData + (&quot;file_path&quot; to relativePath)</span>
+<span class="fc" id="L89">                val userData = userData + (&quot;file_path&quot; to relativePath)</span>
 
-<span class="fc" id="L85">                val sourceText = file.readText(charset)</span>
+<span class="fc" id="L91">                val sourceText = file.readText(charset)</span>
 
-<span class="fc" id="L87">                val formattedText = formatFunc(</span>
-<span class="fc" id="L88">                    sourceText,</span>
-<span class="fc" id="L89">                    ruleSets,</span>
-<span class="fc" id="L90">                    userData,</span>
-<span class="fc" id="L91">                    { (line, col, _, detail), corrected -&gt;</span>
-<span class="fc" id="L92">                        val lintError = &quot;$relativePath:$line:$col: $detail&quot;</span>
-<span class="pc bpc" id="L93" title="1 of 2 branches missed.">                        log.debug(&quot;Format ${if (corrected) &quot;fixed&quot; else &quot;could not fix&quot;} &gt; $lintError&quot;)</span>
-<span class="fc" id="L94">                    }</span>
+<span class="fc" id="L93">                val formattedText = formatFunc(</span>
+<span class="fc" id="L94">                    sourceText,</span>
+<span class="fc" id="L95">                    ruleSets,</span>
+<span class="fc" id="L96">                    userData,</span>
+<span class="fc" id="L97">                    { (line, col, _, detail), corrected -&gt;</span>
+<span class="fc" id="L98">                        val lintError = &quot;$relativePath:$line:$col: $detail&quot;</span>
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">                        log.debug(&quot;Format ${if (corrected) &quot;fixed&quot; else &quot;could not fix&quot;} &gt; $lintError&quot;)</span>
+<span class="fc" id="L100">                    }</span>
                 )
-<span class="pc bpc" id="L96" title="1 of 2 branches missed.">                if (formattedText !== sourceText) {</span>
-<span class="fc" id="L97">                    log.debug(&quot;Format fixed &gt; $relativePath&quot;)</span>
-<span class="fc" id="L98">                    file.writeText(formattedText, charset)</span>
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">                if (formattedText !== sourceText) {</span>
+<span class="fc" id="L103">                    log.debug(&quot;Format fixed &gt; $relativePath&quot;)</span>
+<span class="fc" id="L104">                    file.writeText(formattedText, charset)</span>
                 }
-<span class="fc" id="L100">            }</span>
+<span class="fc" id="L106">            }</span>
         }
-<span class="fc" id="L102">    }</span>
+<span class="fc" id="L108">    }</span>
 
     private fun formatKt(
         sourceText: String,
         ruleSets: List&lt;RuleSet&gt;,
         userData: Map&lt;String, String&gt;,
         onError: (err: LintError, corrected: Boolean) -&gt; Unit
-<span class="fc" id="L109">    ): String = KtLint.format(sourceText, ruleSets, userData, onError)</span>
+<span class="fc" id="L115">    ): String = KtLint.format(sourceText, ruleSets, userData, onError)</span>
 
     private fun formatKts(
         sourceText: String,
         ruleSets: List&lt;RuleSet&gt;,
         userData: Map&lt;String, String&gt;,
         onError: (err: LintError, corrected: Boolean) -&gt; Unit
-<span class="fc" id="L116">    ): String = KtLint.formatScript(sourceText, ruleSets, userData, onError)</span>
+<span class="fc" id="L122">    ): String = KtLint.formatScript(sourceText, ruleSets, userData, onError)</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>
