@@ -34,7 +34,7 @@ ${project.name}
 
   This plugin provides the ability to use
   {{{https://github.com/shyiko/ktlint}ktlint}} to format and check your source
-  code against the `ktlint` anti-bikeshedding code style.
+  code against the ktlint anti-bikeshedding code style.
 
 * Goals Overview
 
