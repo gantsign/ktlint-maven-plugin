@@ -1,6 +1,7 @@
 # ktlint Maven Plugin
 
 [![Build Status](https://travis-ci.org/gantsign/ktlint-maven-plugin.svg?branch=master)](https://travis-ci.org/gantsign/ktlint-maven-plugin)
+[![codecov](https://codecov.io/gh/gantsign/ktlint-maven-plugin/branch/master/graph/badge.svg)](https://codecov.io/gh/gantsign/ktlint-maven-plugin)
 
 This plugin provides the ability to use [ktlint](https://github.com/shyiko/ktlint)
 to format and check your source code against the ktlint anti-bikeshedding code
