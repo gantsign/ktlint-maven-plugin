@@ -26,11 +26,11 @@
 package com.github.gantsign.maven.plugin.ktlint
 
 import com.github.gantsign.maven.plugin.ktlint.internal.Check
+import com.github.gantsign.maven.plugin.ktlint.internal.Sources
 import org.apache.maven.plugins.annotations.LifecyclePhase
 import org.apache.maven.plugins.annotations.Mojo
 import org.apache.maven.plugins.annotations.Parameter
 import org.apache.maven.plugins.annotations.ResolutionScope
-import java.io.File
 import java.nio.charset.Charset
 import java.nio.charset.StandardCharsets.UTF_8
 
@@ -77,12 +77,23 @@ class CheckMojo : AbstractBaseMojo() {
         Check(
             log = log,
             basedir = basedir,
-            sourceRoots = sourceRoots.asSequence().map(::File).toSet(),
+            sources = listOf(
+                Sources(
+                    isIncluded = includeSources,
+                    sourceRoots = sourceRoots,
+                    includes = sourcesIncludes,
+                    excludes = sourcesExcludes
+                ),
+                Sources(
+                    isIncluded = includeTestSources,
+                    sourceRoots = testSourceRoots,
+                    includes = testSourcesIncludes,
+                    excludes = testSourcesExcludes
+                )
+            ),
             charset = encoding?.trim()?.takeUnless(String::isEmpty)
                 ?.let { Charset.forName(it) }
                 ?: UTF_8,
-            includes = includes ?: emptySet(),
-            excludes = excludes ?: emptySet(),
             android = android,
             reporterConfig = reporters ?: emptySet(),
             verbose = verbose,

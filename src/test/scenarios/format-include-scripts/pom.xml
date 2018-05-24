@@ -46,9 +46,9 @@
         <groupId>com.github.gantsign.maven</groupId>
         <artifactId>ktlint-maven-plugin</artifactId>
         <configuration>
-            <includes>
+            <sourcesIncludes>
               <include>**/*.kts</include>
-            </includes>
+            </sourcesIncludes>
         </configuration>
       </plugin>
     </plugins>

@@ -10,10 +10,10 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- *
+ * 
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- *
+ * 
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -25,35 +25,23 @@
  */
 package com.github.gantsign.maven.plugin.ktlint.internal
 
-import com.github.gantsign.maven.plugin.ktlint.ReporterConfig
-import com.github.shyiko.ktlint.core.Reporter
-import org.apache.maven.plugin.logging.Log
 import java.io.File
-import java.nio.charset.Charset
 
-internal class Report(
-    log: Log,
-    basedir: File,
-    sources: List<Sources>,
-    charset: Charset,
-    android: Boolean,
-    reporterConfig: Set<ReporterConfig>,
-    verbose: Boolean
-) : AbstractCheckSupport(
-    log,
-    basedir,
-    sources,
-    charset,
-    android,
-    reporterConfig,
-    verbose
+data class Sources constructor(
+    val isIncluded: Boolean,
+    val sourceRoots: Set<File>,
+    val includes: Set<String>,
+    val excludes: Set<String>
 ) {
-    operator fun invoke(): CheckResults {
-        val modelReporter = ModelReporter()
-        val reporter = Reporter.from(reporter, modelReporter)
-
-        hasErrors(reporter)
-
-        return CheckResults(modelReporter.fileCount, modelReporter.errors)
-    }
+    constructor(
+        isIncluded: Boolean,
+        sourceRoots: Collection<String>?,
+        includes: Collection<String>?,
+        excludes: Collection<String>?
+    ) : this(
+        isIncluded,
+        sourceRoots?.asSequence()?.map(::File)?.toSet() ?: emptySet(),
+        includes?.toSet() ?: emptySet(),
+        excludes?.toSet() ?: emptySet()
+    )
 }
