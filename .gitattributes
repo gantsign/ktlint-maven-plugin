@@ -59,3 +59,4 @@
 *.jpeg binary
 *.gif binary
 *.jar binary
+*.enc binary
