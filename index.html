@@ -53,7 +53,7 @@
                   <li id="publishDate">Last Published: 2018-05-24
                       <span class="divider">|</span>
                    </li>
-                  <li id="projectVersion">Version: 0.9.0-SNAPSHOT
+                  <li id="projectVersion">Version: 0.9.1
                       </li>
                       
               
@@ -88,7 +88,7 @@
         Usage</a>
             </li>
                               <li class="nav-header">Project Documentation</li>
-                                                                                                                                                                                                                                                                                                
+                                                                                                                                                                                                                                                                                                                  
       <li>
   
                           <a href="project-info.html" title="Project Information">
@@ -122,6 +122,13 @@
                           <a href="dependency-management.html" title="Dependency Management">
           <span class="none"></span>
         Dependency Management</a>
+            </li>
+                    
+      <li>
+  
+                          <a href="distribution-management.html" title="Distribution Management">
+          <span class="none"></span>
+        Distribution Management</a>
             </li>
                     
       <li class="active">
@@ -218,6 +225,21 @@
 <div class="section">
 <h3><a name="Usage"></a>Usage</h3>
 <p>General instructions on how to use the ktlint plugin can be found on the <a href="./usage.html">usage page</a>.</p></div>
+<div class="section">
+<h3><a name="Repository"></a>Repository</h3>
+<p>This plugin isn't currently available from Maven Central, you need to add the following to your repository manager or to your Maven POM.</p>
+<div class="source"><pre class="prettyprint">&lt;pluginRepositories&gt;
+  ...
+  &lt;pluginRepository&gt;
+    &lt;snapshots&gt;
+      &lt;enabled&gt;false&lt;/enabled&gt;
+    &lt;/snapshots&gt;
+    &lt;id&gt;bintray-gantsign-maven&lt;/id&gt;
+    &lt;name&gt;bintray&lt;/name&gt;
+    &lt;url&gt;https://dl.bintray.com/gantsign/maven&lt;/url&gt;
+  &lt;/pluginRepository&gt;
+  ...
+&lt;/pluginRepositories&gt;</pre></div></div>
 <div class="section">
 <h3><a name="License"></a>License</h3>
 <p>This software is licensed under the terms in the file named &quot;LICENSE&quot; in the root directory of this project.</p></div>
