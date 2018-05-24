@@ -940,8 +940,9 @@
           <excludes>
             <!-- Exclude generated HelpMojo -->
             <exclude>com/github/gantsign/maven/plugin/ktlint/HelpMojo.*</exclude>
-            <!-- Exclude data class -->
+            <!-- Exclude data classs -->
             <exclude>com/github/gantsign/maven/plugin/ktlint/ReporterConfig.*</exclude>
+            <exclude>com/github/gantsign/maven/plugin/ktlint/internal/Sources*</exclude>
             <!-- Exclude class with just just properties -->
             <exclude>com/github/gantsign/maven/plugin/ktlint/AbstractBaseMojo.*</exclude>
           </excludes>

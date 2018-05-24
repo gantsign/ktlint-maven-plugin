@@ -45,10 +45,8 @@ import java.util.ServiceLoader
 internal abstract class AbstractCheckSupport(
     log: Log,
     basedir: File,
-    private val sourceRoots: Set<File>,
+    private val sources: List<Sources>,
     private val charset: Charset,
-    private val includes: Set<String>,
-    private val excludes: Set<String>,
     android: Boolean,
     private val reporterConfig: Set<ReporterConfig>,
     protected val verbose: Boolean
@@ -133,68 +131,75 @@ internal abstract class AbstractCheckSupport(
 
     protected fun hasErrors(reporter: Reporter): Boolean {
         var hasErrors = false
-        for (sourceRoot in sourceRoots) {
-            if (!sourceRoot.exists()) {
-                log.warn("Source root doesn't exist: ${sourceRoot.toRelativeString(basedir)}")
+        for ((isIncluded, sourceRoots, includes, excludes) in sources) {
+            if (!isIncluded) {
+                log.debug("Source roots not included: $sourceRoots")
                 continue
             }
-            if (!sourceRoot.isDirectory) {
-                throw MojoFailureException(
-                    "Source root is not a directory: ${sourceRoot.toRelativeString(basedir)}"
-                )
-            }
+            for (sourceRoot in sourceRoots) {
+                if (!sourceRoot.exists()) {
+                    log.warn("Source root doesn't exist: ${sourceRoot.toRelativeString(basedir)}")
+                    continue
+                }
+                if (!sourceRoot.isDirectory) {
+                    throw MojoFailureException(
+                        "Source root is not a directory: ${sourceRoot.toRelativeString(basedir)}"
+                    )
+                }
 
-            val includes =
-                includes.takeUnless(Set<String>::isEmpty)?.toTypedArray() ?: arrayOf("**/*.kt")
-            val excludes = excludes.toTypedArray()
+                val includesArray =
+                    includes.takeUnless(Set<String>::isEmpty)?.toTypedArray() ?: arrayOf("**/*.kt")
+                val excludesArray = excludes.toTypedArray()
 
-            val ds = DirectoryScanner().apply {
-                setIncludes(*includes)
-                setExcludes(*excludes)
-                basedir = sourceRoot
-                setCaseSensitive(true)
-            }
-            ds.scan()
+                val ds = DirectoryScanner().apply {
+                    setIncludes(*includesArray)
+                    setExcludes(*excludesArray)
+                    basedir = sourceRoot
+                    setCaseSensitive(true)
+                }
+                ds.scan()
 
-            val sourceFiles = ds.includedFiles.map { File(sourceRoot, it) }
+                val sourceFiles = ds.includedFiles.map { File(sourceRoot, it) }
 
-            sourceFiles.forEach { file ->
-                val relativePath = file.toRelativeString(basedir)
-                reporter.before(relativePath)
+                sourceFiles.forEach { file ->
+                    val relativePath = file.toRelativeString(basedir)
+                    reporter.before(relativePath)
 
-                log.debug("checking: $relativePath")
+                    log.debug("checking: $relativePath")
 
-                val formatFunc =
-                    when (file.extension) {
-                        "kt" -> ::lintKt
-                        "kts" -> ::lintKts
-                        else -> {
-                            log.debug("ignoring non Kotlin file: $relativePath")
-                            return@forEach
+                    val formatFunc =
+                        when (file.extension) {
+                            "kt" -> ::lintKt
+                            "kts" -> ::lintKts
+                            else -> {
+                                log.debug("ignoring non Kotlin file: $relativePath")
+                                return@forEach
+                            }
                         }
-                    }
 
-                val userData = userData + ("file_path" to relativePath)
+                    val userData = userData + ("file_path" to relativePath)
 
-                val sourceText = file.readText(charset)
+                    val sourceText = file.readText(charset)
 
-                formatFunc(
-                    sourceText,
-                    ruleSets,
-                    userData,
-                    { error ->
-                        reporter.onLintError(relativePath, error, false)
+                    formatFunc(
+                        sourceText,
+                        ruleSets,
+                        userData,
+                        { error ->
+                            reporter.onLintError(relativePath, error, false)
 
-                        val lintError = "$relativePath:${error.line}:${error.col}: ${error.detail}"
-                        log.debug("Style error > $lintError")
+                            val lintError =
+                                "$relativePath:${error.line}:${error.col}: ${error.detail}"
+                            log.debug("Style error > $lintError")
 
-                        hasErrors = true
-                    }
-                )
+                            hasErrors = true
+                        }
+                    )
 
-                reporter.after(relativePath)
+                    reporter.after(relativePath)
+                }
+                reporter.afterAll()
             }
-            reporter.afterAll()
         }
         return hasErrors
     }

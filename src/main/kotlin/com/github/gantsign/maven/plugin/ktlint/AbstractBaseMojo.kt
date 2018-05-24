@@ -35,38 +35,26 @@ abstract class AbstractBaseMojo : AbstractMojo() {
     protected lateinit var basedir: File
 
     @Parameter(defaultValue = "\${project.compileSourceRoots}", readonly = true, required = true)
-    private lateinit var compileSourceRoots: List<String>
+    protected lateinit var sourceRoots: List<String>
 
     @Parameter(
         defaultValue = "\${project.testCompileSourceRoots}",
         readonly = true,
         required = true
     )
-    private lateinit var testCompileSourceRoots: List<String>
+    protected lateinit var testSourceRoots: List<String>
 
     /**
      * Include the production source roots.
      */
-    @Parameter(property = "ktlint.includeSourceRoots", defaultValue = "true", required = true)
-    private var includeSourceRoots = true
+    @Parameter(property = "ktlint.includeSources", defaultValue = "true", required = true)
+    protected var includeSources = true
 
     /**
      * Include the test source roots.
      */
-    @Parameter(property = "ktlint.includeTestSourceRoots", defaultValue = "true", required = true)
-    private var includeTestSourceRoots = true
-
-    protected val sourceRoots: List<String>
-        get() {
-            var sourceRoots = emptyList<String>()
-            if (includeSourceRoots) {
-                sourceRoots += compileSourceRoots
-            }
-            if (includeTestSourceRoots) {
-                sourceRoots += testCompileSourceRoots
-            }
-            return sourceRoots
-        }
+    @Parameter(property = "ktlint.includeTestSources", defaultValue = "true", required = true)
+    protected var includeTestSources = true
 
     /**
      * File file encoding of the Kotlin source files.
@@ -75,16 +63,28 @@ abstract class AbstractBaseMojo : AbstractMojo() {
     protected val encoding: String? = null
 
     /**
-     * A list of inclusion filters for the source files to be processed.
+     * A list of inclusion filters for the source files to be processed under the source roots.
      */
     @Parameter
-    protected var includes: Set<String>? = null
+    protected var sourcesIncludes: Set<String>? = null
 
     /**
-     * A list of exclusion filters for the source files to be processed.
+     * A list of exclusion filters for the source files to be processed under the source roots.
      */
     @Parameter
-    protected var excludes: Set<String>? = null
+    protected var sourcesExcludes: Set<String>? = null
+
+    /**
+     * A list of inclusion filters for the source files to be processed under the test source roots.
+     */
+    @Parameter
+    protected var testSourcesIncludes: Set<String>? = null
+
+    /**
+     * A list of exclusion filters for the source files to be processed under the test source roots.
+     */
+    @Parameter
+    protected var testSourcesExcludes: Set<String>? = null
 
     /**
      * Enable Android Kotlin Style Guide compatibility.

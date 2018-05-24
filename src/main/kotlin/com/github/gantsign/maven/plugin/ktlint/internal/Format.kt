@@ -37,71 +37,74 @@ import java.nio.charset.Charset
 internal class Format(
     log: Log,
     basedir: File,
-    private val sourceRoots: Set<File>,
+    private val sources: List<Sources>,
     private val charset: Charset,
-    private val includes: Set<String>,
-    private val excludes: Set<String>,
     android: Boolean
 ) : AbstractLintSupport(log, basedir, android) {
 
     operator fun invoke() {
-
-        for (sourceRoot in sourceRoots) {
-            if (!sourceRoot.exists()) {
-                log.warn("Source root doesn't exist: ${sourceRoot.toRelativeString(basedir)}")
+        for ((isIncluded, sourceRoots, includes, excludes) in sources) {
+            if (!isIncluded) {
+                log.debug("Source roots not included: $sourceRoots")
                 continue
             }
-            if (!sourceRoot.isDirectory) {
-                throw MojoFailureException(
-                    "Source root is not a directory: ${sourceRoot.toRelativeString(basedir)}"
-                )
-            }
+            for (sourceRoot in sourceRoots) {
+                if (!sourceRoot.exists()) {
+                    log.warn("Source root doesn't exist: ${sourceRoot.toRelativeString(basedir)}")
+                    continue
+                }
+                if (!sourceRoot.isDirectory) {
+                    throw MojoFailureException(
+                        "Source root is not a directory: ${sourceRoot.toRelativeString(basedir)}"
+                    )
+                }
 
-            val includes =
-                includes.takeUnless(Set<String>::isEmpty)?.toTypedArray() ?: arrayOf("**/*.kt")
-            val excludes = excludes.toTypedArray()
+                val includesArray =
+                    includes.takeUnless(Set<String>::isEmpty)?.toTypedArray() ?: arrayOf("**/*.kt")
+                val excludesArray = excludes.toTypedArray()
 
-            val ds = DirectoryScanner().apply {
-                setIncludes(*includes)
-                setExcludes(*excludes)
-                basedir = sourceRoot
-                setCaseSensitive(true)
-            }
-            ds.scan()
+                val ds = DirectoryScanner().apply {
+                    setIncludes(*includesArray)
+                    setExcludes(*excludesArray)
+                    basedir = sourceRoot
+                    setCaseSensitive(true)
+                }
+                ds.scan()
 
-            val sourceFiles = ds.includedFiles.map { File(sourceRoot, it) }
+                val sourceFiles = ds.includedFiles.map { File(sourceRoot, it) }
 
-            sourceFiles.forEach { file ->
-                val relativePath = file.toRelativeString(basedir)
+                sourceFiles.forEach { file ->
+                    val relativePath = file.toRelativeString(basedir)
 
-                log.debug("checking format: $relativePath")
+                    log.debug("checking format: $relativePath")
 
-                val formatFunc =
-                    when (file.extension) {
-                        "kt" -> ::formatKt
-                        "kts" -> ::formatKts
-                        else -> {
-                            log.debug("ignoring non Kotlin file: $relativePath")
-                            return@forEach
+                    val formatFunc =
+                        when (file.extension) {
+                            "kt" -> ::formatKt
+                            "kts" -> ::formatKts
+                            else -> {
+                                log.debug("ignoring non Kotlin file: $relativePath")
+                                return@forEach
+                            }
                         }
+
+                    val userData = userData + ("file_path" to relativePath)
+
+                    val sourceText = file.readText(charset)
+
+                    val formattedText = formatFunc(
+                        sourceText,
+                        ruleSets,
+                        userData,
+                        { (line, col, _, detail), corrected ->
+                            val lintError = "$relativePath:$line:$col: $detail"
+                            log.debug("Format ${if (corrected) "fixed" else "could not fix"} > $lintError")
+                        }
+                    )
+                    if (formattedText !== sourceText) {
+                        log.debug("Format fixed > $relativePath")
+                        file.writeText(formattedText, charset)
                     }
-
-                val userData = userData + ("file_path" to relativePath)
-
-                val sourceText = file.readText(charset)
-
-                val formattedText = formatFunc(
-                    sourceText,
-                    ruleSets,
-                    userData,
-                    { (line, col, _, detail), corrected ->
-                        val lintError = "$relativePath:$line:$col: $detail"
-                        log.debug("Format ${if (corrected) "fixed" else "could not fix"} > $lintError")
-                    }
-                )
-                if (formattedText !== sourceText) {
-                    log.debug("Format fixed > $relativePath")
-                    file.writeText(formattedText, charset)
                 }
             }
         }

@@ -34,10 +34,8 @@ import java.nio.charset.Charset
 internal class Check(
     log: Log,
     basedir: File,
-    sourceRoots: Set<File>,
+    sources: List<Sources>,
     charset: Charset,
-    includes: Set<String>,
-    excludes: Set<String>,
     android: Boolean,
     reporterConfig: Set<ReporterConfig>,
     verbose: Boolean,
@@ -45,10 +43,8 @@ internal class Check(
 ) : AbstractCheckSupport(
     log,
     basedir,
-    sourceRoots,
+    sources,
     charset,
-    includes,
-    excludes,
     android,
     addMavenReporter(reporterConfig),
     verbose

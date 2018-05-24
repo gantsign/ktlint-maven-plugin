@@ -27,6 +27,7 @@ package com.github.gantsign.maven.plugin.ktlint
 
 import com.github.gantsign.maven.plugin.ktlint.internal.KtlintReportGenerator
 import com.github.gantsign.maven.plugin.ktlint.internal.Report
+import com.github.gantsign.maven.plugin.ktlint.internal.Sources
 import com.github.gantsign.maven.plugin.ktlint.internal.get
 import org.apache.maven.plugins.annotations.LifecyclePhase
 import org.apache.maven.plugins.annotations.Mojo
@@ -55,38 +56,26 @@ class KtlintReport : AbstractMavenReport() {
     private lateinit var basedir: File
 
     @Parameter(defaultValue = "\${project.compileSourceRoots}", readonly = true, required = true)
-    private lateinit var compileSourceRoots: List<String>
+    private lateinit var sourceRoots: List<String>
 
     @Parameter(
         defaultValue = "\${project.testCompileSourceRoots}",
         readonly = true,
         required = true
     )
-    private lateinit var testCompileSourceRoots: List<String>
+    private lateinit var testSourceRoots: List<String>
 
     /**
      * Include the production source roots.
      */
-    @Parameter(property = "ktlint.includeSourceRoots", defaultValue = "true", required = true)
-    private var includeSourceRoots = true
+    @Parameter(property = "ktlint.includeSources", defaultValue = "true", required = true)
+    private var includeSources = true
 
     /**
      * Include the test source roots.
      */
-    @Parameter(property = "ktlint.includeTestSourceRoots", defaultValue = "true", required = true)
-    private var includeTestSourceRoots = true
-
-    private val sourceRoots: List<String>
-        get() {
-            var sourceRoots = emptyList<String>()
-            if (includeSourceRoots) {
-                sourceRoots += compileSourceRoots
-            }
-            if (includeTestSourceRoots) {
-                sourceRoots += testCompileSourceRoots
-            }
-            return sourceRoots
-        }
+    @Parameter(property = "ktlint.includeTestSources", defaultValue = "true", required = true)
+    private var includeTestSources = true
 
     /**
      * File file encoding of the Kotlin source files.
@@ -95,16 +84,28 @@ class KtlintReport : AbstractMavenReport() {
     private val encoding: String? = null
 
     /**
-     * A list of inclusion filters for the source files to be processed.
+     * A list of inclusion filters for the source files to be processed under the source roots.
      */
     @Parameter
-    private var includes: Set<String>? = null
+    private var sourcesIncludes: Set<String>? = null
 
     /**
-     * A list of exclusion filters for the source files to be processed.
+     * A list of exclusion filters for the source files to be processed under the source roots.
      */
     @Parameter
-    private var excludes: Set<String>? = null
+    private var sourcesExcludes: Set<String>? = null
+
+    /**
+     * A list of inclusion filters for the source files to be processed under the test source roots.
+     */
+    @Parameter
+    private var testSourcesIncludes: Set<String>? = null
+
+    /**
+     * A list of exclusion filters for the source files to be processed under the test source roots.
+     */
+    @Parameter
+    private var testSourcesExcludes: Set<String>? = null
 
     /**
      * Enable Android Kotlin Style Guide compatibility.
@@ -156,12 +157,23 @@ class KtlintReport : AbstractMavenReport() {
         val results = Report(
             log = log,
             basedir = basedir,
-            sourceRoots = sourceRoots.asSequence().map(::File).toSet(),
+            sources = listOf(
+                Sources(
+                    isIncluded = includeSources,
+                    sourceRoots = sourceRoots,
+                    includes = sourcesIncludes,
+                    excludes = sourcesExcludes
+                ),
+                Sources(
+                    isIncluded = includeTestSources,
+                    sourceRoots = testSourceRoots,
+                    includes = testSourcesIncludes,
+                    excludes = testSourcesExcludes
+                )
+            ),
             charset = encoding?.trim()?.takeUnless(String::isEmpty)
                 ?.let { Charset.forName(it) }
                 ?: UTF_8,
-            includes = includes ?: emptySet(),
-            excludes = excludes ?: emptySet(),
             android = android,
             reporterConfig = reporters ?: emptySet(),
             verbose = verbose
