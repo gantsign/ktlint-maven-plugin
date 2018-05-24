@@ -53,7 +53,7 @@
                   <li id="publishDate">Last Published: 2018-05-24
                       <span class="divider">|</span>
                    </li>
-                  <li id="projectVersion">Version: 0.9.3
+                  <li id="projectVersion">Version: 0.9.4
                       </li>
                       
               
@@ -134,10 +134,10 @@
     &lt;plugin&gt;
       &lt;groupId&gt;com.github.gantsign.maven&lt;/groupId&gt;
       &lt;artifactId&gt;ktlint-maven-plugin&lt;/artifactId&gt;
-      &lt;version&gt;0.9.3&lt;/version&gt;
+      &lt;version&gt;0.9.4&lt;/version&gt;
       &lt;executions&gt;
         &lt;execution&gt;
-          &lt;id&gt;format-and-lint&lt;/id&gt;
+          &lt;id&gt;format-and-check&lt;/id&gt;
           &lt;goals&gt;
             &lt;goal&gt;format&lt;/goal&gt;
             &lt;goal&gt;check&lt;/goal&gt;
@@ -157,7 +157,7 @@
     &lt;plugin&gt;
       &lt;groupId&gt;com.github.gantsign.maven&lt;/groupId&gt;
       &lt;artifactId&gt;ktlint-maven-plugin&lt;/artifactId&gt;
-      &lt;version&gt;0.9.3&lt;/version&gt;
+      &lt;version&gt;0.9.4&lt;/version&gt;
       &lt;executions&gt;
         &lt;execution&gt;
           &lt;id&gt;format&lt;/id&gt;
@@ -171,7 +171,7 @@
   &lt;/plugins&gt;
 &lt;/build&gt;</pre></div>
 <p>To run this from the command line (without adding the plugin to your POM) you can run the following from your console:</p>
-<div class="source"><pre class="prettyprint">mvn com.github.gantsign.maven:ktlint-maven-plugin:0.9.3:format</pre></div></div>
+<div class="source"><pre class="prettyprint">mvn com.github.gantsign.maven:ktlint-maven-plugin:0.9.4:format</pre></div></div>
 <div class="section">
 <h3><a name="Checking_for_violations_as_part_of_the_build"></a>Checking for violations as part of the build</h3>
 <p>If you just want to drill good habits into your developers, add the following plugin configuration to your POM.</p>
@@ -181,12 +181,12 @@
     &lt;plugin&gt;
       &lt;groupId&gt;com.github.gantsign.maven&lt;/groupId&gt;
       &lt;artifactId&gt;ktlint-maven-plugin&lt;/artifactId&gt;
-      &lt;version&gt;0.9.3&lt;/version&gt;
+      &lt;version&gt;0.9.4&lt;/version&gt;
       &lt;executions&gt;
         &lt;execution&gt;
-          &lt;id&gt;lint&lt;/id&gt;
+          &lt;id&gt;check&lt;/id&gt;
           &lt;goals&gt;
-            &lt;goal&gt;lint&lt;/goal&gt;
+            &lt;goal&gt;check&lt;/goal&gt;
           &lt;/goals&gt;
         &lt;/execution&gt;
       &lt;/executions&gt;
@@ -195,7 +195,7 @@
   &lt;/plugins&gt;
 &lt;/build&gt;</pre></div>
 <p>To run this from the command line (without adding the plugin to your POM) you can run the following from your console:</p>
-<div class="source"><pre class="prettyprint">mvn com.github.gantsign.maven:ktlint-maven-plugin:0.9.3:lint</pre></div></div>
+<div class="source"><pre class="prettyprint">mvn com.github.gantsign.maven:ktlint-maven-plugin:0.9.4:check</pre></div></div>
 <div class="section">
 <h3><a name="Generate_ktlint_report_as_part_of_the_project_reports"></a>Generate ktlint report as part of the project reports</h3>
 <p>To generate the ktlint report as part of the project reports, add the ktlint plugin in the <tt>&lt;reporting&gt;</tt> section of your POM.</p>
@@ -205,7 +205,7 @@
     &lt;plugin&gt;
       &lt;groupId&gt;com.github.gantsign.maven&lt;/groupId&gt;
       &lt;artifactId&gt;ktlint-maven-plugin&lt;/artifactId&gt;
-      &lt;version&gt;0.9.3&lt;/version&gt;
+      &lt;version&gt;0.9.4&lt;/version&gt;
     &lt;/plugin&gt;
     ...
   &lt;/plugins&gt;
@@ -219,7 +219,7 @@
     &lt;plugin&gt;
       &lt;groupId&gt;com.github.gantsign.maven&lt;/groupId&gt;
       &lt;artifactId&gt;ktlint-maven-plugin&lt;/artifactId&gt;
-      &lt;version&gt;0.9.3&lt;/version&gt;
+      &lt;version&gt;0.9.4&lt;/version&gt;
       &lt;executions&gt;
         &lt;execution&gt;
           &lt;id&gt;reporter&lt;/id&gt;
@@ -254,7 +254,7 @@
     &lt;plugin&gt;
       &lt;groupId&gt;com.github.gantsign.maven&lt;/groupId&gt;
       &lt;artifactId&gt;ktlint-maven-plugin&lt;/artifactId&gt;
-      &lt;version&gt;0.9.3&lt;/version&gt;
+      &lt;version&gt;0.9.4&lt;/version&gt;
       &lt;executions&gt;
         &lt;execution&gt;
           &lt;id&gt;check&lt;/id&gt;
