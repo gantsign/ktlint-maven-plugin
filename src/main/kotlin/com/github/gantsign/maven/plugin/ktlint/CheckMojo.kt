@@ -89,6 +89,12 @@ class CheckMojo : AbstractBaseMojo() {
                     sourceRoots = testSourceRoots,
                     includes = testSourcesIncludes,
                     excludes = testSourcesExcludes
+                ),
+                Sources(
+                    isIncluded = includeScripts,
+                    sourceRoots = scriptRoots,
+                    includes = scriptsIncludes,
+                    excludes = scriptsExcludes
                 )
             ),
             charset = encoding?.trim()?.takeUnless(String::isEmpty)

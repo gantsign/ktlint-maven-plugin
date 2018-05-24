@@ -37,6 +37,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.Rule
 import org.junit.Test
 import java.io.File
+import java.util.Locale
 
 class KtlintReportTest {
 
@@ -112,5 +113,31 @@ class KtlintReportTest {
         ktlintReport.execute()
 
         verifyNoMoreInteractions(log)
+    }
+
+    @Test
+    fun getName() {
+        val pom = File("target/test-scenarios/check-with-errors/pom.xml")
+
+        Assertions.assertThat(pom.isFile).isTrue()
+
+        val project = rule.readMavenProject(pom.parentFile)
+
+        val ktlintReport = rule.lookupConfiguredMojo(project, "ktlint") as KtlintReport
+
+        assertThat(ktlintReport.getName(Locale.ENGLISH)).isEqualTo("Ktlint")
+    }
+
+    @Test
+    fun getDescription() {
+        val pom = File("target/test-scenarios/check-with-errors/pom.xml")
+
+        Assertions.assertThat(pom.isFile).isTrue()
+
+        val project = rule.readMavenProject(pom.parentFile)
+
+        val ktlintReport = rule.lookupConfiguredMojo(project, "ktlint") as KtlintReport
+
+        assertThat(ktlintReport.getDescription(Locale.ENGLISH)).isEqualTo("Report on coding style conventions.")
     }
 }

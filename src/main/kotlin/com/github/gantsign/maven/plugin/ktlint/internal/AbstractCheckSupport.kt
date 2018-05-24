@@ -131,6 +131,7 @@ internal abstract class AbstractCheckSupport(
 
     protected fun hasErrors(reporter: Reporter): Boolean {
         var hasErrors = false
+        val checkedFiles = mutableSetOf<File>()
         for ((isIncluded, sourceRoots, includes, excludes) in sources) {
             if (!isIncluded) {
                 log.debug("Source roots not included: $sourceRoots")
@@ -162,6 +163,10 @@ internal abstract class AbstractCheckSupport(
                 val sourceFiles = ds.includedFiles.map { File(sourceRoot, it) }
 
                 sourceFiles.forEach { file ->
+                    if (!checkedFiles.add(file.canonicalFile)) {
+                        return@forEach
+                    }
+
                     val relativePath = file.toRelativeString(basedir)
                     reporter.before(relativePath)
 

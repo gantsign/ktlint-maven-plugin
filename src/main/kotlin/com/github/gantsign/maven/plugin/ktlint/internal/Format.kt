@@ -43,6 +43,7 @@ internal class Format(
 ) : AbstractLintSupport(log, basedir, android) {
 
     operator fun invoke() {
+        val checkedFiles = mutableSetOf<File>()
         for ((isIncluded, sourceRoots, includes, excludes) in sources) {
             if (!isIncluded) {
                 log.debug("Source roots not included: $sourceRoots")
@@ -74,6 +75,10 @@ internal class Format(
                 val sourceFiles = ds.includedFiles.map { File(sourceRoot, it) }
 
                 sourceFiles.forEach { file ->
+                    if (!checkedFiles.add(file.canonicalFile)) {
+                        return@forEach
+                    }
+
                     val relativePath = file.toRelativeString(basedir)
 
                     log.debug("checking format: $relativePath")
