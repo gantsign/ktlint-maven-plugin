@@ -24,6 +24,26 @@ style.
 General instructions on how to use the ktlint plugin can be found on the
 [usage page](http://gantsign.com/ktlint-maven-plugin/usage.html).
 
+## Repository
+
+This plugin isn't currently available from Maven Central, you need to add the
+following to your repository manager or to your Maven POM.
+
+```xml
+<pluginRepositories>
+  ...
+  <pluginRepository>
+    <snapshots>
+      <enabled>false</enabled>
+    </snapshots>
+    <id>bintray-gantsign-maven</id>
+    <name>bintray</name>
+    <url>https://dl.bintray.com/gantsign/maven</url>
+  </pluginRepository>
+  ...
+</pluginRepositories>
+```
+
 ## License
 
 This software is licensed under the terms in the file named "LICENSE" in the
