@@ -51,7 +51,7 @@
                   <li id="publishDate">Last Published: 2018-05-24
                       <span class="divider">|</span>
                    </li>
-                  <li id="projectVersion">Version: 0.9.2
+                  <li id="projectVersion">Version: 0.9.3
                       </li>
                       
               
@@ -131,7 +131,7 @@
       
 <p><b>Full name</b>:</p>
       
-<p>com.github.gantsign.maven:ktlint-maven-plugin:0.9.2:ktlint</p>
+<p>com.github.gantsign.maven:ktlint-maven-plugin:0.9.3:ktlint</p>
       
 <p><b>Description</b>:</p>
       
@@ -181,27 +181,38 @@ finds.</div>
           
 <tr class="a">
             
-<td><tt><a href="#includeSourceRoots">&lt;includeSourceRoots&gt;</a></tt></td>
+<td><tt><a href="#includeScripts">&lt;includeScripts&gt;</a></tt></td>
             
 <td><tt>boolean</tt></td>
             
 <td><tt>2.0</tt></td>
             
-<td>(no description)<br /><b>Default value is</b>: <tt>true</tt>.<br /><b>User property is</b>: <tt>ktlint.includeSourceRoots</tt>.<br /></td>
+<td>(no description)<br /><b>Default value is</b>: <tt>true</tt>.<br /><b>User property is</b>: <tt>ktlint.includeScripts</tt>.<br /></td>
           </tr>
           
 <tr class="b">
             
-<td><tt><a href="#includeTestSourceRoots">&lt;includeTestSourceRoots&gt;</a></tt></td>
+<td><tt><a href="#includeSources">&lt;includeSources&gt;</a></tt></td>
             
 <td><tt>boolean</tt></td>
             
 <td><tt>2.0</tt></td>
             
-<td>(no description)<br /><b>Default value is</b>: <tt>true</tt>.<br /><b>User property is</b>: <tt>ktlint.includeTestSourceRoots</tt>.<br /></td>
+<td>(no description)<br /><b>Default value is</b>: <tt>true</tt>.<br /><b>User property is</b>: <tt>ktlint.includeSources</tt>.<br /></td>
           </tr>
           
 <tr class="a">
+            
+<td><tt><a href="#includeTestSources">&lt;includeTestSources&gt;</a></tt></td>
+            
+<td><tt>boolean</tt></td>
+            
+<td><tt>2.0</tt></td>
+            
+<td>(no description)<br /><b>Default value is</b>: <tt>true</tt>.<br /><b>User property is</b>: <tt>ktlint.includeTestSources</tt>.<br /></td>
+          </tr>
+          
+<tr class="b">
             
 <td><tt><a href="#skip">&lt;skip&gt;</a></tt></td>
             
@@ -212,7 +223,7 @@ finds.</div>
 <td>(no description)<br /><b>Default value is</b>: <tt>false</tt>.<br /><b>User property is</b>: <tt>ktlint.skip</tt>.<br /></td>
           </tr>
           
-<tr class="b">
+<tr class="a">
             
 <td><tt><a href="#verbose">&lt;verbose&gt;</a></tt></td>
             
@@ -254,7 +265,7 @@ finds.</div>
           
 <tr class="a">
             
-<td><tt><a href="#excludes">&lt;excludes&gt;</a></tt></td>
+<td><tt><a href="#reporters">&lt;reporters&gt;</a></tt></td>
             
 <td><tt>Set</tt></td>
             
@@ -265,7 +276,18 @@ finds.</div>
           
 <tr class="b">
             
-<td><tt><a href="#includes">&lt;includes&gt;</a></tt></td>
+<td><tt><a href="#scriptRoots">&lt;scriptRoots&gt;</a></tt></td>
+            
+<td><tt>List</tt></td>
+            
+<td><tt>2.0</tt></td>
+            
+<td>(no description)<br /><b>Default value is</b>: <tt>${project.basedir.path}</tt>.<br /><b>User property is</b>: <tt>ktlint.scriptRoots</tt>.<br /></td>
+          </tr>
+          
+<tr class="a">
+            
+<td><tt><a href="#scriptsExcludes">&lt;scriptsExcludes&gt;</a></tt></td>
             
 <td><tt>Set</tt></td>
             
@@ -274,15 +296,59 @@ finds.</div>
 <td>(no description)<br /></td>
           </tr>
           
+<tr class="b">
+            
+<td><tt><a href="#scriptsIncludes">&lt;scriptsIncludes&gt;</a></tt></td>
+            
+<td><tt>Set</tt></td>
+            
+<td><tt>2.0</tt></td>
+            
+<td>(no description)<br /><b>Default value is</b>: <tt>*.kts</tt>.<br /></td>
+          </tr>
+          
 <tr class="a">
             
-<td><tt><a href="#reporters">&lt;reporters&gt;</a></tt></td>
+<td><tt><a href="#sourcesExcludes">&lt;sourcesExcludes&gt;</a></tt></td>
             
 <td><tt>Set</tt></td>
             
 <td><tt>2.0</tt></td>
             
 <td>(no description)<br /></td>
+          </tr>
+          
+<tr class="b">
+            
+<td><tt><a href="#sourcesIncludes">&lt;sourcesIncludes&gt;</a></tt></td>
+            
+<td><tt>Set</tt></td>
+            
+<td><tt>2.0</tt></td>
+            
+<td>(no description)<br /><b>Default value is</b>: <tt>**/*.kt</tt>.<br /></td>
+          </tr>
+          
+<tr class="a">
+            
+<td><tt><a href="#testSourcesExcludes">&lt;testSourcesExcludes&gt;</a></tt></td>
+            
+<td><tt>Set</tt></td>
+            
+<td><tt>2.0</tt></td>
+            
+<td>(no description)<br /></td>
+          </tr>
+          
+<tr class="b">
+            
+<td><tt><a href="#testSourcesIncludes">&lt;testSourcesIncludes&gt;</a></tt></td>
+            
+<td><tt>Set</tt></td>
+            
+<td><tt>2.0</tt></td>
+            
+<td>(no description)<br /><b>Default value is</b>: <tt>**/*.kt</tt>.<br /></td>
           </tr>
         </table>
       </div>
@@ -325,20 +391,7 @@ finds.</div>
 <li><b>Default</b>: <tt>${project.build.sourceEncoding}</tt></li>
         </ul><hr /></div>
 <div class="section">
-<h4><a name="a.3Cexcludes.3E"></a><b><a name="excludes">&lt;excludes&gt;</a></b></h4>
-        
-<div>(no description)</div>
-        
-<ul>
-          
-<li><b>Type</b>: <tt>java.util.Set</tt></li>
-          
-<li><b>Since</b>: <tt>2.0</tt></li>
-          
-<li><b>Required</b>: <tt>No</tt></li>
-        </ul><hr /></div>
-<div class="section">
-<h4><a name="a.3CincludeSourceRoots.3E"></a><b><a name="includeSourceRoots">&lt;includeSourceRoots&gt;</a></b></h4>
+<h4><a name="a.3CincludeScripts.3E"></a><b><a name="includeScripts">&lt;includeScripts&gt;</a></b></h4>
         
 <div>(no description)</div>
         
@@ -350,12 +403,12 @@ finds.</div>
           
 <li><b>Required</b>: <tt>Yes</tt></li>
           
-<li><b>User Property</b>: <tt>ktlint.includeSourceRoots</tt></li>
+<li><b>User Property</b>: <tt>ktlint.includeScripts</tt></li>
           
 <li><b>Default</b>: <tt>true</tt></li>
         </ul><hr /></div>
 <div class="section">
-<h4><a name="a.3CincludeTestSourceRoots.3E"></a><b><a name="includeTestSourceRoots">&lt;includeTestSourceRoots&gt;</a></b></h4>
+<h4><a name="a.3CincludeSources.3E"></a><b><a name="includeSources">&lt;includeSources&gt;</a></b></h4>
         
 <div>(no description)</div>
         
@@ -367,22 +420,26 @@ finds.</div>
           
 <li><b>Required</b>: <tt>Yes</tt></li>
           
-<li><b>User Property</b>: <tt>ktlint.includeTestSourceRoots</tt></li>
+<li><b>User Property</b>: <tt>ktlint.includeSources</tt></li>
           
 <li><b>Default</b>: <tt>true</tt></li>
         </ul><hr /></div>
 <div class="section">
-<h4><a name="a.3Cincludes.3E"></a><b><a name="includes">&lt;includes&gt;</a></b></h4>
+<h4><a name="a.3CincludeTestSources.3E"></a><b><a name="includeTestSources">&lt;includeTestSources&gt;</a></b></h4>
         
 <div>(no description)</div>
         
 <ul>
           
-<li><b>Type</b>: <tt>java.util.Set</tt></li>
+<li><b>Type</b>: <tt>boolean</tt></li>
           
 <li><b>Since</b>: <tt>2.0</tt></li>
           
-<li><b>Required</b>: <tt>No</tt></li>
+<li><b>Required</b>: <tt>Yes</tt></li>
+          
+<li><b>User Property</b>: <tt>ktlint.includeTestSources</tt></li>
+          
+<li><b>Default</b>: <tt>true</tt></li>
         </ul><hr /></div>
 <div class="section">
 <h4><a name="a.3Creporters.3E"></a><b><a name="reporters">&lt;reporters&gt;</a></b></h4>
@@ -396,6 +453,51 @@ finds.</div>
 <li><b>Since</b>: <tt>2.0</tt></li>
           
 <li><b>Required</b>: <tt>No</tt></li>
+        </ul><hr /></div>
+<div class="section">
+<h4><a name="a.3CscriptRoots.3E"></a><b><a name="scriptRoots">&lt;scriptRoots&gt;</a></b></h4>
+        
+<div>(no description)</div>
+        
+<ul>
+          
+<li><b>Type</b>: <tt>java.util.List</tt></li>
+          
+<li><b>Since</b>: <tt>2.0</tt></li>
+          
+<li><b>Required</b>: <tt>No</tt></li>
+          
+<li><b>User Property</b>: <tt>ktlint.scriptRoots</tt></li>
+          
+<li><b>Default</b>: <tt>${project.basedir.path}</tt></li>
+        </ul><hr /></div>
+<div class="section">
+<h4><a name="a.3CscriptsExcludes.3E"></a><b><a name="scriptsExcludes">&lt;scriptsExcludes&gt;</a></b></h4>
+        
+<div>(no description)</div>
+        
+<ul>
+          
+<li><b>Type</b>: <tt>java.util.Set</tt></li>
+          
+<li><b>Since</b>: <tt>2.0</tt></li>
+          
+<li><b>Required</b>: <tt>No</tt></li>
+        </ul><hr /></div>
+<div class="section">
+<h4><a name="a.3CscriptsIncludes.3E"></a><b><a name="scriptsIncludes">&lt;scriptsIncludes&gt;</a></b></h4>
+        
+<div>(no description)</div>
+        
+<ul>
+          
+<li><b>Type</b>: <tt>java.util.Set</tt></li>
+          
+<li><b>Since</b>: <tt>2.0</tt></li>
+          
+<li><b>Required</b>: <tt>No</tt></li>
+          
+<li><b>Default</b>: <tt>*.kts</tt></li>
         </ul><hr /></div>
 <div class="section">
 <h4><a name="a.3Cskip.3E"></a><b><a name="skip">&lt;skip&gt;</a></b></h4>
@@ -413,6 +515,62 @@ finds.</div>
 <li><b>User Property</b>: <tt>ktlint.skip</tt></li>
           
 <li><b>Default</b>: <tt>false</tt></li>
+        </ul><hr /></div>
+<div class="section">
+<h4><a name="a.3CsourcesExcludes.3E"></a><b><a name="sourcesExcludes">&lt;sourcesExcludes&gt;</a></b></h4>
+        
+<div>(no description)</div>
+        
+<ul>
+          
+<li><b>Type</b>: <tt>java.util.Set</tt></li>
+          
+<li><b>Since</b>: <tt>2.0</tt></li>
+          
+<li><b>Required</b>: <tt>No</tt></li>
+        </ul><hr /></div>
+<div class="section">
+<h4><a name="a.3CsourcesIncludes.3E"></a><b><a name="sourcesIncludes">&lt;sourcesIncludes&gt;</a></b></h4>
+        
+<div>(no description)</div>
+        
+<ul>
+          
+<li><b>Type</b>: <tt>java.util.Set</tt></li>
+          
+<li><b>Since</b>: <tt>2.0</tt></li>
+          
+<li><b>Required</b>: <tt>No</tt></li>
+          
+<li><b>Default</b>: <tt>**/*.kt</tt></li>
+        </ul><hr /></div>
+<div class="section">
+<h4><a name="a.3CtestSourcesExcludes.3E"></a><b><a name="testSourcesExcludes">&lt;testSourcesExcludes&gt;</a></b></h4>
+        
+<div>(no description)</div>
+        
+<ul>
+          
+<li><b>Type</b>: <tt>java.util.Set</tt></li>
+          
+<li><b>Since</b>: <tt>2.0</tt></li>
+          
+<li><b>Required</b>: <tt>No</tt></li>
+        </ul><hr /></div>
+<div class="section">
+<h4><a name="a.3CtestSourcesIncludes.3E"></a><b><a name="testSourcesIncludes">&lt;testSourcesIncludes&gt;</a></b></h4>
+        
+<div>(no description)</div>
+        
+<ul>
+          
+<li><b>Type</b>: <tt>java.util.Set</tt></li>
+          
+<li><b>Since</b>: <tt>2.0</tt></li>
+          
+<li><b>Required</b>: <tt>No</tt></li>
+          
+<li><b>Default</b>: <tt>**/*.kt</tt></li>
         </ul><hr /></div>
 <div class="section">
 <h4><a name="a.3Cverbose.3E"></a><b><a name="verbose">&lt;verbose&gt;</a></b></h4>

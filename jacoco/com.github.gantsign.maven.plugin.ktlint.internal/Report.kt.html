@@ -34,31 +34,27 @@ import java.nio.charset.Charset
 <span class="fc" id="L34">internal class Report(</span>
     log: Log,
     basedir: File,
-    sourceRoots: Set&lt;File&gt;,
+    sources: List&lt;Sources&gt;,
     charset: Charset,
-    includes: Set&lt;String&gt;,
-    excludes: Set&lt;String&gt;,
     android: Boolean,
     reporterConfig: Set&lt;ReporterConfig&gt;,
     verbose: Boolean
-<span class="fc" id="L44">) : AbstractCheckSupport(</span>
-<span class="fc" id="L45">    log,</span>
-<span class="fc" id="L46">    basedir,</span>
-<span class="fc" id="L47">    sourceRoots,</span>
-<span class="fc" id="L48">    charset,</span>
-<span class="fc" id="L49">    includes,</span>
-<span class="fc" id="L50">    excludes,</span>
-<span class="fc" id="L51">    android,</span>
-<span class="fc" id="L52">    reporterConfig,</span>
-<span class="fc" id="L53">    verbose</span>
+<span class="fc" id="L42">) : AbstractCheckSupport(</span>
+<span class="fc" id="L43">    log,</span>
+<span class="fc" id="L44">    basedir,</span>
+<span class="fc" id="L45">    sources,</span>
+<span class="fc" id="L46">    charset,</span>
+<span class="fc" id="L47">    android,</span>
+<span class="fc" id="L48">    reporterConfig,</span>
+<span class="fc" id="L49">    verbose</span>
 ) {
     operator fun invoke(): CheckResults {
-<span class="fc" id="L56">        val modelReporter = ModelReporter()</span>
-<span class="fc" id="L57">        val reporter = Reporter.from(reporter, modelReporter)</span>
+<span class="fc" id="L52">        val modelReporter = ModelReporter()</span>
+<span class="fc" id="L53">        val reporter = Reporter.from(reporter, modelReporter)</span>
 
-<span class="fc" id="L59">        hasErrors(reporter)</span>
+<span class="fc" id="L55">        hasErrors(reporter)</span>
 
-<span class="fc" id="L61">        return CheckResults(modelReporter.fileCount, modelReporter.errors)</span>
+<span class="fc" id="L57">        return CheckResults(modelReporter.fileCount, modelReporter.errors)</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

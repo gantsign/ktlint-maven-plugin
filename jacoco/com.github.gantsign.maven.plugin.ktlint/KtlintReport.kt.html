@@ -27,6 +27,7 @@ package com.github.gantsign.maven.plugin.ktlint
 
 import com.github.gantsign.maven.plugin.ktlint.internal.KtlintReportGenerator
 import com.github.gantsign.maven.plugin.ktlint.internal.Report
+import com.github.gantsign.maven.plugin.ktlint.internal.Sources
 import com.github.gantsign.maven.plugin.ktlint.internal.get
 import org.apache.maven.plugins.annotations.LifecyclePhase
 import org.apache.maven.plugins.annotations.Mojo
@@ -49,44 +50,44 @@ import java.util.ResourceBundle
     requiresDependencyCollection = ResolutionScope.TEST,
     requiresProject = true
 )
-<span class="fc" id="L52">class KtlintReport : AbstractMavenReport() {</span>
+<span class="fc" id="L53">class KtlintReport : AbstractMavenReport() {</span>
 
     @Parameter(defaultValue = &quot;\${project.basedir}&quot;, readonly = true, required = true)
     private lateinit var basedir: File
 
     @Parameter(defaultValue = &quot;\${project.compileSourceRoots}&quot;, readonly = true, required = true)
-    private lateinit var compileSourceRoots: List&lt;String&gt;
+    private lateinit var sourceRoots: List&lt;String&gt;
 
     @Parameter(
         defaultValue = &quot;\${project.testCompileSourceRoots}&quot;,
         readonly = true,
         required = true
     )
-    private lateinit var testCompileSourceRoots: List&lt;String&gt;
+    private lateinit var testSourceRoots: List&lt;String&gt;
+
+    /**
+     * A list of root directories containing Kotlin scripts.
+     */
+    @Parameter(property = &quot;ktlint.scriptRoots&quot;, defaultValue = &quot;\${project.basedir.path}&quot;)
+    private lateinit var scriptRoots: List&lt;String&gt;
 
     /**
      * Include the production source roots.
      */
-    @Parameter(property = &quot;ktlint.includeSourceRoots&quot;, defaultValue = &quot;true&quot;, required = true)
-<span class="fc" id="L71">    private var includeSourceRoots = true</span>
+    @Parameter(property = &quot;ktlint.includeSources&quot;, defaultValue = &quot;true&quot;, required = true)
+<span class="fc" id="L78">    private var includeSources = true</span>
 
     /**
      * Include the test source roots.
      */
-    @Parameter(property = &quot;ktlint.includeTestSourceRoots&quot;, defaultValue = &quot;true&quot;, required = true)
-<span class="fc" id="L77">    private var includeTestSourceRoots = true</span>
+    @Parameter(property = &quot;ktlint.includeTestSources&quot;, defaultValue = &quot;true&quot;, required = true)
+<span class="fc" id="L84">    private var includeTestSources = true</span>
 
-    private val sourceRoots: List&lt;String&gt;
-        get() {
-<span class="fc" id="L81">            var sourceRoots = emptyList&lt;String&gt;()</span>
-<span class="pc bpc" id="L82" title="1 of 2 branches missed.">            if (includeSourceRoots) {</span>
-<span class="pc bpc" id="L83" title="1 of 2 branches missed.">                sourceRoots += compileSourceRoots</span>
-            }
-<span class="pc bpc" id="L85" title="1 of 2 branches missed.">            if (includeTestSourceRoots) {</span>
-<span class="pc bpc" id="L86" title="1 of 2 branches missed.">                sourceRoots += testCompileSourceRoots</span>
-            }
-<span class="fc" id="L88">            return sourceRoots</span>
-        }
+    /**
+     * Include scripts.
+     */
+    @Parameter(property = &quot;ktlint.includeScripts&quot;, defaultValue = &quot;true&quot;, required = true)
+<span class="fc" id="L90">    private var includeScripts = true</span>
 
     /**
      * File file encoding of the Kotlin source files.
@@ -95,16 +96,40 @@ import java.util.ResourceBundle
     private val encoding: String? = null
 
     /**
-     * A list of inclusion filters for the source files to be processed.
+     * A list of inclusion filters for the source files to be processed under the source roots.
      */
-    @Parameter
-    private var includes: Set&lt;String&gt;? = null
+    @Parameter(defaultValue = &quot;**/*.kt&quot;)
+    private var sourcesIncludes: Set&lt;String&gt;? = null
 
     /**
-     * A list of exclusion filters for the source files to be processed.
+     * A list of exclusion filters for the source files to be processed under the source roots.
      */
     @Parameter
-    private var excludes: Set&lt;String&gt;? = null
+    private var sourcesExcludes: Set&lt;String&gt;? = null
+
+    /**
+     * A list of inclusion filters for the source files to be processed under the test source roots.
+     */
+    @Parameter(defaultValue = &quot;**/*.kt&quot;)
+    private var testSourcesIncludes: Set&lt;String&gt;? = null
+
+    /**
+     * A list of exclusion filters for the source files to be processed under the test source roots.
+     */
+    @Parameter
+    private var testSourcesExcludes: Set&lt;String&gt;? = null
+
+    /**
+     * A list of inclusion filters for scripts.
+     */
+    @Parameter(defaultValue = &quot;*.kts&quot;)
+    private var scriptsIncludes: Set&lt;String&gt;? = null
+
+    /**
+     * A list of exclusion filters for scripts.
+     */
+    @Parameter
+    private var scriptsExcludes: Set&lt;String&gt;? = null
 
     /**
      * Enable Android Kotlin Style Guide compatibility.
@@ -131,42 +156,56 @@ import java.util.ResourceBundle
     private var skip: Boolean = false
 
     private fun getBundle(locale: Locale): ResourceBundle {
-<span class="fc" id="L134">        return ResourceBundle.getBundle(</span>
-<span class="fc" id="L135">            &quot;ktlint-report&quot;,</span>
-<span class="fc" id="L136">            locale,</span>
-<span class="fc" id="L137">            AbstractMavenReport::class.java.classLoader</span>
+<span class="fc" id="L159">        return ResourceBundle.getBundle(</span>
+<span class="fc" id="L160">            &quot;ktlint-report&quot;,</span>
+<span class="fc" id="L161">            locale,</span>
+<span class="fc" id="L162">            AbstractMavenReport::class.java.classLoader</span>
         )
     }
 
     override fun getName(locale: Locale): String =
-<span class="nc" id="L142">        getBundle(locale)[&quot;report.ktlint.name&quot;]</span>
+<span class="fc" id="L167">        getBundle(locale)[&quot;report.ktlint.name&quot;]</span>
 
     override fun getDescription(locale: Locale): String =
-<span class="nc" id="L145">        getBundle(locale)[&quot;report.ktlint.description&quot;]</span>
+<span class="fc" id="L170">        getBundle(locale)[&quot;report.ktlint.description&quot;]</span>
 
-<span class="fc" id="L147">    override fun getOutputName(): String = &quot;ktlint&quot;</span>
+<span class="fc" id="L172">    override fun getOutputName(): String = &quot;ktlint&quot;</span>
 
-    override fun canGenerateReport(): Boolean = when {
-<span class="fc bfc" id="L150" title="All 2 branches covered.">        skip -&gt; false</span>
-<span class="fc bfc" id="L151" title="All 2 branches covered.">        !sourceRoots.asSequence().map(::File).any { it.isDirectory } -&gt; false</span>
-<span class="fc" id="L152">        else -&gt; true</span>
-<span class="fc" id="L153">    }</span>
+    override fun canGenerateReport(): Boolean =
+<span class="pc bpc" id="L175" title="1 of 6 branches missed.">        !skip &amp;&amp; sourceRoots.asSequence().map(::File).any { it.isDirectory }</span>
 
     override fun executeReport(locale: Locale) {
-<span class="fc" id="L156">        val results = Report(</span>
-<span class="fc" id="L157">            log = log,</span>
-<span class="pc bpc" id="L158" title="1 of 2 branches missed.">            basedir = basedir,</span>
-<span class="fc" id="L159">            sourceRoots = sourceRoots.asSequence().map(::File).toSet(),</span>
-<span class="pc bpc" id="L160" title="5 of 10 branches missed.">            charset = encoding?.trim()?.takeUnless(String::isEmpty)</span>
-<span class="pc bpc" id="L161" title="2 of 4 branches missed.">                ?.let { Charset.forName(it) }</span>
-<span class="nc" id="L162">                ?: UTF_8,</span>
-<span class="pc bpc" id="L163" title="1 of 2 branches missed.">            includes = includes ?: emptySet(),</span>
-<span class="pc bpc" id="L164" title="1 of 2 branches missed.">            excludes = excludes ?: emptySet(),</span>
-<span class="fc" id="L165">            android = android,</span>
-<span class="pc bpc" id="L166" title="1 of 2 branches missed.">            reporterConfig = reporters ?: emptySet(),</span>
-<span class="fc" id="L167">            verbose = verbose</span>
+<span class="fc" id="L178">        val results = Report(</span>
+<span class="fc" id="L179">            log = log,</span>
+<span class="pc bpc" id="L180" title="1 of 2 branches missed.">            basedir = basedir,</span>
+<span class="fc" id="L181">            sources = listOf(</span>
+<span class="fc" id="L182">                Sources(</span>
+<span class="fc" id="L183">                    isIncluded = includeSources,</span>
+<span class="pc bpc" id="L184" title="1 of 2 branches missed.">                    sourceRoots = sourceRoots,</span>
+<span class="fc" id="L185">                    includes = sourcesIncludes,</span>
+<span class="fc" id="L186">                    excludes = sourcesExcludes</span>
+                ),
+<span class="fc" id="L188">                Sources(</span>
+<span class="fc" id="L189">                    isIncluded = includeTestSources,</span>
+<span class="pc bpc" id="L190" title="1 of 2 branches missed.">                    sourceRoots = testSourceRoots,</span>
+<span class="fc" id="L191">                    includes = testSourcesIncludes,</span>
+<span class="fc" id="L192">                    excludes = testSourcesExcludes</span>
+                ),
+<span class="fc" id="L194">                Sources(</span>
+<span class="fc" id="L195">                    isIncluded = includeScripts,</span>
+<span class="pc bpc" id="L196" title="1 of 2 branches missed.">                    sourceRoots = scriptRoots,</span>
+<span class="fc" id="L197">                    includes = scriptsIncludes,</span>
+<span class="fc" id="L198">                    excludes = scriptsExcludes</span>
+                )
+            ),
+<span class="pc bpc" id="L201" title="5 of 10 branches missed.">            charset = encoding?.trim()?.takeUnless(String::isEmpty)</span>
+<span class="pc bpc" id="L202" title="2 of 4 branches missed.">                ?.let { Charset.forName(it) }</span>
+<span class="nc" id="L203">                ?: UTF_8,</span>
+<span class="fc" id="L204">            android = android,</span>
+<span class="pc bpc" id="L205" title="1 of 2 branches missed.">            reporterConfig = reporters ?: emptySet(),</span>
+<span class="fc" id="L206">            verbose = verbose</span>
         )()
-<span class="fc" id="L169">        KtlintReportGenerator(sink, getBundle(locale)).generatorReport(results)</span>
-<span class="fc" id="L170">    }</span>
+<span class="fc" id="L208">        KtlintReportGenerator(sink, getBundle(locale)).generatorReport(results)</span>
+<span class="fc" id="L209">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

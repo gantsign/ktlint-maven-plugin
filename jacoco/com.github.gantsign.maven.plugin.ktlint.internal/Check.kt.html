@@ -34,42 +34,38 @@ import java.nio.charset.Charset
 <span class="fc" id="L34">internal class Check(</span>
     log: Log,
     basedir: File,
-    sourceRoots: Set&lt;File&gt;,
+    sources: List&lt;Sources&gt;,
     charset: Charset,
-    includes: Set&lt;String&gt;,
-    excludes: Set&lt;String&gt;,
     android: Boolean,
     reporterConfig: Set&lt;ReporterConfig&gt;,
     verbose: Boolean,
     private val failOnViolation: Boolean
-<span class="fc" id="L45">) : AbstractCheckSupport(</span>
-<span class="fc" id="L46">    log,</span>
-<span class="fc" id="L47">    basedir,</span>
-<span class="fc" id="L48">    sourceRoots,</span>
-<span class="fc" id="L49">    charset,</span>
-<span class="fc" id="L50">    includes,</span>
-<span class="fc" id="L51">    excludes,</span>
-<span class="fc" id="L52">    android,</span>
-<span class="fc" id="L53">    addMavenReporter(reporterConfig),</span>
-<span class="fc" id="L54">    verbose</span>
+<span class="fc" id="L43">) : AbstractCheckSupport(</span>
+<span class="fc" id="L44">    log,</span>
+<span class="fc" id="L45">    basedir,</span>
+<span class="fc" id="L46">    sources,</span>
+<span class="fc" id="L47">    charset,</span>
+<span class="fc" id="L48">    android,</span>
+<span class="fc" id="L49">    addMavenReporter(reporterConfig),</span>
+<span class="fc" id="L50">    verbose</span>
 ) {
     operator fun invoke() {
-<span class="fc" id="L57">        val reporter = reporter</span>
+<span class="fc" id="L53">        val reporter = reporter</span>
 
-<span class="fc" id="L59">        val hasErrors = hasErrors(reporter)</span>
-<span class="fc bfc" id="L60" title="All 4 branches covered.">        if (hasErrors &amp;&amp; failOnViolation) {</span>
-<span class="fc" id="L61">            throw MojoFailureException(&quot;Kotlin source failed ktlint check.&quot;)</span>
+<span class="fc" id="L55">        val hasErrors = hasErrors(reporter)</span>
+<span class="fc bfc" id="L56" title="All 4 branches covered.">        if (hasErrors &amp;&amp; failOnViolation) {</span>
+<span class="fc" id="L57">            throw MojoFailureException(&quot;Kotlin source failed ktlint check.&quot;)</span>
         }
-<span class="fc" id="L63">    }</span>
+<span class="fc" id="L59">    }</span>
 
     companion object {
 
         @JvmStatic
         fun addMavenReporter(reporterConfig: Set&lt;ReporterConfig&gt;): Set&lt;ReporterConfig&gt; {
-<span class="fc bfc" id="L69" title="All 2 branches covered.">            return if (reporterConfig.any { it.name == MavenLogReporter.NAME }) {</span>
-<span class="fc" id="L70">                reporterConfig</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">            return if (reporterConfig.any { it.name == MavenLogReporter.NAME }) {</span>
+<span class="fc" id="L66">                reporterConfig</span>
             } else {
-<span class="fc" id="L72">                reporterConfig + ReporterConfig(MavenLogReporter.NAME)</span>
+<span class="fc" id="L68">                reporterConfig + ReporterConfig(MavenLogReporter.NAME)</span>
             }
         }
     }

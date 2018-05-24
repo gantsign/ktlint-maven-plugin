@@ -26,11 +26,11 @@
 package com.github.gantsign.maven.plugin.ktlint
 
 import com.github.gantsign.maven.plugin.ktlint.internal.Format
+import com.github.gantsign.maven.plugin.ktlint.internal.Sources
 import org.apache.maven.plugins.annotations.LifecyclePhase
 import org.apache.maven.plugins.annotations.Mojo
 import org.apache.maven.plugins.annotations.Parameter
 import org.apache.maven.plugins.annotations.ResolutionScope
-import java.io.File
 import java.nio.charset.Charset
 import java.nio.charset.StandardCharsets.UTF_8
 
@@ -59,14 +59,31 @@ import java.nio.charset.StandardCharsets.UTF_8
 <span class="fc" id="L59">        Format(</span>
 <span class="fc" id="L60">            log = log,</span>
 <span class="fc" id="L61">            basedir = basedir,</span>
-<span class="fc" id="L62">            sourceRoots = sourceRoots.asSequence().map(::File).toSet(),</span>
-<span class="pc bpc" id="L63" title="5 of 10 branches missed.">            charset = encoding?.trim()?.takeUnless(String::isEmpty)</span>
-<span class="pc bpc" id="L64" title="1 of 4 branches missed.">                ?.let { Charset.forName(it) }</span>
-<span class="fc" id="L65">                ?: UTF_8,</span>
-<span class="fc bfc" id="L66" title="All 2 branches covered.">            includes = includes ?: emptySet(),</span>
-<span class="pc bpc" id="L67" title="1 of 2 branches missed.">            excludes = excludes ?: emptySet(),</span>
-<span class="fc" id="L68">            android = android</span>
+<span class="fc" id="L62">            sources = listOf(</span>
+<span class="fc" id="L63">                Sources(</span>
+<span class="fc" id="L64">                    isIncluded = includeSources,</span>
+<span class="fc" id="L65">                    sourceRoots = sourceRoots,</span>
+<span class="fc" id="L66">                    includes = sourcesIncludes,</span>
+<span class="fc" id="L67">                    excludes = sourcesExcludes</span>
+                ),
+<span class="fc" id="L69">                Sources(</span>
+<span class="fc" id="L70">                    isIncluded = includeTestSources,</span>
+<span class="fc" id="L71">                    sourceRoots = testSourceRoots,</span>
+<span class="fc" id="L72">                    includes = testSourcesIncludes,</span>
+<span class="fc" id="L73">                    excludes = testSourcesExcludes</span>
+                ),
+<span class="fc" id="L75">                Sources(</span>
+<span class="fc" id="L76">                    isIncluded = includeScripts,</span>
+<span class="fc" id="L77">                    sourceRoots = scriptRoots,</span>
+<span class="fc" id="L78">                    includes = scriptsIncludes,</span>
+<span class="fc" id="L79">                    excludes = scriptsExcludes</span>
+                )
+            ),
+<span class="pc bpc" id="L82" title="5 of 10 branches missed.">            charset = encoding?.trim()?.takeUnless(String::isEmpty)</span>
+<span class="pc bpc" id="L83" title="1 of 4 branches missed.">                ?.let { Charset.forName(it) }</span>
+<span class="fc" id="L84">                ?: UTF_8,</span>
+<span class="fc" id="L85">            android = android</span>
         )()
-<span class="fc" id="L70">    }</span>
+<span class="fc" id="L87">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

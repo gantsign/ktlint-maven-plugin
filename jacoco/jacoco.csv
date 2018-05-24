@@ -8,7 +8,7 @@ ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,AbstractLin
 ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,KtlintReportGenerator.generatorReport.1.new Function1() {...},0,25,0,0,0,2,0,2,0,2
 ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,KtlintReportGenerator.generatorReport.1.new Function1() {...},2,142,3,5,1,19,3,3,0,2
 ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,AbstractCheckSupport.reporter.ReporterTemplate,83,54,12,4,0,4,14,6,7,5
-ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,AbstractCheckSupport,105,599,23,36,9,89,21,15,2,4
+ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,AbstractCheckSupport,108,635,22,43,11,94,23,16,2,4
 ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,KtlintReportGenerator.generatorReport.1.2.3.2.1.2.1.new Function1() {...},0,20,0,0,0,2,0,2,0,2
 ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,KtlintReportGenerator.generatorReport.1.2.4.3.1.new Function1() {...},0,89,0,0,0,4,0,2,0,2
 ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,KtlintReportGenerator.generatorReport.1.2.4.3.1.1.new Function1() {...},0,24,0,0,0,2,0,2,0,2
@@ -21,7 +21,7 @@ ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,MavenLogRep
 ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,Format.invoke.1.formatFunc.new Function4() {...},7,26,0,0,0,1,3,2,3,2
 ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,KtlintReportGenerator.generatorReport.1.2.new Function1() {...},0,148,3,5,0,9,3,3,0,2
 ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,KtlintReportGenerator.generatorReport.1.2.new Function1() {...},0,52,0,0,0,3,0,2,0,2
-ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,AbstractCheckSupport.hasErrors..inlined.forEach.lambda.new Function1() {...},0,69,0,0,0,5,0,2,0,2
+ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,AbstractCheckSupport.hasErrors..inlined.forEach.lambda.new Function1() {...},0,72,0,0,0,6,0,2,0,2
 ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,Format.invoke.1.formatFunc.new Function4() {...},7,26,0,0,0,1,3,2,3,2
 ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,KtlintReportGenerator.generatorReport.1.2.new Function1() {...},0,49,0,0,0,3,0,2,0,2
 ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,KtlintReportGenerator.generatorReport.1.2.2.2.1.1.new Function1() {...},0,24,0,0,0,2,0,2,0,2
@@ -34,10 +34,11 @@ ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,KtlintRepor
 ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,AbstractLintSupport.ruleSets.2.ruleSets.new ToIntFunction() {...},9,8,2,0,1,0,2,2,1,2
 ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,KtlintReportGenerator.generatorReport.1.2.1.2.new Function1() {...},0,16,0,0,0,2,0,3,0,3
 ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,KtlintReportGenerator,2,42,1,1,0,5,1,2,0,2
-ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,Format.invoke..inlined.forEach.lambda.new Function2() {...},2,64,1,1,0,3,1,2,0,2
+ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,Format.invoke..inlined.forEach.lambda.new Function2() {...},2,67,1,1,0,3,1,2,0,2
 ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,KtlintReportGenerator.generatorReport.1.2.2.2.1.new Function1() {...},0,63,0,0,0,3,0,2,0,2
 ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,KtlintReportGenerator.generatorReport.1.2.2.2.1.new Function1() {...},0,63,0,0,0,3,0,2,0,2
 ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,KtlintReportGenerator.generatorReport.1.2.4.new Function1() {...},0,21,0,0,0,2,0,2,0,2
+ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,Sources,214,0,38,0,11,0,33,0,14,0
 ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,AbstractCheckSupport.reporter.1.new Reporter() {...},4,48,0,0,0,4,1,5,1,5
 ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,KtlintReportGenerator.generatorReport.1.2.2.new Function1() {...},0,22,0,0,0,2,0,2,0,2
 ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,KtlintReportGenerator.generatorReport.1.2.2.new Function1() {...},0,21,0,0,0,2,0,2,0,2
@@ -46,7 +47,7 @@ ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,Check.Compa
 ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,KtlintReportGenerator.generatorReport.1.2.2.2.new Function1() {...},0,45,0,0,0,3,0,2,0,2
 ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,KtlintReportGenerator.generatorReport.new Function1() {...},0,39,0,0,0,3,0,2,0,2
 ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,KtlintReportGenerator.generatorReport.1.2.4.new Function1() {...},0,25,0,0,0,2,0,2,0,2
-ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,Format,49,329,10,23,4,49,10,11,0,4
+ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,Format,71,346,14,25,7,53,14,10,0,4
 ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,KtlintReportGenerator.generatorReport.1.2.4.new Function1() {...},0,26,0,0,0,2,0,2,0,2
 ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,MavenLogReporter,44,280,7,13,5,38,13,12,6,9
 ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,KtlintReportGenerator.generatorReport.1.2.4.sortedErrors.new PropertyReference1() {...},11,8,0,0,1,0,4,2,4,2
@@ -63,7 +64,8 @@ ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,CheckResult
 ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,KtlintReportGenerator.generatorReport.1.2.3.2.new Function1() {...},0,76,0,2,0,4,0,3,0,2
 ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,KtlintReportGenerator.generatorReport.1.2.3.2.1.new Function1() {...},0,63,0,0,0,3,0,2,0,2
 ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,ModelReporter,3,55,0,0,0,9,1,7,1,7
-ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,Check,4,63,0,4,0,16,1,5,1,3
+ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,Check,4,55,0,4,0,14,1,5,1,3
+ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,Sources.new Function1() {...},21,0,0,0,1,0,6,0,6,0
 ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,KtlintReportGenerator.sam.java_util_function_ToIntFunction.new ToIntFunction() {...},0,6,0,0,0,0,0,1,0,1
 ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,KtlintReportGenerator.generatorReport.1.2.2.2.1.2.new Function1() {...},0,30,0,0,0,2,0,2,0,2
 ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,KtlintReportGenerator.generatorReport.1.2.2.2.1.2.new Function1() {...},0,29,0,0,0,2,0,2,0,2
@@ -75,15 +77,12 @@ ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,AbstractChe
 ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,AbstractCheckSupport.hasErrors.1.formatFunc.new Function4() {...},7,26,0,0,0,1,3,2,3,2
 ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,AbstractLintSupport.userData.2.editorConfigs.new Function1() {...},0,23,0,0,0,1,0,2,0,2
 ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,AbstractLintSupport.userData.2.editorConfigs.new PropertyReference1() {...},7,12,0,0,0,1,3,3,3,3
-ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,Report,0,64,0,0,0,15,0,2,0,2
+ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint.internal,Report,0,56,0,0,0,13,0,2,0,2
 ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint,MavenLogReporterProvider,12,51,1,3,1,9,2,5,1,4
-ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint,CheckMojo,10,132,8,14,0,18,8,5,0,2
-ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint,AbstractBaseMojo,25,54,5,5,0,14,9,7,4,7
-ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint,KtlintReport.executeReport.results.new Function1() {...},7,14,0,0,0,1,3,3,3,3
-ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint,FormatMojo,9,119,7,13,0,14,7,5,0,2
-ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint,KtlintReport,40,217,15,23,3,33,17,10,2,6
+ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint,CheckMojo,8,166,6,12,0,31,6,5,0,2
+ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint,AbstractBaseMojo,76,65,4,4,0,16,18,16,14,16
+ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint,FormatMojo,8,152,6,10,0,27,6,4,0,2
+ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint,KtlintReport,24,250,13,21,1,40,13,11,0,7
 ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint,HelpMojo,893,0,110,0,159,0,71,0,16,0
 ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint,ReporterConfig,84,73,11,5,0,4,13,12,7,10
 ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint,KtlintReport.canGenerateReport.new Function1() {...},7,14,0,0,0,1,3,3,3,3
-ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint,FormatMojo.execute.new Function1() {...},7,14,0,0,0,1,3,3,3,3
-ktlint Maven Plugin,com.github.gantsign.maven.plugin.ktlint,CheckMojo.execute.new Function1() {...},7,14,0,0,0,1,3,3,3,3

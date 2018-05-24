@@ -45,158 +45,168 @@ import java.util.ServiceLoader
 <span class="fc" id="L45">internal abstract class AbstractCheckSupport(</span>
     log: Log,
     basedir: File,
-    private val sourceRoots: Set&lt;File&gt;,
+    private val sources: List&lt;Sources&gt;,
     private val charset: Charset,
-    private val includes: Set&lt;String&gt;,
-    private val excludes: Set&lt;String&gt;,
     android: Boolean,
     private val reporterConfig: Set&lt;ReporterConfig&gt;,
-<span class="nc" id="L54">    protected val verbose: Boolean</span>
-<span class="fc" id="L55">) : AbstractLintSupport(log, basedir, android) {</span>
+<span class="nc" id="L52">    protected val verbose: Boolean</span>
+<span class="fc" id="L53">) : AbstractLintSupport(log, basedir, android) {</span>
 
     protected open val reporter: Reporter
         get() {
-<span class="fc" id="L59">            data class ReporterTemplate(</span>
-<span class="fc" id="L60">                val id: String,</span>
-<span class="fc" id="L61">                val config: Map&lt;String, String&gt;,</span>
-<span class="pc" id="L62">                var output: String?</span>
+<span class="fc" id="L57">            data class ReporterTemplate(</span>
+<span class="fc" id="L58">                val id: String,</span>
+<span class="fc" id="L59">                val config: Map&lt;String, String&gt;,</span>
+<span class="pc" id="L60">                var output: String?</span>
             )
 
-<span class="fc" id="L65">            val templates: List&lt;ReporterTemplate&gt; =</span>
-<span class="fc" id="L66">                reporterConfig</span>
-<span class="fc" id="L67">                    .map { reporter: ReporterConfig -&gt;</span>
-<span class="fc" id="L68">                        val (reporterId, output) = reporter</span>
+<span class="fc" id="L63">            val templates: List&lt;ReporterTemplate&gt; =</span>
+<span class="fc" id="L64">                reporterConfig</span>
+<span class="fc" id="L65">                    .map { reporter: ReporterConfig -&gt;</span>
+<span class="fc" id="L66">                        val (reporterId, output) = reporter</span>
 
-<span class="pc bpc" id="L70" title="1 of 2 branches missed.">                        if (reporterId == null) {</span>
-<span class="nc" id="L71">                            throw MojoFailureException(&quot;Unable to find reporter without id&quot;)</span>
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">                        if (reporterId == null) {</span>
+<span class="nc" id="L69">                            throw MojoFailureException(&quot;Unable to find reporter without id&quot;)</span>
                         }
 
-<span class="fc" id="L74">                        val properties: Map&lt;String, String&gt; =</span>
-<span class="pc bpc" id="L75" title="1 of 4 branches missed.">                            reporter.properties?.asSequence()?.associate { (key, value) -&gt;</span>
-<span class="pc bpc" id="L76" title="4 of 8 branches missed.">                                (key?.toString() ?: &quot;&quot;) to (value?.toString() ?: &quot;&quot;)</span>
-<span class="fc" id="L77">                            } ?: emptyMap()</span>
+<span class="fc" id="L72">                        val properties: Map&lt;String, String&gt; =</span>
+<span class="pc bpc" id="L73" title="1 of 4 branches missed.">                            reporter.properties?.asSequence()?.associate { (key, value) -&gt;</span>
+<span class="pc bpc" id="L74" title="4 of 8 branches missed.">                                (key?.toString() ?: &quot;&quot;) to (value?.toString() ?: &quot;&quot;)</span>
+<span class="fc" id="L75">                            } ?: emptyMap()</span>
 
-<span class="fc" id="L79">                        ReporterTemplate(</span>
-<span class="fc" id="L80">                            id = reporterId,</span>
-<span class="fc" id="L81">                            config = mapOf(</span>
-<span class="fc" id="L82">                                &quot;verbose&quot; to verbose.toString()</span>
-<span class="fc" id="L83">                            ) + properties,</span>
-<span class="fc bfc" id="L84" title="All 2 branches covered.">                            output = output?.toString()</span>
-<span class="fc" id="L85">                        )</span>
+<span class="fc" id="L77">                        ReporterTemplate(</span>
+<span class="fc" id="L78">                            id = reporterId,</span>
+<span class="fc" id="L79">                            config = mapOf(</span>
+<span class="fc" id="L80">                                &quot;verbose&quot; to verbose.toString()</span>
+<span class="fc" id="L81">                            ) + properties,</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">                            output = output?.toString()</span>
+<span class="fc" id="L83">                        )</span>
                     }
-<span class="fc" id="L87">                    .distinct()</span>
+<span class="fc" id="L85">                    .distinct()</span>
 
-<span class="fc" id="L89">            val reporterLoader = ServiceLoader.load(ReporterProvider::class.java)</span>
+<span class="fc" id="L87">            val reporterLoader = ServiceLoader.load(ReporterProvider::class.java)</span>
 
-<span class="fc" id="L91">            val reporterProviderById = reporterLoader.associate { it.id to it }</span>
-<span class="fc bfc" id="L92" title="All 2 branches covered.">            for ((id) in reporterProviderById) {</span>
-<span class="fc" id="L93">                log.debug(&quot;Discovered reporter '$id'&quot;)</span>
+<span class="fc" id="L89">            val reporterProviderById = reporterLoader.associate { it.id to it }</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">            for ((id) in reporterProviderById) {</span>
+<span class="fc" id="L91">                log.debug(&quot;Discovered reporter '$id'&quot;)</span>
             }
 
-<span class="fc" id="L96">            fun ReporterTemplate.toReporter(): Reporter {</span>
-<span class="fc" id="L97">                val reporterProvider = reporterProviderById[id]</span>
-<span class="pc bpc" id="L98" title="1 of 2 branches missed.">                if (reporterProvider == null) {</span>
-<span class="nc" id="L99">                    val availableReporters = reporterProviderById.keys.sorted()</span>
-<span class="nc" id="L100">                    throw MojoFailureException(</span>
-<span class="nc" id="L101">                        &quot;Error: reporter '$id' wasn't found (available: &quot; +</span>
-<span class="nc" id="L102">                            &quot;${availableReporters.joinToString(&quot;,&quot;)})&quot;</span>
+<span class="fc" id="L94">            fun ReporterTemplate.toReporter(): Reporter {</span>
+<span class="fc" id="L95">                val reporterProvider = reporterProviderById[id]</span>
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">                if (reporterProvider == null) {</span>
+<span class="nc" id="L97">                    val availableReporters = reporterProviderById.keys.sorted()</span>
+<span class="nc" id="L98">                    throw MojoFailureException(</span>
+<span class="nc" id="L99">                        &quot;Error: reporter '$id' wasn't found (available: &quot; +</span>
+<span class="nc" id="L100">                            &quot;${availableReporters.joinToString(&quot;,&quot;)})&quot;</span>
                     )
                 }
-<span class="fc bfc" id="L105" title="All 2 branches covered.">                if (log.isDebugEnabled) {</span>
-<span class="fc" id="L106">                    log.debug(&quot;Initializing '$id' reporter with $config&quot; +</span>
-<span class="pc bpc" id="L107" title="1 of 4 branches missed.">                        (output?.let { &quot;, output=$it&quot; } ?: &quot;&quot;))</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">                if (log.isDebugEnabled) {</span>
+<span class="fc" id="L104">                    log.debug(&quot;Initializing '$id' reporter with $config&quot; +</span>
+<span class="pc bpc" id="L105" title="1 of 4 branches missed.">                        (output?.let { &quot;, output=$it&quot; } ?: &quot;&quot;))</span>
                 }
-<span class="fc" id="L109">                val stream =</span>
-<span class="fc bfc" id="L110" title="All 2 branches covered.">                    if (output != null) {</span>
-<span class="fc" id="L111">                        Files.createDirectories(Paths.get(output).parent)</span>
-<span class="fc" id="L112">                        PrintStream(output, &quot;UTF-8&quot;)</span>
-<span class="fc" id="L113">                    } else System.out</span>
+<span class="fc" id="L107">                val stream =</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">                    if (output != null) {</span>
+<span class="fc" id="L109">                        Files.createDirectories(Paths.get(output).parent)</span>
+<span class="fc" id="L110">                        PrintStream(output, &quot;UTF-8&quot;)</span>
+<span class="fc" id="L111">                    } else System.out</span>
 
-<span class="fc" id="L115">                val reporter =</span>
-<span class="fc bfc" id="L116" title="All 2 branches covered.">                    if (reporterProvider is MavenLogReporterProvider)</span>
-<span class="fc" id="L117">                        reporterProvider.get(log, config)</span>
-<span class="fc" id="L118">                    else reporterProvider.get(stream, config)</span>
+<span class="fc" id="L113">                val reporter =</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">                    if (reporterProvider is MavenLogReporterProvider)</span>
+<span class="fc" id="L115">                        reporterProvider.get(log, config)</span>
+<span class="fc" id="L116">                    else reporterProvider.get(stream, config)</span>
 
-<span class="fc bfc" id="L120" title="All 2 branches covered.">                if (output == null) {</span>
-<span class="fc" id="L121">                    return reporter</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">                if (output == null) {</span>
+<span class="fc" id="L119">                    return reporter</span>
                 }
 
-<span class="fc" id="L124">                return object : Reporter by reporter {</span>
+<span class="fc" id="L122">                return object : Reporter by reporter {</span>
                     override fun afterAll() {
-<span class="fc" id="L126">                        reporter.afterAll()</span>
-<span class="fc" id="L127">                        stream.close()</span>
-<span class="fc" id="L128">                    }</span>
+<span class="fc" id="L124">                        reporter.afterAll()</span>
+<span class="fc" id="L125">                        stream.close()</span>
+<span class="fc" id="L126">                    }</span>
                 }
             }
-<span class="fc" id="L131">            return Reporter.from(*templates.map(ReporterTemplate::toReporter).toTypedArray())</span>
+<span class="fc" id="L129">            return Reporter.from(*templates.map(ReporterTemplate::toReporter).toTypedArray())</span>
         }
 
     protected fun hasErrors(reporter: Reporter): Boolean {
-<span class="fc" id="L135">        var hasErrors = false</span>
-<span class="fc bfc" id="L136" title="All 2 branches covered.">        for (sourceRoot in sourceRoots) {</span>
-<span class="fc bfc" id="L137" title="All 2 branches covered.">            if (!sourceRoot.exists()) {</span>
-<span class="fc" id="L138">                log.warn(&quot;Source root doesn't exist: ${sourceRoot.toRelativeString(basedir)}&quot;)</span>
-<span class="fc" id="L139">                continue</span>
+<span class="fc" id="L133">        var hasErrors = false</span>
+<span class="fc" id="L134">        val checkedFiles = mutableSetOf&lt;File&gt;()</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">        for ((isIncluded, sourceRoots, includes, excludes) in sources) {</span>
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">            if (!isIncluded) {</span>
+<span class="nc" id="L137">                log.debug(&quot;Source roots not included: $sourceRoots&quot;)</span>
+<span class="nc" id="L138">                continue</span>
             }
-<span class="pc bpc" id="L141" title="1 of 2 branches missed.">            if (!sourceRoot.isDirectory) {</span>
-<span class="nc" id="L142">                throw MojoFailureException(</span>
-<span class="nc" id="L143">                    &quot;Source root is not a directory: ${sourceRoot.toRelativeString(basedir)}&quot;</span>
-                )
-            }
+<span class="fc bfc" id="L140" title="All 2 branches covered.">            for (sourceRoot in sourceRoots) {</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">                if (!sourceRoot.exists()) {</span>
+<span class="fc" id="L142">                    log.warn(&quot;Source root doesn't exist: ${sourceRoot.toRelativeString(basedir)}&quot;)</span>
+<span class="fc" id="L143">                    continue</span>
+                }
+<span class="pc bpc" id="L145" title="1 of 2 branches missed.">                if (!sourceRoot.isDirectory) {</span>
+<span class="nc" id="L146">                    throw MojoFailureException(</span>
+<span class="nc" id="L147">                        &quot;Source root is not a directory: ${sourceRoot.toRelativeString(basedir)}&quot;</span>
+                    )
+                }
 
-<span class="fc" id="L147">            val includes =</span>
-<span class="pc bpc" id="L148" title="2 of 4 branches missed.">                includes.takeUnless(Set&lt;String&gt;::isEmpty)?.toTypedArray() ?: arrayOf(&quot;**/*.kt&quot;)</span>
-<span class="fc" id="L149">            val excludes = excludes.toTypedArray()</span>
+<span class="fc" id="L151">                val includesArray =</span>
+<span class="pc bpc" id="L152" title="2 of 4 branches missed.">                    includes.takeUnless(Set&lt;String&gt;::isEmpty)?.toTypedArray() ?: arrayOf(&quot;**/*.kt&quot;)</span>
+<span class="fc" id="L153">                val excludesArray = excludes.toTypedArray()</span>
 
-<span class="fc" id="L151">            val ds = DirectoryScanner().apply {</span>
-<span class="fc" id="L152">                setIncludes(*includes)</span>
-<span class="fc" id="L153">                setExcludes(*excludes)</span>
-<span class="fc" id="L154">                basedir = sourceRoot</span>
-<span class="fc" id="L155">                setCaseSensitive(true)</span>
-<span class="fc" id="L156">            }</span>
-<span class="fc" id="L157">            ds.scan()</span>
+<span class="fc" id="L155">                val ds = DirectoryScanner().apply {</span>
+<span class="fc" id="L156">                    setIncludes(*includesArray)</span>
+<span class="fc" id="L157">                    setExcludes(*excludesArray)</span>
+<span class="fc" id="L158">                    basedir = sourceRoot</span>
+<span class="fc" id="L159">                    setCaseSensitive(true)</span>
+<span class="fc" id="L160">                }</span>
+<span class="fc" id="L161">                ds.scan()</span>
 
-<span class="fc" id="L159">            val sourceFiles = ds.includedFiles.map { File(sourceRoot, it) }</span>
+<span class="fc" id="L163">                val sourceFiles = ds.includedFiles.map { File(sourceRoot, it) }</span>
 
-<span class="fc" id="L161">            sourceFiles.forEach { file -&gt;</span>
-<span class="fc" id="L162">                val relativePath = file.toRelativeString(basedir)</span>
-<span class="fc" id="L163">                reporter.before(relativePath)</span>
-
-<span class="fc" id="L165">                log.debug(&quot;checking: $relativePath&quot;)</span>
-
-<span class="fc" id="L167">                val formatFunc =</span>
-<span class="pc bpc" id="L168" title="5 of 7 branches missed.">                    when (file.extension) {</span>
-<span class="fc" id="L169">                        &quot;kt&quot; -&gt; ::lintKt</span>
-<span class="nc" id="L170">                        &quot;kts&quot; -&gt; ::lintKts</span>
-                        else -&gt; {
-<span class="nc" id="L172">                            log.debug(&quot;ignoring non Kotlin file: $relativePath&quot;)</span>
-<span class="nc" id="L173">                            return@forEach</span>
-                        }
+<span class="fc" id="L165">                sourceFiles.forEach { file -&gt;</span>
+<span class="pc bpc" id="L166" title="1 of 2 branches missed.">                    if (!checkedFiles.add(file.canonicalFile)) {</span>
+<span class="nc" id="L167">                        return@forEach</span>
                     }
 
-<span class="fc" id="L177">                val userData = userData + (&quot;file_path&quot; to relativePath)</span>
+<span class="fc" id="L170">                    val relativePath = file.toRelativeString(basedir)</span>
+<span class="fc" id="L171">                    reporter.before(relativePath)</span>
 
-<span class="fc" id="L179">                val sourceText = file.readText(charset)</span>
+<span class="fc" id="L173">                    log.debug(&quot;checking: $relativePath&quot;)</span>
 
-<span class="fc" id="L181">                formatFunc(</span>
-<span class="fc" id="L182">                    sourceText,</span>
-<span class="fc" id="L183">                    ruleSets,</span>
-<span class="fc" id="L184">                    userData,</span>
-<span class="fc" id="L185">                    { error -&gt;</span>
-<span class="fc" id="L186">                        reporter.onLintError(relativePath, error, false)</span>
+<span class="fc" id="L175">                    val formatFunc =</span>
+<span class="pc bpc" id="L176" title="5 of 7 branches missed.">                        when (file.extension) {</span>
+<span class="fc" id="L177">                            &quot;kt&quot; -&gt; ::lintKt</span>
+<span class="nc" id="L178">                            &quot;kts&quot; -&gt; ::lintKts</span>
+                            else -&gt; {
+<span class="nc" id="L180">                                log.debug(&quot;ignoring non Kotlin file: $relativePath&quot;)</span>
+<span class="nc" id="L181">                                return@forEach</span>
+                            }
+                        }
 
-<span class="fc" id="L188">                        val lintError = &quot;$relativePath:${error.line}:${error.col}: ${error.detail}&quot;</span>
-<span class="fc" id="L189">                        log.debug(&quot;Style error &gt; $lintError&quot;)</span>
+<span class="fc" id="L185">                    val userData = userData + (&quot;file_path&quot; to relativePath)</span>
 
-<span class="fc" id="L191">                        hasErrors = true</span>
-<span class="fc" id="L192">                    }</span>
-                )
+<span class="fc" id="L187">                    val sourceText = file.readText(charset)</span>
 
-<span class="fc" id="L195">                reporter.after(relativePath)</span>
-<span class="fc" id="L196">            }</span>
-<span class="fc" id="L197">            reporter.afterAll()</span>
+<span class="fc" id="L189">                    formatFunc(</span>
+<span class="fc" id="L190">                        sourceText,</span>
+<span class="fc" id="L191">                        ruleSets,</span>
+<span class="fc" id="L192">                        userData,</span>
+<span class="fc" id="L193">                        { error -&gt;</span>
+<span class="fc" id="L194">                            reporter.onLintError(relativePath, error, false)</span>
+
+<span class="fc" id="L196">                            val lintError =</span>
+<span class="fc" id="L197">                                &quot;$relativePath:${error.line}:${error.col}: ${error.detail}&quot;</span>
+<span class="fc" id="L198">                            log.debug(&quot;Style error &gt; $lintError&quot;)</span>
+
+<span class="fc" id="L200">                            hasErrors = true</span>
+<span class="fc" id="L201">                        }</span>
+                    )
+
+<span class="fc" id="L204">                    reporter.after(relativePath)</span>
+<span class="fc" id="L205">                }</span>
+<span class="fc" id="L206">                reporter.afterAll()</span>
+            }
         }
-<span class="fc" id="L199">        return hasErrors</span>
+<span class="fc" id="L209">        return hasErrors</span>
     }
 
     private fun lintKt(
@@ -204,13 +214,13 @@ import java.util.ServiceLoader
         ruleSets: List&lt;RuleSet&gt;,
         userData: Map&lt;String, String&gt;,
         onError: (error: LintError) -&gt; Unit
-<span class="fc" id="L207">    ) = KtLint.lint(sourceText, ruleSets, userData, onError)</span>
+<span class="fc" id="L217">    ) = KtLint.lint(sourceText, ruleSets, userData, onError)</span>
 
     private fun lintKts(
         sourceText: String,
         ruleSets: List&lt;RuleSet&gt;,
         userData: Map&lt;String, String&gt;,
         onError: (error: LintError) -&gt; Unit
-<span class="nc" id="L214">    ) = KtLint.lintScript(sourceText, ruleSets, userData, onError)</span>
+<span class="nc" id="L224">    ) = KtLint.lintScript(sourceText, ruleSets, userData, onError)</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

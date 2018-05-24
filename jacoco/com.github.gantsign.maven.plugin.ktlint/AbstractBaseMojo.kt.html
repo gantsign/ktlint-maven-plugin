@@ -35,38 +35,38 @@ import java.io.File
 <span class="pc bpc" id="L35" title="1 of 2 branches missed.">    protected lateinit var basedir: File</span>
 
     @Parameter(defaultValue = &quot;\${project.compileSourceRoots}&quot;, readonly = true, required = true)
-    private lateinit var compileSourceRoots: List&lt;String&gt;
+<span class="pc bpc" id="L38" title="1 of 2 branches missed.">    protected lateinit var sourceRoots: List&lt;String&gt;</span>
 
     @Parameter(
         defaultValue = &quot;\${project.testCompileSourceRoots}&quot;,
         readonly = true,
         required = true
     )
-    private lateinit var testCompileSourceRoots: List&lt;String&gt;
+<span class="pc bpc" id="L45" title="1 of 2 branches missed.">    protected lateinit var testSourceRoots: List&lt;String&gt;</span>
+
+    /**
+     * A list of root directories containing Kotlin scripts.
+     */
+    @Parameter(property = &quot;ktlint.scriptRoots&quot;, defaultValue = &quot;\${project.basedir.path}&quot;)
+<span class="pc bpc" id="L51" title="1 of 2 branches missed.">    protected lateinit var scriptRoots: List&lt;String&gt;</span>
 
     /**
      * Include the production source roots.
      */
-    @Parameter(property = &quot;ktlint.includeSourceRoots&quot;, defaultValue = &quot;true&quot;, required = true)
-<span class="fc" id="L51">    private var includeSourceRoots = true</span>
+    @Parameter(property = &quot;ktlint.includeSources&quot;, defaultValue = &quot;true&quot;, required = true)
+<span class="pc" id="L57">    protected var includeSources = true</span>
 
     /**
      * Include the test source roots.
      */
-    @Parameter(property = &quot;ktlint.includeTestSourceRoots&quot;, defaultValue = &quot;true&quot;, required = true)
-<span class="fc" id="L57">    private var includeTestSourceRoots = true</span>
+    @Parameter(property = &quot;ktlint.includeTestSources&quot;, defaultValue = &quot;true&quot;, required = true)
+<span class="pc" id="L63">    protected var includeTestSources = true</span>
 
-    protected val sourceRoots: List&lt;String&gt;
-        get() {
-<span class="fc" id="L61">            var sourceRoots = emptyList&lt;String&gt;()</span>
-<span class="pc bpc" id="L62" title="1 of 2 branches missed.">            if (includeSourceRoots) {</span>
-<span class="pc bpc" id="L63" title="1 of 2 branches missed.">                sourceRoots += compileSourceRoots</span>
-            }
-<span class="pc bpc" id="L65" title="1 of 2 branches missed.">            if (includeTestSourceRoots) {</span>
-<span class="pc bpc" id="L66" title="1 of 2 branches missed.">                sourceRoots += testCompileSourceRoots</span>
-            }
-<span class="fc" id="L68">            return sourceRoots</span>
-        }
+    /**
+     * Include scripts.
+     */
+    @Parameter(property = &quot;ktlint.includeScripts&quot;, defaultValue = &quot;true&quot;, required = true)
+<span class="pc" id="L69">    protected var includeScripts = true</span>
 
     /**
      * File file encoding of the Kotlin source files.
@@ -75,21 +75,45 @@ import java.io.File
 <span class="fc" id="L75">    protected val encoding: String? = null</span>
 
     /**
-     * A list of inclusion filters for the source files to be processed.
+     * A list of inclusion filters for the source files to be processed under the source roots.
      */
-    @Parameter
-<span class="pc" id="L81">    protected var includes: Set&lt;String&gt;? = null</span>
+    @Parameter(defaultValue = &quot;**/*.kt&quot;)
+<span class="pc" id="L81">    protected var sourcesIncludes: Set&lt;String&gt;? = null</span>
 
     /**
-     * A list of exclusion filters for the source files to be processed.
+     * A list of exclusion filters for the source files to be processed under the source roots.
      */
     @Parameter
-<span class="pc" id="L87">    protected var excludes: Set&lt;String&gt;? = null</span>
+<span class="pc" id="L87">    protected var sourcesExcludes: Set&lt;String&gt;? = null</span>
+
+    /**
+     * A list of inclusion filters for the source files to be processed under the test source roots.
+     */
+    @Parameter(defaultValue = &quot;**/*.kt&quot;)
+<span class="pc" id="L93">    protected var testSourcesIncludes: Set&lt;String&gt;? = null</span>
+
+    /**
+     * A list of exclusion filters for the source files to be processed under the test source roots.
+     */
+    @Parameter
+<span class="pc" id="L99">    protected var testSourcesExcludes: Set&lt;String&gt;? = null</span>
+
+    /**
+     * A list of inclusion filters for scripts.
+     */
+    @Parameter(defaultValue = &quot;*.kts&quot;)
+<span class="pc" id="L105">    protected var scriptsIncludes: Set&lt;String&gt;? = null</span>
+
+    /**
+     * A list of exclusion filters for scripts.
+     */
+    @Parameter
+<span class="pc" id="L111">    protected var scriptsExcludes: Set&lt;String&gt;? = null</span>
 
     /**
      * Enable Android Kotlin Style Guide compatibility.
      */
     @Parameter(property = &quot;ktlint.android&quot;, defaultValue = &quot;false&quot;, required = true)
-<span class="pc" id="L93">    protected var android: Boolean = false</span>
+<span class="pc" id="L117">    protected var android: Boolean = false</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>
