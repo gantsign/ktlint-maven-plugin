@@ -45,6 +45,12 @@ abstract class AbstractBaseMojo : AbstractMojo() {
     protected lateinit var testSourceRoots: List<String>
 
     /**
+     * A list of root directories containing Kotlin scripts.
+     */
+    @Parameter(property = "ktlint.scriptRoots", defaultValue = "\${project.basedir.path}")
+    protected lateinit var scriptRoots: List<String>
+
+    /**
      * Include the production source roots.
      */
     @Parameter(property = "ktlint.includeSources", defaultValue = "true", required = true)
@@ -57,6 +63,12 @@ abstract class AbstractBaseMojo : AbstractMojo() {
     protected var includeTestSources = true
 
     /**
+     * Include scripts.
+     */
+    @Parameter(property = "ktlint.includeScripts", defaultValue = "true", required = true)
+    protected var includeScripts = true
+
+    /**
      * File file encoding of the Kotlin source files.
      */
     @Parameter(property = "encoding", defaultValue = "\${project.build.sourceEncoding}")
@@ -65,7 +77,7 @@ abstract class AbstractBaseMojo : AbstractMojo() {
     /**
      * A list of inclusion filters for the source files to be processed under the source roots.
      */
-    @Parameter
+    @Parameter(defaultValue = "**/*.kt")
     protected var sourcesIncludes: Set<String>? = null
 
     /**
@@ -77,7 +89,7 @@ abstract class AbstractBaseMojo : AbstractMojo() {
     /**
      * A list of inclusion filters for the source files to be processed under the test source roots.
      */
-    @Parameter
+    @Parameter(defaultValue = "**/*.kt")
     protected var testSourcesIncludes: Set<String>? = null
 
     /**
@@ -85,6 +97,18 @@ abstract class AbstractBaseMojo : AbstractMojo() {
      */
     @Parameter
     protected var testSourcesExcludes: Set<String>? = null
+
+    /**
+     * A list of inclusion filters for scripts.
+     */
+    @Parameter(defaultValue = "*.kts")
+    protected var scriptsIncludes: Set<String>? = null
+
+    /**
+     * A list of exclusion filters for scripts.
+     */
+    @Parameter
+    protected var scriptsExcludes: Set<String>? = null
 
     /**
      * Enable Android Kotlin Style Guide compatibility.

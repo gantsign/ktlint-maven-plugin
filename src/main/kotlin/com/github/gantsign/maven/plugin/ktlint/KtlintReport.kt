@@ -66,6 +66,12 @@ class KtlintReport : AbstractMavenReport() {
     private lateinit var testSourceRoots: List<String>
 
     /**
+     * A list of root directories containing Kotlin scripts.
+     */
+    @Parameter(property = "ktlint.scriptRoots", defaultValue = "\${project.basedir.path}")
+    private lateinit var scriptRoots: List<String>
+
+    /**
      * Include the production source roots.
      */
     @Parameter(property = "ktlint.includeSources", defaultValue = "true", required = true)
@@ -78,6 +84,12 @@ class KtlintReport : AbstractMavenReport() {
     private var includeTestSources = true
 
     /**
+     * Include scripts.
+     */
+    @Parameter(property = "ktlint.includeScripts", defaultValue = "true", required = true)
+    private var includeScripts = true
+
+    /**
      * File file encoding of the Kotlin source files.
      */
     @Parameter(property = "encoding", defaultValue = "\${project.build.sourceEncoding}")
@@ -86,7 +98,7 @@ class KtlintReport : AbstractMavenReport() {
     /**
      * A list of inclusion filters for the source files to be processed under the source roots.
      */
-    @Parameter
+    @Parameter(defaultValue = "**/*.kt")
     private var sourcesIncludes: Set<String>? = null
 
     /**
@@ -98,7 +110,7 @@ class KtlintReport : AbstractMavenReport() {
     /**
      * A list of inclusion filters for the source files to be processed under the test source roots.
      */
-    @Parameter
+    @Parameter(defaultValue = "**/*.kt")
     private var testSourcesIncludes: Set<String>? = null
 
     /**
@@ -106,6 +118,18 @@ class KtlintReport : AbstractMavenReport() {
      */
     @Parameter
     private var testSourcesExcludes: Set<String>? = null
+
+    /**
+     * A list of inclusion filters for scripts.
+     */
+    @Parameter(defaultValue = "*.kts")
+    private var scriptsIncludes: Set<String>? = null
+
+    /**
+     * A list of exclusion filters for scripts.
+     */
+    @Parameter
+    private var scriptsExcludes: Set<String>? = null
 
     /**
      * Enable Android Kotlin Style Guide compatibility.
@@ -147,11 +171,8 @@ class KtlintReport : AbstractMavenReport() {
 
     override fun getOutputName(): String = "ktlint"
 
-    override fun canGenerateReport(): Boolean = when {
-        skip -> false
-        !sourceRoots.asSequence().map(::File).any { it.isDirectory } -> false
-        else -> true
-    }
+    override fun canGenerateReport(): Boolean =
+        !skip && sourceRoots.asSequence().map(::File).any { it.isDirectory }
 
     override fun executeReport(locale: Locale) {
         val results = Report(
@@ -169,6 +190,12 @@ class KtlintReport : AbstractMavenReport() {
                     sourceRoots = testSourceRoots,
                     includes = testSourcesIncludes,
                     excludes = testSourcesExcludes
+                ),
+                Sources(
+                    isIncluded = includeScripts,
+                    sourceRoots = scriptRoots,
+                    includes = scriptsIncludes,
+                    excludes = scriptsExcludes
                 )
             ),
             charset = encoding?.trim()?.takeUnless(String::isEmpty)
