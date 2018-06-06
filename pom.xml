@@ -797,7 +797,7 @@
           <dependency>
             <groupId>com.github.gantsign.maven.plugin-tools</groupId>
             <artifactId>kotlin-maven-plugin-tools</artifactId>
-            <version>0.9.3</version>
+            <version>0.9.4</version>
           </dependency>
         </dependencies>
         <executions>
