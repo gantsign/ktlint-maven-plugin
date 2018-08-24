@@ -43,6 +43,7 @@
   <properties>
     <doxia.version>1.8</doxia.version>
     <kotlin.version>1.2.41</kotlin.version>
+    <ktlint.version>0.23.1</ktlint.version>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <maven.version>3.5.3</maven.version>
@@ -61,7 +62,12 @@
       <dependency>
         <groupId>com.github.shyiko</groupId>
         <artifactId>ktlint</artifactId>
-        <version>0.23.1</version>
+        <version>${ktlint.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.github.shyiko.ktlint</groupId>
+        <artifactId>ktlint-core</artifactId>
+        <version>${ktlint.version}</version>
       </dependency>
       <dependency>
         <groupId>com.google.guava</groupId>
@@ -363,7 +369,6 @@
     <dependency>
       <groupId>com.github.shyiko.ktlint</groupId>
       <artifactId>ktlint-core</artifactId>
-      <version>0.23.1</version>
     </dependency>
     <dependency>
       <groupId>org.apache.maven</groupId>
