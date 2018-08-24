@@ -136,6 +136,21 @@ mvn ${project.groupId}:${project.artifactId}:${project.version}:check
   plugin in the <<<\<reporting\>>>> section of your POM.
 
 +----------+
+<build>
+  <pluginManagement>
+    <plugins>
+      ...
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+        <!-- ktlint-maven plugin requires maven-site-plugin >= 3.7.0 to work -->
+        <version>3.7.1</version>
+      </plugin>
+      ...
+    </plugins>
+  </pluginManagement>
+</build>
+
 <reporting>
   <plugins>
     ...
