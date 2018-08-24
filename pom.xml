@@ -417,7 +417,7 @@
     <dependency>
       <groupId>org.jetbrains.kotlin</groupId>
       <artifactId>kotlin-compiler-embeddable</artifactId>
-      <version>1.2.41</version>
+      <version>1.2.61</version>
     </dependency>
     <dependency>
       <groupId>org.jetbrains.kotlin</groupId>
