@@ -41,7 +41,7 @@
   </prerequisites>
 
   <properties>
-    <kotlin.version>1.2.41</kotlin.version>
+    <kotlin.version>1.2.61</kotlin.version>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <maven.version>3.5.3</maven.version>
