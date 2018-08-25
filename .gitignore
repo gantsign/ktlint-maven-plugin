@@ -326,3 +326,4 @@ $RECYCLE.BIN/
 ### Project additions ###
 
 .flattened-pom.xml
+/.idea/checkstyle-idea.xml
