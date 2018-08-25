@@ -32,23 +32,23 @@ import java.io.File
 <span class="fc" id="L32">abstract class AbstractBaseMojo : AbstractMojo() {</span>
 
     @Parameter(defaultValue = &quot;\${project.basedir}&quot;, readonly = true, required = true)
-<span class="pc bpc" id="L35" title="1 of 2 branches missed.">    protected lateinit var basedir: File</span>
+<span class="pc" id="L35">    protected lateinit var basedir: File</span>
 
     @Parameter(defaultValue = &quot;\${project.compileSourceRoots}&quot;, readonly = true, required = true)
-<span class="pc bpc" id="L38" title="1 of 2 branches missed.">    protected lateinit var sourceRoots: List&lt;String&gt;</span>
+<span class="pc" id="L38">    protected lateinit var sourceRoots: List&lt;String&gt;</span>
 
     @Parameter(
         defaultValue = &quot;\${project.testCompileSourceRoots}&quot;,
         readonly = true,
         required = true
     )
-<span class="pc bpc" id="L45" title="1 of 2 branches missed.">    protected lateinit var testSourceRoots: List&lt;String&gt;</span>
+<span class="pc" id="L45">    protected lateinit var testSourceRoots: List&lt;String&gt;</span>
 
     /**
      * A list of root directories containing Kotlin scripts.
      */
     @Parameter(property = &quot;ktlint.scriptRoots&quot;, defaultValue = &quot;\${project.basedir.path}&quot;)
-<span class="pc bpc" id="L51" title="1 of 2 branches missed.">    protected lateinit var scriptRoots: List&lt;String&gt;</span>
+<span class="pc" id="L51">    protected lateinit var scriptRoots: List&lt;String&gt;</span>
 
     /**
      * Include the production source roots.
@@ -116,4 +116,4 @@ import java.io.File
     @Parameter(property = &quot;ktlint.android&quot;, defaultValue = &quot;false&quot;, required = true)
 <span class="pc" id="L117">    protected var android: Boolean = false</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

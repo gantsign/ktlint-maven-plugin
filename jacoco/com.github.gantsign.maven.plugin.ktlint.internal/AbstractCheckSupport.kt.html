@@ -173,7 +173,7 @@ import java.util.ServiceLoader
 <span class="fc" id="L173">                    log.debug(&quot;checking: $relativePath&quot;)</span>
 
 <span class="fc" id="L175">                    val formatFunc =</span>
-<span class="pc bpc" id="L176" title="5 of 7 branches missed.">                        when (file.extension) {</span>
+<span class="pc bpc" id="L176" title="2 of 3 branches missed.">                        when (file.extension) {</span>
 <span class="fc" id="L177">                            &quot;kt&quot; -&gt; ::lintKt</span>
 <span class="nc" id="L178">                            &quot;kts&quot; -&gt; ::lintKts</span>
                             else -&gt; {
@@ -223,4 +223,4 @@ import java.util.ServiceLoader
         onError: (error: LintError) -&gt; Unit
 <span class="nc" id="L224">    ) = KtLint.lintScript(sourceText, ruleSets, userData, onError)</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

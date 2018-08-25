@@ -84,7 +84,7 @@ import java.nio.charset.Charset
 <span class="fc" id="L84">                    log.debug(&quot;checking format: $relativePath&quot;)</span>
 
 <span class="fc" id="L86">                    val formatFunc =</span>
-<span class="pc bpc" id="L87" title="3 of 7 branches missed.">                        when (file.extension) {</span>
+<span class="pc bpc" id="L87" title="1 of 3 branches missed.">                        when (file.extension) {</span>
 <span class="fc" id="L88">                            &quot;kt&quot; -&gt; ::formatKt</span>
 <span class="fc" id="L89">                            &quot;kts&quot; -&gt; ::formatKts</span>
                             else -&gt; {
@@ -129,4 +129,4 @@ import java.nio.charset.Charset
         onError: (err: LintError, corrected: Boolean) -&gt; Unit
 <span class="fc" id="L130">    ): String = KtLint.formatScript(sourceText, ruleSets, userData, onError)</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
