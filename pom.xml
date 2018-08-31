@@ -1139,7 +1139,7 @@
         <enabled>false</enabled>
       </snapshots>
       <id>jcenter</id>
-      <name>bintray</name>
+      <name>JCenter</name>
       <url>http://jcenter.bintray.com</url>
     </repository>
   </repositories>
