@@ -5,9 +5,9 @@
                           https://maven.apache.org/xsd/settings-1.0.0.xsd">
   <servers>
     <server>
-      <id>bintray-gantsign-maven</id>
-      <username>${env.BINTRAY_USER}</username>
-      <password>${env.BINTRAY_API_KEY}</password>
+      <id>ossrh</id>
+      <username>${env.OSSRH_USER}</username>
+      <password>${env.OSSRH_TOKEN}</password>
     </server>
     <server>
       <id>github</id>

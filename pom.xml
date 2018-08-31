@@ -633,6 +633,11 @@
           <artifactId>dokka-maven-plugin</artifactId>
           <version>0.9.17</version>
         </plugin>
+        <plugin>
+          <groupId>org.sonatype.plugins</groupId>
+          <artifactId>nexus-staging-maven-plugin</artifactId>
+          <version>1.6.7</version>
+        </plugin>
       </plugins>
     </pluginManagement>
 
@@ -1041,7 +1046,16 @@
           </execution>
         </executions>
       </plugin>
-
+      <plugin>
+        <groupId>org.sonatype.plugins</groupId>
+        <artifactId>nexus-staging-maven-plugin</artifactId>
+        <extensions>true</extensions>
+        <configuration>
+          <serverId>ossrh</serverId>
+          <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+          <autoReleaseAfterClose>true</autoReleaseAfterClose>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 
@@ -1150,11 +1164,10 @@
   </pluginRepositories>
 
   <distributionManagement>
-    <repository>
-      <id>bintray-gantsign-maven</id>
-      <name>gantsign-maven</name>
-      <url>https://dl.bintray.com/gantsign/maven</url>
-    </repository>
+    <snapshotRepository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
   </distributionManagement>
 
   <profiles>
@@ -1206,14 +1219,6 @@
           </plugin>
         </plugins>
       </build>
-
-      <distributionManagement>
-        <repository>
-          <id>bintray-gantsign-maven</id>
-          <name>gantsign-maven</name>
-          <url>https://api.bintray.com/maven/gantsign/maven/ktlint-maven-plugin/;publish=1</url>
-        </repository>
-      </distributionManagement>
     </profile>
     <profile>
       <id>site-deploy</id>
