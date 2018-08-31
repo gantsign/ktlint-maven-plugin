@@ -746,7 +746,7 @@
                   <allowedPluginRepositories>
                     <!-- for kotlin-maven-plugin-tools -->
                     <repository>bintray-gantsign-maven</repository>
-                    <!-- jcenter is only required for the Dokka plugin during the build -->
+                    <!-- for dokka-maven-plugin -->
                     <repository>jcenter</repository>
                   </allowedPluginRepositories>
                 </requireNoRepositories>
