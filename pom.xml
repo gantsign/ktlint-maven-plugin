@@ -739,7 +739,7 @@
                   <message>Best Practice is to never define repositories in pom.xml (use a repository manager instead)</message>
                   <allowedRepositories>
                     <!-- for kolor -->
-                    <repository>central</repository>
+                    <repository>jcenter</repository>
                     <!-- for doxia-sink-api-ktx -->
                     <repository>bintray-gantsign-maven</repository>
                   </allowedRepositories>
@@ -1122,7 +1122,7 @@
       <snapshots>
         <enabled>false</enabled>
       </snapshots>
-      <id>central</id>
+      <id>jcenter</id>
       <name>bintray</name>
       <url>http://jcenter.bintray.com</url>
     </repository>
