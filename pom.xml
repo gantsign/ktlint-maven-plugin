@@ -756,8 +756,6 @@
                   <allowedRepositories>
                     <!-- for kolor -->
                     <repository>jcenter</repository>
-                    <!-- for doxia-sink-api-ktx -->
-                    <repository>bintray-gantsign-maven</repository>
                   </allowedRepositories>
                   <allowedPluginRepositories>
                     <!-- for kotlin-maven-plugin-tools -->
@@ -1126,14 +1124,6 @@
   </ciManagement>
 
   <repositories>
-    <repository>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-      <id>bintray-gantsign-maven</id>
-      <name>bintray</name>
-      <url>https://dl.bintray.com/gantsign/maven</url>
-    </repository>
     <repository>
       <snapshots>
         <enabled>false</enabled>
