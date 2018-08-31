@@ -623,6 +623,11 @@
           <artifactId>jacoco-maven-plugin</artifactId>
           <version>0.8.2</version>
         </plugin>
+        <plugin>
+          <groupId>org.jetbrains.dokka</groupId>
+          <artifactId>dokka-maven-plugin</artifactId>
+          <version>0.9.17</version>
+        </plugin>
       </plugins>
     </pluginManagement>
 
@@ -741,6 +746,8 @@
                   <allowedPluginRepositories>
                     <!-- for kotlin-maven-plugin-tools -->
                     <repository>bintray-gantsign-maven</repository>
+                    <!-- jcenter is only required for the Dokka plugin during the build -->
+                    <repository>jcenter</repository>
                   </allowedPluginRepositories>
                 </requireNoRepositories>
                 <banDuplicateClasses>
@@ -1129,6 +1136,11 @@
       <name>bintray-gantsign-plugins</name>
       <url>https://dl.bintray.com/gantsign/maven</url>
     </pluginRepository>
+    <pluginRepository>
+      <id>jcenter</id>
+      <name>JCenter</name>
+      <url>https://jcenter.bintray.com/</url>
+    </pluginRepository>
   </pluginRepositories>
 
   <distributionManagement>
@@ -1171,6 +1183,18 @@
                 <goals>
                   <goal>jar</goal>
                 </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.jetbrains.dokka</groupId>
+            <artifactId>dokka-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>javadocJar</goal>
+                </goals>
+                <phase>package</phase>
               </execution>
             </executions>
           </plugin>
