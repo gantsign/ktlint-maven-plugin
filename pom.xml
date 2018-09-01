@@ -29,7 +29,7 @@
 
   <groupId>com.github.gantsign.maven</groupId>
   <artifactId>ktlint-maven-plugin</artifactId>
-  <version>0.9.9-SNAPSHOT</version>
+  <version>0.9.9</version>
 
   <packaging>maven-plugin</packaging>
 
@@ -1099,7 +1099,7 @@
     <connection>scm:git:https://github.com/gantsign/ktlint-maven-plugin.git</connection>
     <developerConnection>scm:git:git@github.com:gantsign/ktlint-maven-plugin.git</developerConnection>
     <url>https://github.com/gantsign/ktlint-maven-plugin</url>
-    <tag>HEAD</tag>
+    <tag>0.9.9</tag>
   </scm>
 
   <issueManagement>
