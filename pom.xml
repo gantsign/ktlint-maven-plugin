@@ -55,11 +55,6 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>com.andreapivetta.kolor</groupId>
-        <artifactId>kolor</artifactId>
-        <version>0.0.2</version>
-      </dependency>
-      <dependency>
         <groupId>com.github.shyiko</groupId>
         <artifactId>ktlint</artifactId>
         <version>${ktlint.version}</version>
@@ -364,6 +359,11 @@
           <groupId>org.eclipse.aether</groupId>
           <artifactId>aether-transport-http</artifactId>
         </exclusion>
+        <exclusion>
+          <!-- not required for core plugin features and not available from Maven Central -->
+          <groupId>com.andreapivetta.kolor</groupId>
+          <artifactId>kolor</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
     <dependency>
@@ -432,26 +432,6 @@
     <dependency>
       <groupId>org.jetbrains.kotlin</groupId>
       <artifactId>kotlin-stdlib-jdk8</artifactId>
-    </dependency>
-    <dependency>
-      <!-- Used by some of the ktlint reporters but not absolutely required and not available from Maven Central yet -->
-      <groupId>com.andreapivetta.kolor</groupId>
-      <artifactId>kolor</artifactId>
-      <version>0.0.2</version>
-      <scope>runtime</scope>
-      <optional>true</optional>
-      <exclusions>
-        <exclusion>
-          <!-- provided by kotlin-stdlib-jdk8 -->
-          <groupId>org.jetbrains.kotlin</groupId>
-          <artifactId>kotlin-stdlib-jre8</artifactId>
-        </exclusion>
-        <exclusion>
-          <!-- provided by kotlin-stdlib-jdk7 -->
-          <groupId>org.jetbrains.kotlin</groupId>
-          <artifactId>kotlin-stdlib-jre7</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>com.nhaarman</groupId>
@@ -695,7 +675,6 @@
                 <dependency>org.apache.maven:maven-compat</dependency>
                 <dependency>org.slf4j:slf4j-simple</dependency>
                 <dependency>org.slf4j:log4j-over-slf4j</dependency>
-                <dependency>com.andreapivetta.kolor:kolor</dependency>
               </ignoredUnusedDeclaredDependencies>
               <ignoredUsedUndeclaredDependencies>
                 <dependency>org.jetbrains.kotlin:kotlin-stdlib</dependency>
@@ -758,10 +737,6 @@
                 </bannedPlugins>
                 <requireNoRepositories>
                   <message>Best Practice is to never define repositories in pom.xml (use a repository manager instead)</message>
-                  <allowedRepositories>
-                    <!-- for kolor -->
-                    <repository>jcenter</repository>
-                  </allowedRepositories>
                   <allowedPluginRepositories>
                     <!-- for kotlin-maven-plugin-tools -->
                     <repository>bintray-gantsign-maven</repository>
@@ -1137,16 +1112,6 @@
     <url>https://travis-ci.org/gantsign/ktlint-maven-plugin</url>
   </ciManagement>
 
-  <repositories>
-    <repository>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-      <id>jcenter</id>
-      <name>JCenter</name>
-      <url>http://jcenter.bintray.com</url>
-    </repository>
-  </repositories>
   <pluginRepositories>
     <pluginRepository>
       <snapshots>
