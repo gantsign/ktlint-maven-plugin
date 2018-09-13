@@ -505,11 +505,6 @@
     <pluginManagement>
       <plugins>
         <plugin>
-          <groupId>com.github.github</groupId>
-          <artifactId>site-maven-plugin</artifactId>
-          <version>0.12</version>
-        </plugin>
-        <plugin>
           <groupId>io.github.zlika</groupId>
           <artifactId>reproducible-build-maven-plugin</artifactId>
           <version>0.7</version>
@@ -582,6 +577,16 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-resources-plugin</artifactId>
           <version>3.1.0</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-scm-publish-plugin</artifactId>
+          <version>3.0.0</version>
+          <extensions>true</extensions>
+          <configuration>
+            <scmBranch>gh-pages</scmBranch>
+            <serverId>github</serverId>
+          </configuration>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -1127,6 +1132,11 @@
       <id>ossrh</id>
       <url>https://oss.sonatype.org/content/repositories/snapshots</url>
     </snapshotRepository>
+    <site>
+      <id>github-pages-site</id>
+      <name>Deployment through Apache Maven SCM Publish Plugin</name>
+      <url>scm:git:https://github.com/gantsign/ktlint-maven-plugin.git</url>
+    </site>
   </distributionManagement>
 
   <profiles>
@@ -1173,29 +1183,6 @@
                   <goal>javadocJar</goal>
                 </goals>
                 <phase>package</phase>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>site-deploy</id>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>com.github.github</groupId>
-            <artifactId>site-maven-plugin</artifactId>
-            <configuration>
-              <server>github</server>
-              <message>Creating site for ${project.version}</message>
-            </configuration>
-            <executions>
-              <execution>
-                <goals>
-                  <goal>site</goal>
-                </goals>
-                <phase>site</phase>
               </execution>
             </executions>
           </plugin>
