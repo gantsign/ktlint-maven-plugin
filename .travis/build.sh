@@ -10,8 +10,7 @@ if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
         -in .travis/codesigning.asc.enc -out .travis/codesigning.asc -d
     gpg --fast-import .travis/codesigning.asc
 
-    ./mvnw deploy -P publish-artifacts --batch-mode --show-version --settings .travis/settings.xml \
-        -Denforcer.skip=true
+    ./mvnw deploy -P publish-artifacts --batch-mode --show-version --settings .travis/settings.xml
 
     if [ "$TRAVIS_TAG" != "" ]; then
         ./mvnw site-deploy -P site-deploy --batch-mode --show-version --settings .travis/settings.xml
