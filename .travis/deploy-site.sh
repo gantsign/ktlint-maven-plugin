@@ -2,13 +2,18 @@
 
 set -e
 
-mvn site \
+./mvnw site \
     -DskipTests \
     -Dinvoker.skip=true \
     --batch-mode \
     --show-version
 
-mvn scm-publish:publish-scm \
+./mvnw site:stage \
+    -DskipTests \
+    -Dinvoker.skip=true \
+    --batch-mode
+
+./mvnw scm-publish:publish-scm \
     --settings .travis/settings.xml \
     -DskipTests \
     -Dinvoker.skip=true \
