@@ -33,20 +33,20 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Maven: com.github.gantsign.maven.doxia:doxia-sink-api-ktx:0.6.1" level="project" />
+    <orderEntry type="library" name="Maven: com.github.gantsign.maven.doxia:doxia-sink-api-ktx:0.7.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.maven.doxia:doxia-core:1.8" level="project" />
     <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpclient:4.5.6" level="project" />
     <orderEntry type="library" name="Maven: commons-logging:commons-logging:1.2" level="project" />
     <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.10" level="project" />
     <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpcore:4.4.10" level="project" />
-    <orderEntry type="library" name="Maven: com.github.shyiko:ktlint:0.27.0" level="project" />
-    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib:1.2.61" level="project" />
-    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-common:1.2.61" level="project" />
-    <orderEntry type="library" name="Maven: com.github.shyiko.ktlint:ktlint-ruleset-standard:0.27.0" level="project" />
-    <orderEntry type="library" name="Maven: com.github.shyiko.ktlint:ktlint-reporter-plain:0.27.0" level="project" />
-    <orderEntry type="library" name="Maven: com.github.shyiko.ktlint:ktlint-reporter-json:0.27.0" level="project" />
-    <orderEntry type="library" name="Maven: com.github.shyiko.ktlint:ktlint-reporter-checkstyle:0.27.0" level="project" />
-    <orderEntry type="library" name="Maven: com.github.shyiko.ktlint:ktlint-test:0.27.0" level="project" />
+    <orderEntry type="library" name="Maven: com.github.shyiko:ktlint:0.28.0" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib:1.2.70" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-common:1.2.70" level="project" />
+    <orderEntry type="library" name="Maven: com.github.shyiko.ktlint:ktlint-ruleset-standard:0.28.0" level="project" />
+    <orderEntry type="library" name="Maven: com.github.shyiko.ktlint:ktlint-reporter-plain:0.28.0" level="project" />
+    <orderEntry type="library" name="Maven: com.github.shyiko.ktlint:ktlint-reporter-json:0.28.0" level="project" />
+    <orderEntry type="library" name="Maven: com.github.shyiko.ktlint:ktlint-reporter-checkstyle:0.28.0" level="project" />
+    <orderEntry type="library" name="Maven: com.github.shyiko.ktlint:ktlint-test:0.28.0" level="project" />
     <orderEntry type="library" name="Maven: com.github.shyiko.klob:klob:0.2.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.maven:maven-model:3.5.4" level="project" />
     <orderEntry type="library" name="Maven: org.apache.maven:maven-model-builder:3.5.4" level="project" />
@@ -58,7 +58,7 @@
     <orderEntry type="library" name="Maven: com.google.j2objc:j2objc-annotations:1.1" level="project" />
     <orderEntry type="library" name="Maven: org.codehaus.mojo:animal-sniffer-annotations:1.14" level="project" />
     <orderEntry type="library" name="Maven: info.picocli:picocli:2.3.0" level="project" />
-    <orderEntry type="library" name="Maven: com.github.shyiko.ktlint:ktlint-core:0.27.0" level="project" />
+    <orderEntry type="library" name="Maven: com.github.shyiko.ktlint:ktlint-core:0.28.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.maven:maven-plugin-api:3.5.4" level="project" />
     <orderEntry type="library" name="Maven: org.apache.maven:maven-artifact:3.5.4" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.sisu:org.eclipse.sisu.plexus:0.3.3" level="project" />
@@ -90,12 +90,11 @@
     <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.4" level="project" />
     <orderEntry type="library" name="Maven: org.apache.maven.shared:maven-shared-utils:3.2.1" level="project" />
     <orderEntry type="library" name="Maven: commons-io:commons-io:2.6" level="project" />
-    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-compiler-embeddable:1.2.61" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Maven: org.jetbrains.kotlin:kotlin-script-runtime:1.2.61" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Maven: org.jetbrains.kotlin:kotlin-reflect:1.2.61" level="project" />
-    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.2.61" level="project" />
-    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.2.61" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Maven: com.andreapivetta.kolor:kolor:0.0.2" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-compiler-embeddable:1.2.70" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.jetbrains.kotlin:kotlin-script-runtime:1.2.70" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.jetbrains.kotlin:kotlin-reflect:1.2.70" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.2.70" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.2.70" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: com.nhaarman:mockito-kotlin:1.6.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: com.vaadin.external.google:android-json:0.0.20131108.vaadin1" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.12" level="project" />
@@ -124,13 +123,13 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.codehaus.plexus:plexus-archiver:2.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.codehaus.plexus:plexus-io:2.0.4" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.assertj:assertj-core:3.11.1" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: org.jetbrains.kotlin:kotlin-test-junit:1.2.61" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: org.jetbrains.kotlin:kotlin-test-annotations-common:1.2.61" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: org.jetbrains.kotlin:kotlin-test:1.2.61" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: org.jetbrains.kotlin:kotlin-test-common:1.2.61" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: org.mockito:mockito-core:2.21.0" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: net.bytebuddy:byte-buddy:1.8.15" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: net.bytebuddy:byte-buddy-agent:1.8.15" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.jetbrains.kotlin:kotlin-test-junit:1.2.70" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.jetbrains.kotlin:kotlin-test-annotations-common:1.2.70" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.jetbrains.kotlin:kotlin-test:1.2.70" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.jetbrains.kotlin:kotlin-test-common:1.2.70" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.mockito:mockito-core:2.22.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: net.bytebuddy:byte-buddy:1.8.21" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: net.bytebuddy:byte-buddy-agent:1.8.21" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.objenesis:objenesis:2.6" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.skyscreamer:jsonassert:1.5.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.slf4j:slf4j-simple:1.7.25" level="project" />
