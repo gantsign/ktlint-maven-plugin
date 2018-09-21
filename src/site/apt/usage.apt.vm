@@ -207,8 +207,8 @@ mvn ${project.groupId}:${project.artifactId}:${project.version}:check
 +----------+
 
   The built in reporters are <<<plain>>>, <<<json>>> and <<<checkstyle>>>. You
-  can also provide a customer reporter (see {{https://github.com/shyiko/ktlint
-  for details}}); to use a custom reporter it needs to be added as a Maven
+  can also provide a customer reporter (see {{https://github.com/shyiko/ktlint}}
+  for details); to use a custom reporter it needs to be added as a Maven
   dependency to the Maven plugin e.g.:
 
 +----------+
