@@ -42,7 +42,7 @@
 
   <properties>
     <doxia.version>1.8</doxia.version>
-    <kotlin.version>1.2.70</kotlin.version>
+    <kotlin.version>1.2.71</kotlin.version>
     <ktlint.version>0.28.0</ktlint.version>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
