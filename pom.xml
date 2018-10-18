@@ -419,6 +419,11 @@
           <groupId>org.apache.struts</groupId>
           <artifactId>struts-tiles</artifactId>
         </exclusion>
+        <exclusion>
+          <!-- version 1.x has known vulnerabilities and version 2.x has a different groupId -->
+          <groupId>dom4j</groupId>
+          <artifactId>dom4j</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
     <dependency>
@@ -432,6 +437,13 @@
     <dependency>
       <groupId>org.jetbrains.kotlin</groupId>
       <artifactId>kotlin-stdlib-jdk8</artifactId>
+    </dependency>
+    <dependency>
+      <!-- required by maven-reporting-impl -->
+      <groupId>org.dom4j</groupId>
+      <artifactId>dom4j</artifactId>
+      <version>2.1.1</version>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>com.nhaarman</groupId>
@@ -669,6 +681,7 @@
             <configuration>
               <failOnWarning>true</failOnWarning>
               <outputXML>true</outputXML>
+              <ignoreNonCompile>true</ignoreNonCompile>
               <ignoredUnusedDeclaredDependencies>
                 <dependency>org.jetbrains.kotlin:kotlin-stdlib-jdk8</dependency>
                 <dependency>org.jetbrains.kotlin:kotlin-test-junit</dependency>
