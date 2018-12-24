@@ -889,7 +889,7 @@
         <!-- This'll remove the repositories from the POM so downstream users can use their own repository -->
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>flatten-maven-plugin</artifactId>
-        <version>1.0.1</version>
+        <version>1.1.0</version>
         <configuration>
           <flattenMode>oss</flattenMode>
         </configuration>
