@@ -913,7 +913,7 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>license-maven-plugin</artifactId>
-        <version>1.17</version>
+        <version>1.19</version>
         <configuration>
           <projectName>ktlint-maven-plugin</projectName>
           <licenseName>mit</licenseName>
