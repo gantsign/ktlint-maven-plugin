@@ -29,7 +29,7 @@
 
   <groupId>com.github.gantsign.maven</groupId>
   <artifactId>ktlint-maven-plugin</artifactId>
-  <version>0.9.19-SNAPSHOT</version>
+  <version>0.9.20-SNAPSHOT</version>
 
   <packaging>maven-plugin</packaging>
 
