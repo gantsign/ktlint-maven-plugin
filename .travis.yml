@@ -31,7 +31,7 @@ language: java
 jdk: oraclejdk8
 
 before_cache:
-  - rm --force --recursive --verbose $HOME/.m2/repository/com/github/gantsign/ktlint-maven-plugin
+  - rm --force --recursive --verbose $HOME/.m2/repository/com/github/gantsign/maven/ktlint-maven-plugin
   - rm --force --recursive --verbose $HOME/.m2/repository/com/example/test-project
 
 cache:
