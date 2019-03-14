@@ -37,7 +37,7 @@
   <description>Maven plugin for the ktlint Kotlin linter.</description>
 
   <prerequisites>
-    <maven>3.5.3</maven>
+    <maven>3.3.9</maven>
   </prerequisites>
 
   <properties>
@@ -717,7 +717,7 @@
             <configuration>
               <rules>
                 <requireMavenVersion>
-                  <version>[3.2.5,3.7)</version>
+                  <version>[3.3.9,3.7)</version>
                 </requireMavenVersion>
                 <requireJavaVersion>
                   <version>[1.8,1.9)</version>
