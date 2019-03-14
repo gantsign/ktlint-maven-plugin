@@ -43,6 +43,13 @@ install: true
 jobs:
   include:
     - stage: Test
+      name: Min Maven Test
+      env:
+        - MAVEN_VERSION: 3.3.9
+      script: .travis/test.sh
+    - name: Max Maven Test
+      env:
+        - MAVEN_VERSION: 3.6.0
       script: .travis/test.sh
       after_success:
         - bash <(curl -s https://codecov.io/bash)
