@@ -48,7 +48,8 @@ import java.util.ResourceBundle
     defaultPhase = LifecyclePhase.VERIFY,
     requiresDependencyResolution = ResolutionScope.TEST,
     requiresDependencyCollection = ResolutionScope.TEST,
-    requiresProject = true
+    requiresProject = true,
+    threadSafe = true
 )
 class KtlintReport : AbstractMavenReport() {
 
