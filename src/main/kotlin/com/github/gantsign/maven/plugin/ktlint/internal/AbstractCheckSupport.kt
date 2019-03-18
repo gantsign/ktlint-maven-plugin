@@ -49,8 +49,9 @@ internal abstract class AbstractCheckSupport(
     private val charset: Charset,
     android: Boolean,
     private val reporterConfig: Set<ReporterConfig>,
-    protected val verbose: Boolean
-) : AbstractLintSupport(log, basedir, android) {
+    protected val verbose: Boolean,
+    enableExperimentalRules: Boolean
+) : AbstractLintSupport(log, basedir, android, enableExperimentalRules) {
 
     protected open val reporter: Reporter
         get() {

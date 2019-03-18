@@ -82,7 +82,8 @@ class FormatMojo : AbstractBaseMojo() {
             charset = encoding?.trim()?.takeUnless(String::isEmpty)
                 ?.let { Charset.forName(it) }
                 ?: UTF_8,
-            android = android
+            android = android,
+            enableExperimentalRules = experimental
         )()
     }
 }

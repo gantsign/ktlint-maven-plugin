@@ -36,22 +36,37 @@ import java.util.ServiceLoader
 internal abstract class AbstractLintSupport(
     protected val log: Log,
     protected val basedir: File,
-    private val android: Boolean
+    private val android: Boolean,
+    private val enableExperimentalRules: Boolean
 ) {
 
     protected val ruleSets: List<RuleSet> by lazy {
 
-        val ruleSets: List<RuleSet> =
+        val ruleSetComparator =
+            comparingInt<RuleSet> {
+                return@comparingInt when (it.id) {
+                    "standard" -> 0
+                    "experimental" -> 1
+                    else -> 2
+                }
+            }.thenComparing(RuleSet::id)
+
+        var ruleSets: List<RuleSet> =
             ServiceLoader.load(RuleSetProvider::class.java)
                 .map(RuleSetProvider::get)
-                .sortedWith(comparingInt<RuleSet> { if (it.id == "standard") 0 else 1 }
-                    .thenComparing(RuleSet::id))
+                .sortedWith(ruleSetComparator)
 
         if (log.isDebugEnabled) {
             for (ruleSet in ruleSets) {
                 log.debug("Discovered ruleset '${ruleSet.id}'")
             }
         }
+
+        if (!enableExperimentalRules) {
+            ruleSets = ruleSets.filter { it.id != "experimental" }
+            log.debug("Disabled ruleset 'experimental'")
+        }
+
         return@lazy ruleSets
     }
 

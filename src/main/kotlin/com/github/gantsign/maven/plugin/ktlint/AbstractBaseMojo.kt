@@ -115,4 +115,10 @@ abstract class AbstractBaseMojo : AbstractMojo() {
      */
     @Parameter(property = "ktlint.android", defaultValue = "false", required = true)
     protected var android: Boolean = false
+
+    /**
+     * Enable experimental rules (ktlint-ruleset-experimental).
+     */
+    @Parameter(property = "ktlint.experimental", defaultValue = "false", required = true)
+    protected var experimental: Boolean = false
 }

@@ -39,8 +39,9 @@ internal class Format(
     basedir: File,
     private val sources: List<Sources>,
     private val charset: Charset,
-    android: Boolean
-) : AbstractLintSupport(log, basedir, android) {
+    android: Boolean,
+    enableExperimentalRules: Boolean
+) : AbstractLintSupport(log, basedir, android, enableExperimentalRules) {
 
     operator fun invoke() {
         val checkedFiles = mutableSetOf<File>()

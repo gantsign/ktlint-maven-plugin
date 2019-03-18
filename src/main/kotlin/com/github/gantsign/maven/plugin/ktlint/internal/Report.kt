@@ -38,7 +38,8 @@ internal class Report(
     charset: Charset,
     android: Boolean,
     reporterConfig: Set<ReporterConfig>,
-    verbose: Boolean
+    verbose: Boolean,
+    enableExperimentalRules: Boolean
 ) : AbstractCheckSupport(
     log,
     basedir,
@@ -46,7 +47,8 @@ internal class Report(
     charset,
     android,
     reporterConfig,
-    verbose
+    verbose,
+    enableExperimentalRules
 ) {
     operator fun invoke(): CheckResults {
         val modelReporter = ModelReporter()
