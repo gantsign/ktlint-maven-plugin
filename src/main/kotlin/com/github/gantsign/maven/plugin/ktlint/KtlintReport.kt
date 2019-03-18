@@ -150,6 +150,12 @@ class KtlintReport : AbstractMavenReport() {
     private var verbose: Boolean = false
 
     /**
+     * Enable experimental rules (ktlint-ruleset-experimental).
+     */
+    @Parameter(property = "ktlint.experimental", defaultValue = "false", required = true)
+    private var experimental: Boolean = false
+
+    /**
      * Skips and code style checks.
      */
     @Parameter(property = "ktlint.skip", defaultValue = "false", required = true)
@@ -203,7 +209,8 @@ class KtlintReport : AbstractMavenReport() {
                 ?: UTF_8,
             android = android,
             reporterConfig = reporters ?: emptySet(),
-            verbose = verbose
+            verbose = verbose,
+            enableExperimentalRules = experimental
         )()
         KtlintReportGenerator(sink, getBundle(locale)).generatorReport(results)
     }

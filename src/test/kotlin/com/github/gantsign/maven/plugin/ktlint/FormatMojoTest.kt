@@ -60,6 +60,7 @@ class FormatMojoTest {
         formatMojo.execute()
 
         verify(log, atLeastOnce()).isDebugEnabled
+        verify(log).debug("Disabled ruleset 'experimental'")
         verify(log).debug("checking format: src/main/kotlin/example/Example.kt")
         verify(log).debug("Format could not fix > src/main/kotlin/example/Example.kt:28:1: Wildcard import")
         verify(log).debug("Format fixed > src/main/kotlin/example/Example.kt")
@@ -84,6 +85,7 @@ class FormatMojoTest {
         formatMojo.execute()
 
         verify(log, atLeastOnce()).isDebugEnabled
+        verify(log).debug("Disabled ruleset 'experimental'")
         verify(log).debug("checking format: src/main/kotlin/example/Example.kts")
         verify(log).debug("Format could not fix > src/main/kotlin/example/Example.kts:28:1: Wildcard import")
         verify(log).debug("Format fixed > src/main/kotlin/example/Example.kts")

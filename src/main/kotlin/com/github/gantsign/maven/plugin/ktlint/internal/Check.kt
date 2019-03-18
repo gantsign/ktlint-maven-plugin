@@ -39,6 +39,7 @@ internal class Check(
     android: Boolean,
     reporterConfig: Set<ReporterConfig>,
     verbose: Boolean,
+    enableExperimentalRules: Boolean,
     private val failOnViolation: Boolean
 ) : AbstractCheckSupport(
     log,
@@ -47,7 +48,8 @@ internal class Check(
     charset,
     android,
     addMavenReporter(reporterConfig),
-    verbose
+    verbose,
+    enableExperimentalRules
 ) {
     operator fun invoke() {
         val reporter = reporter

@@ -103,6 +103,7 @@ class CheckMojo : AbstractBaseMojo() {
             android = android,
             reporterConfig = reporters ?: emptySet(),
             verbose = verbose,
+            enableExperimentalRules = experimental,
             failOnViolation = failOnViolation
         )()
     }
