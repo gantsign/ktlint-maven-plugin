@@ -202,6 +202,17 @@ class CheckMojoTest {
                             "rule": "no-semi"
                         }
                     ]
+                },
+                {
+                    "file": "src/test/kotlin/example/TestExample.kt",
+                    "errors": [
+                        {
+                            "line": 29,
+                            "column": 39,
+                            "message": "Unnecessary semicolon",
+                            "rule": "no-semi"
+                        }
+                    ]
                 }
             ]
             """

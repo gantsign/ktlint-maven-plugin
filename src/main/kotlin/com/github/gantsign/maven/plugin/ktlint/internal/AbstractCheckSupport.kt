@@ -204,9 +204,9 @@ internal abstract class AbstractCheckSupport(
 
                     reporter.after(relativePath)
                 }
-                reporter.afterAll()
             }
         }
+        reporter.afterAll()
         return hasErrors
     }
 
