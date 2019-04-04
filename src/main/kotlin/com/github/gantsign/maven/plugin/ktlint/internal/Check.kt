@@ -34,6 +34,7 @@ import java.nio.charset.Charset
 internal class Check(
     log: Log,
     basedir: File,
+    modulePackaging: String,
     sources: List<Sources>,
     charset: Charset,
     android: Boolean,
@@ -44,6 +45,7 @@ internal class Check(
 ) : AbstractCheckSupport(
     log,
     basedir,
+    modulePackaging,
     sources,
     charset,
     android,

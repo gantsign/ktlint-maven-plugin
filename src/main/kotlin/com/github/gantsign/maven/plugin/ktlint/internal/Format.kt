@@ -37,6 +37,7 @@ import java.nio.charset.Charset
 internal class Format(
     log: Log,
     basedir: File,
+    private val modulePackaging: String,
     private val sources: List<Sources>,
     private val charset: Charset,
     android: Boolean,
@@ -52,7 +53,12 @@ internal class Format(
             }
             for (sourceRoot in sourceRoots) {
                 if (!sourceRoot.exists()) {
-                    log.warn("Source root doesn't exist: ${sourceRoot.toRelativeString(basedir)}")
+                    val msg = "Source root doesn't exist: ${sourceRoot.toRelativeString(basedir)}"
+                    if (modulePackaging == "pom") {
+                        log.debug(msg)
+                    } else {
+                        log.warn(msg)
+                    }
                     continue
                 }
                 if (!sourceRoot.isDirectory) {

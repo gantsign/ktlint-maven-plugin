@@ -60,6 +60,7 @@ class FormatMojo : AbstractBaseMojo() {
         Format(
             log = log,
             basedir = basedir,
+            modulePackaging = packaging,
             sources = listOf(
                 Sources(
                     isIncluded = includeSources,
