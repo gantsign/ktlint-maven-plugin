@@ -34,6 +34,9 @@ abstract class AbstractBaseMojo : AbstractMojo() {
     @Parameter(defaultValue = "\${project.basedir}", readonly = true, required = true)
     protected lateinit var basedir: File
 
+    @Parameter(defaultValue = "\${project.packaging}", readonly = true, required = true)
+    protected lateinit var packaging: String
+
     @Parameter(defaultValue = "\${project.compileSourceRoots}", readonly = true, required = true)
     protected lateinit var sourceRoots: List<String>
 

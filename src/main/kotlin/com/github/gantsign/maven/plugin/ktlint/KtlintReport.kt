@@ -56,6 +56,9 @@ class KtlintReport : AbstractMavenReport() {
     @Parameter(defaultValue = "\${project.basedir}", readonly = true, required = true)
     private lateinit var basedir: File
 
+    @Parameter(defaultValue = "\${project.packaging}", readonly = true, required = true)
+    private lateinit var packaging: String
+
     @Parameter(defaultValue = "\${project.compileSourceRoots}", readonly = true, required = true)
     private lateinit var sourceRoots: List<String>
 
@@ -185,6 +188,7 @@ class KtlintReport : AbstractMavenReport() {
         val results = Report(
             log = log,
             basedir = basedir,
+            modulePackaging = packaging,
             sources = listOf(
                 Sources(
                     isIncluded = includeSources,
