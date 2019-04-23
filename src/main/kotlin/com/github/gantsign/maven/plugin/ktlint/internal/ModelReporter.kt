@@ -25,8 +25,8 @@
  */
 package com.github.gantsign.maven.plugin.ktlint.internal
 
-import com.github.shyiko.ktlint.core.LintError
-import com.github.shyiko.ktlint.core.Reporter
+import com.pinterest.ktlint.core.LintError
+import com.pinterest.ktlint.core.Reporter
 import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.atomic.AtomicInteger
 

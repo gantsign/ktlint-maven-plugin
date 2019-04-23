@@ -25,9 +25,9 @@
  */
 package com.github.gantsign.maven.plugin.ktlint.internal
 
-import com.github.shyiko.ktlint.core.RuleSet
-import com.github.shyiko.ktlint.core.RuleSetProvider
-import com.github.shyiko.ktlint.internal.EditorConfig
+import com.pinterest.ktlint.core.RuleSet
+import com.pinterest.ktlint.core.RuleSetProvider
+import com.pinterest.ktlint.internal.EditorConfig
 import org.apache.maven.plugin.logging.Log
 import java.io.File
 import java.util.Comparator.comparingInt

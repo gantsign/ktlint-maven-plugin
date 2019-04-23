@@ -26,7 +26,7 @@
 package com.github.gantsign.maven.plugin.ktlint.internal
 
 import com.github.gantsign.maven.doxia.sink.kotlin.invoke
-import com.github.shyiko.ktlint.core.KtLint
+import com.pinterest.ktlint.core.KtLint
 import org.apache.maven.doxia.sink.Sink
 import java.util.ResourceBundle
 

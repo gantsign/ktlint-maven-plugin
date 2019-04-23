@@ -26,8 +26,8 @@
 package com.github.gantsign.maven.plugin.ktlint
 
 import com.github.gantsign.maven.plugin.ktlint.internal.MavenLogReporter
-import com.github.shyiko.ktlint.core.Reporter
-import com.github.shyiko.ktlint.core.ReporterProvider
+import com.pinterest.ktlint.core.Reporter
+import com.pinterest.ktlint.core.ReporterProvider
 import org.apache.maven.plugin.logging.Log
 import java.io.PrintStream
 
