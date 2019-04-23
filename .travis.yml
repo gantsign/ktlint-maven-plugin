@@ -49,7 +49,7 @@ jobs:
       script: .travis/test.sh
     - name: Max Maven Test
       env:
-        - MAVEN_VERSION: 3.6.0
+        - MAVEN_VERSION: 3.6.1
       script: .travis/test.sh
       after_success:
         - bash <(curl -s https://codecov.io/bash)
