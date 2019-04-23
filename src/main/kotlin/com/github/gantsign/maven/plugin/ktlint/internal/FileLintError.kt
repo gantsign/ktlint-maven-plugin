@@ -25,7 +25,7 @@
  */
 package com.github.gantsign.maven.plugin.ktlint.internal
 
-import com.github.shyiko.ktlint.core.LintError
+import com.pinterest.ktlint.core.LintError
 
 internal class FileLintError(
     val file: String,

@@ -26,7 +26,7 @@
 package com.github.gantsign.maven.plugin.ktlint.internal
 
 import com.github.gantsign.maven.plugin.ktlint.ReporterConfig
-import com.github.shyiko.ktlint.core.Reporter
+import com.pinterest.ktlint.core.Reporter
 import org.apache.maven.plugin.logging.Log
 import java.io.File
 import java.nio.charset.Charset
