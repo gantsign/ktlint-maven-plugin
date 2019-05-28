@@ -25,8 +25,7 @@
  */
 package example
 
-import java.util.*
-
 fun example() {
+    println("this line is too long" + "............................................................")
     println("should remove semicolon");
 }
