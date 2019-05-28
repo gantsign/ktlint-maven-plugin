@@ -36,7 +36,6 @@ import org.junit.Rule
 import org.junit.Test
 import java.io.File
 
-
 class FormatMojoTest {
 
     @Rule
@@ -62,7 +61,10 @@ class FormatMojoTest {
         verify(log, atLeastOnce()).isDebugEnabled
         verify(log).debug("Disabled ruleset 'experimental'")
         verify(log).debug("checking format: src/main/kotlin/example/Example.kt")
-        verify(log).debug("Format could not fix > src/main/kotlin/example/Example.kt:28:1: Wildcard import")
+        verify(log).debug(
+            "Format could not fix > src/main/kotlin/example/Example.kt:29:1: " +
+                "Exceeded max line length (80)"
+        )
         verify(log).debug("Format fixed > src/main/kotlin/example/Example.kt")
         verify(log).warn("Source root doesn't exist: src/test/kotlin")
         verifyNoMoreInteractions(log)
@@ -87,7 +89,10 @@ class FormatMojoTest {
         verify(log, atLeastOnce()).isDebugEnabled
         verify(log).debug("Disabled ruleset 'experimental'")
         verify(log).debug("checking format: src/main/kotlin/example/Example.kts")
-        verify(log).debug("Format could not fix > src/main/kotlin/example/Example.kts:28:1: Wildcard import")
+        verify(log).debug(
+            "Format could not fix > src/main/kotlin/example/Example.kts:29:1: " +
+                "Exceeded max line length (80)"
+        )
         verify(log).debug("Format fixed > src/main/kotlin/example/Example.kts")
         verify(log).warn("Source root doesn't exist: src/test/kotlin")
         verifyNoMoreInteractions(log)
