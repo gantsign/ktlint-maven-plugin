@@ -28,7 +28,7 @@ sudo: false
 
 language: java
 
-jdk: oraclejdk8
+jdk: openjdk8
 
 before_cache:
   - rm --force --recursive --verbose $HOME/.m2/repository/com/github/gantsign/maven/ktlint-maven-plugin
