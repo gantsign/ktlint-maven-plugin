@@ -25,11 +25,10 @@
  */
 package com.github.gantsign.maven.plugin.ktlint
 
-import com.nhaarman.mockito_kotlin.atLeastOnce
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.verifyNoMoreInteractions
-import com.nhaarman.mockito_kotlin.whenever
+import io.mockk.confirmVerified
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
 import org.apache.maven.plugin.MojoFailureException
 import org.apache.maven.plugin.logging.Log
 import org.apache.maven.plugin.testing.MojoRule
@@ -59,9 +58,9 @@ class CheckMojoTest {
 
         val checkMojo = rule.lookupConfiguredMojo(project, "check") as CheckMojo
 
-        val log = mock<Log>()
+        val log = mockk<Log>(relaxed = true)
         checkMojo.log = log
-        whenever(log.isDebugEnabled).thenReturn(true)
+        every { log.isDebugEnabled } returns true
 
         assertThat(checkMojo).isNotNull
         try {
@@ -71,26 +70,28 @@ class CheckMojoTest {
             assertThat(e.message).isEqualTo("Kotlin source failed ktlint check.")
         }
 
-        verify(log, atLeastOnce()).isDebugEnabled
-        verify(log).debug("Discovered .editorconfig ()")
-        verify(log).debug(
-            "{charset=utf-8, continuation_indent_size=4, indent_size=4, indent_style=space, " +
-                "insert_final_newline=true, max_line_length=120, trim_trailing_whitespace=true} " +
-                "loaded from .editorconfig"
-        )
-        verify(log).debug("Discovered ruleset 'standard'")
-        verify(log).debug("Discovered ruleset 'experimental'")
-        verify(log).debug("Disabled ruleset 'experimental'")
-        verify(log).debug("Discovered reporter 'maven'")
-        verify(log).debug("Discovered reporter 'plain'")
-        verify(log).debug("Discovered reporter 'json'")
-        verify(log).debug("Discovered reporter 'checkstyle'")
-        verify(log).debug("Initializing 'maven' reporter with {verbose=false}")
-        verify(log).debug("checking: src/main/kotlin/example/Example.kt")
-        verify(log).debug("Style error > src/main/kotlin/example/Example.kt:29:39: Unnecessary semicolon")
-        verify(log).error("src/main/kotlin/example/Example.kt:29:39: Unnecessary semicolon")
-        verify(log).warn("Source root doesn't exist: src/test/kotlin")
-        verifyNoMoreInteractions(log)
+        verify(atLeast = 1) { log.isDebugEnabled }
+        verify { log.debug("Discovered .editorconfig ()") }
+        verify {
+            log.debug(
+                "{charset=utf-8, continuation_indent_size=4, indent_size=4, indent_style=space, " +
+                    "insert_final_newline=true, max_line_length=120, trim_trailing_whitespace=true} " +
+                    "loaded from .editorconfig"
+            )
+        }
+        verify { log.debug("Discovered ruleset 'standard'") }
+        verify { log.debug("Discovered ruleset 'experimental'") }
+        verify { log.debug("Disabled ruleset 'experimental'") }
+        verify { log.debug("Discovered reporter 'maven'") }
+        verify { log.debug("Discovered reporter 'plain'") }
+        verify { log.debug("Discovered reporter 'json'") }
+        verify { log.debug("Discovered reporter 'checkstyle'") }
+        verify { log.debug("Initializing 'maven' reporter with {verbose=false}") }
+        verify { log.debug("checking: src/main/kotlin/example/Example.kt") }
+        verify { log.debug("Style error > src/main/kotlin/example/Example.kt:29:39: Unnecessary semicolon") }
+        verify { log.error("src/main/kotlin/example/Example.kt:29:39: Unnecessary semicolon") }
+        verify { log.warn("Source root doesn't exist: src/test/kotlin") }
+        confirmVerified(log)
     }
 
     @Test
@@ -103,9 +104,9 @@ class CheckMojoTest {
 
         val checkMojo = rule.lookupConfiguredMojo(project, "check") as CheckMojo
 
-        val log = mock<Log>()
+        val log = mockk<Log>(relaxed = true)
         checkMojo.log = log
-        whenever(log.isDebugEnabled).thenReturn(true)
+        every { log.isDebugEnabled } returns true
 
         assertThat(checkMojo).isNotNull
         try {
@@ -115,27 +116,29 @@ class CheckMojoTest {
             assertThat(e.message).isEqualTo("Kotlin source failed ktlint check.")
         }
 
-        verify(log, atLeastOnce()).isDebugEnabled
-        verify(log).debug("Discovered .editorconfig ()")
-        verify(log).debug(
-            "{charset=utf-8, continuation_indent_size=4, indent_size=4, indent_style=space, " +
-                "insert_final_newline=true, max_line_length=120, trim_trailing_whitespace=true} " +
-                "loaded from .editorconfig"
-        )
-        verify(log).debug("Discovered ruleset 'standard'")
-        verify(log).debug("Discovered ruleset 'experimental'")
-        verify(log).debug("Disabled ruleset 'experimental'")
-        verify(log).debug("Discovered reporter 'maven'")
-        verify(log).debug("Discovered reporter 'plain'")
-        verify(log).debug("Discovered reporter 'json'")
-        verify(log).debug("Discovered reporter 'checkstyle'")
-        verify(log).debug("Initializing 'maven' reporter with {verbose=true, group_by_file=true}")
-        verify(log).debug("checking: src/main/kotlin/example/Example.kt")
-        verify(log).debug("Style error > src/main/kotlin/example/Example.kt:29:39: Unnecessary semicolon")
-        verify(log).error("src/main/kotlin/example/Example.kt")
-        verify(log).error(" 29:39 Unnecessary semicolon (no-semi)")
-        verify(log).warn("Source root doesn't exist: src/test/kotlin")
-        verifyNoMoreInteractions(log)
+        verify(atLeast = 1) { log.isDebugEnabled }
+        verify { log.debug("Discovered .editorconfig ()") }
+        verify {
+            log.debug(
+                "{charset=utf-8, continuation_indent_size=4, indent_size=4, indent_style=space, " +
+                    "insert_final_newline=true, max_line_length=120, trim_trailing_whitespace=true} " +
+                    "loaded from .editorconfig"
+            )
+        }
+        verify { log.debug("Discovered ruleset 'standard'") }
+        verify { log.debug("Discovered ruleset 'experimental'") }
+        verify { log.debug("Disabled ruleset 'experimental'") }
+        verify { log.debug("Discovered reporter 'maven'") }
+        verify { log.debug("Discovered reporter 'plain'") }
+        verify { log.debug("Discovered reporter 'json'") }
+        verify { log.debug("Discovered reporter 'checkstyle'") }
+        verify { log.debug("Initializing 'maven' reporter with {verbose=true, group_by_file=true}") }
+        verify { log.debug("checking: src/main/kotlin/example/Example.kt") }
+        verify { log.debug("Style error > src/main/kotlin/example/Example.kt:29:39: Unnecessary semicolon") }
+        verify { log.error("src/main/kotlin/example/Example.kt") }
+        verify { log.error(" 29:39 Unnecessary semicolon (no-semi)") }
+        verify { log.warn("Source root doesn't exist: src/test/kotlin") }
+        confirmVerified(log)
     }
 
     @Test
@@ -148,33 +151,35 @@ class CheckMojoTest {
 
         val checkMojo = rule.lookupConfiguredMojo(project, "check") as CheckMojo
 
-        val log = mock<Log>()
+        val log = mockk<Log>(relaxed = true)
         checkMojo.log = log
-        whenever(log.isDebugEnabled).thenReturn(true)
+        every { log.isDebugEnabled } returns true
 
         assertThat(checkMojo).isNotNull
         checkMojo.execute()
 
-        verify(log, atLeastOnce()).isDebugEnabled
-        verify(log).debug("Discovered .editorconfig ()")
-        verify(log).debug(
-            "{charset=utf-8, continuation_indent_size=4, indent_size=4, indent_style=space, " +
-                "insert_final_newline=true, max_line_length=120, trim_trailing_whitespace=true} " +
-                "loaded from .editorconfig"
-        )
-        verify(log).debug("Discovered ruleset 'standard'")
-        verify(log).debug("Discovered ruleset 'experimental'")
-        verify(log).debug("Disabled ruleset 'experimental'")
-        verify(log).debug("Discovered reporter 'maven'")
-        verify(log).debug("Discovered reporter 'plain'")
-        verify(log).debug("Discovered reporter 'json'")
-        verify(log).debug("Discovered reporter 'checkstyle'")
-        verify(log).debug("Initializing 'maven' reporter with {verbose=false}")
-        verify(log).debug("checking: src/main/kotlin/example/Example.kt")
-        verify(log).debug("Style error > src/main/kotlin/example/Example.kt:29:39: Unnecessary semicolon")
-        verify(log).error("src/main/kotlin/example/Example.kt:29:39: Unnecessary semicolon")
-        verify(log).warn("Source root doesn't exist: src/test/kotlin")
-        verifyNoMoreInteractions(log)
+        verify(atLeast = 1) { log.isDebugEnabled }
+        verify { log.debug("Discovered .editorconfig ()") }
+        verify {
+            log.debug(
+                "{charset=utf-8, continuation_indent_size=4, indent_size=4, indent_style=space, " +
+                    "insert_final_newline=true, max_line_length=120, trim_trailing_whitespace=true} " +
+                    "loaded from .editorconfig"
+            )
+        }
+        verify { log.debug("Discovered ruleset 'standard'") }
+        verify { log.debug("Discovered ruleset 'experimental'") }
+        verify { log.debug("Disabled ruleset 'experimental'") }
+        verify { log.debug("Discovered reporter 'maven'") }
+        verify { log.debug("Discovered reporter 'plain'") }
+        verify { log.debug("Discovered reporter 'json'") }
+        verify { log.debug("Discovered reporter 'checkstyle'") }
+        verify { log.debug("Initializing 'maven' reporter with {verbose=false}") }
+        verify { log.debug("checking: src/main/kotlin/example/Example.kt") }
+        verify { log.debug("Style error > src/main/kotlin/example/Example.kt:29:39: Unnecessary semicolon") }
+        verify { log.error("src/main/kotlin/example/Example.kt:29:39: Unnecessary semicolon") }
+        verify { log.warn("Source root doesn't exist: src/test/kotlin") }
+        confirmVerified(log)
     }
 
     @Test
@@ -188,9 +193,9 @@ class CheckMojoTest {
 
         val checkMojo = rule.lookupConfiguredMojo(project, "check") as CheckMojo
 
-        val log = mock<Log>()
+        val log = mockk<Log>(relaxed = true)
         checkMojo.log = log
-        whenever(log.isDebugEnabled).thenReturn(true)
+        every { log.isDebugEnabled } returns true
 
         assertThat(checkMojo).isNotNull
         try {
@@ -243,20 +248,20 @@ class CheckMojoTest {
 
         val checkMojo = rule.lookupConfiguredMojo(project, "check") as CheckMojo
 
-        val log = mock<Log>()
+        val log = mockk<Log>(relaxed = true)
         checkMojo.log = log
 
         assertThat(checkMojo).isNotNull
         checkMojo.execute()
 
-        verify(log).debug("Discovered reporter 'maven'")
-        verify(log).debug("Discovered reporter 'plain'")
-        verify(log).debug("Discovered reporter 'json'")
-        verify(log).debug("Discovered reporter 'checkstyle'")
-        verify(log).isDebugEnabled
-        verify(log).warn("Source root doesn't exist: src/main/kotlin")
-        verify(log).warn("Source root doesn't exist: src/test/kotlin")
-        verifyNoMoreInteractions(log)
+        verify { log.debug("Discovered reporter 'maven'") }
+        verify { log.debug("Discovered reporter 'plain'") }
+        verify { log.debug("Discovered reporter 'json'") }
+        verify { log.debug("Discovered reporter 'checkstyle'") }
+        verify { log.isDebugEnabled }
+        verify { log.warn("Source root doesn't exist: src/main/kotlin") }
+        verify { log.warn("Source root doesn't exist: src/test/kotlin") }
+        confirmVerified(log)
     }
 
     @Test
@@ -269,12 +274,12 @@ class CheckMojoTest {
 
         val checkMojo = rule.lookupConfiguredMojo(project, "check") as CheckMojo
 
-        val log = mock<Log>()
+        val log = mockk<Log>()
         checkMojo.log = log
 
         assertThat(checkMojo).isNotNull
         checkMojo.execute()
 
-        verifyNoMoreInteractions(log)
+        confirmVerified(log)
     }
 }
