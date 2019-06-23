@@ -33,7 +33,6 @@ import com.nhaarman.mockito_kotlin.whenever
 import org.apache.maven.plugin.MojoFailureException
 import org.apache.maven.plugin.logging.Log
 import org.apache.maven.plugin.testing.MojoRule
-import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.json.JSONArray
 import org.junit.Assert.fail
@@ -54,7 +53,7 @@ class CheckMojoTest {
     fun hasErrors() {
         val pom = File("target/test-scenarios/check-with-errors/pom.xml")
 
-        Assertions.assertThat(pom.isFile).isTrue()
+        assertThat(pom.isFile).isTrue()
 
         val project = rule.readMavenProject(pom.parentFile)
 
@@ -98,7 +97,7 @@ class CheckMojoTest {
     fun groupByFile() {
         val pom = File("target/test-scenarios/check-group-by-file/pom.xml")
 
-        Assertions.assertThat(pom.isFile).isTrue()
+        assertThat(pom.isFile).isTrue()
 
         val project = rule.readMavenProject(pom.parentFile)
 
@@ -143,7 +142,7 @@ class CheckMojoTest {
     fun proceedWithErrors() {
         val pom = File("target/test-scenarios/check-proceed-with-errors/pom.xml")
 
-        Assertions.assertThat(pom.isFile).isTrue()
+        assertThat(pom.isFile).isTrue()
 
         val project = rule.readMavenProject(pom.parentFile)
 
@@ -183,7 +182,7 @@ class CheckMojoTest {
         val basedir = File("target/test-scenarios/check-output-file")
         val pom = File(basedir, "pom.xml")
 
-        Assertions.assertThat(pom.isFile).isTrue()
+        assertThat(pom.isFile).isTrue()
 
         val project = rule.readMavenProject(pom.parentFile)
 
@@ -238,7 +237,7 @@ class CheckMojoTest {
     fun rootNotFound() {
         val pom = File("target/test-scenarios/root-not-found/pom.xml")
 
-        Assertions.assertThat(pom.isFile).isTrue()
+        assertThat(pom.isFile).isTrue()
 
         val project = rule.readMavenProject(pom.parentFile)
 
@@ -247,7 +246,7 @@ class CheckMojoTest {
         val log = mock<Log>()
         checkMojo.log = log
 
-        Assertions.assertThat(checkMojo).isNotNull
+        assertThat(checkMojo).isNotNull
         checkMojo.execute()
 
         verify(log).debug("Discovered reporter 'maven'")
@@ -264,7 +263,7 @@ class CheckMojoTest {
     fun skip() {
         val pom = File("target/test-scenarios/check-skip/pom.xml")
 
-        Assertions.assertThat(pom.isFile).isTrue()
+        assertThat(pom.isFile).isTrue()
 
         val project = rule.readMavenProject(pom.parentFile)
 
@@ -273,7 +272,7 @@ class CheckMojoTest {
         val log = mock<Log>()
         checkMojo.log = log
 
-        Assertions.assertThat(checkMojo).isNotNull
+        assertThat(checkMojo).isNotNull
         checkMojo.execute()
 
         verifyNoMoreInteractions(log)
