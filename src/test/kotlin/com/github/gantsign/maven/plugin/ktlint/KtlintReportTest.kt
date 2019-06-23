@@ -32,7 +32,6 @@ import com.nhaarman.mockito_kotlin.verifyNoMoreInteractions
 import com.nhaarman.mockito_kotlin.whenever
 import org.apache.maven.plugin.logging.Log
 import org.apache.maven.plugin.testing.MojoRule
-import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Rule
 import org.junit.Test
@@ -49,7 +48,7 @@ class KtlintReportTest {
     fun hasErrors() {
         val pom = File("target/test-scenarios/check-with-errors/pom.xml")
 
-        Assertions.assertThat(pom.isFile).isTrue()
+        assertThat(pom.isFile).isTrue()
 
         val project = rule.readMavenProject(pom.parentFile)
 
@@ -87,7 +86,7 @@ class KtlintReportTest {
     fun rootNotFound() {
         val pom = File("target/test-scenarios/root-not-found/pom.xml")
 
-        Assertions.assertThat(pom.isFile).isTrue()
+        assertThat(pom.isFile).isTrue()
 
         val project = rule.readMavenProject(pom.parentFile)
 
@@ -96,7 +95,7 @@ class KtlintReportTest {
         val log = mock<Log>()
         ktlintReport.log = log
 
-        Assertions.assertThat(ktlintReport).isNotNull
+        assertThat(ktlintReport).isNotNull
         ktlintReport.execute()
 
         verifyNoMoreInteractions(log)
@@ -106,7 +105,7 @@ class KtlintReportTest {
     fun skip() {
         val pom = File("target/test-scenarios/check-skip/pom.xml")
 
-        Assertions.assertThat(pom.isFile).isTrue()
+        assertThat(pom.isFile).isTrue()
 
         val project = rule.readMavenProject(pom.parentFile)
 
@@ -115,7 +114,7 @@ class KtlintReportTest {
         val log = mock<Log>()
         ktlintReport.log = log
 
-        Assertions.assertThat(ktlintReport).isNotNull
+        assertThat(ktlintReport).isNotNull
         ktlintReport.execute()
 
         verifyNoMoreInteractions(log)
@@ -125,7 +124,7 @@ class KtlintReportTest {
     fun getName() {
         val pom = File("target/test-scenarios/check-with-errors/pom.xml")
 
-        Assertions.assertThat(pom.isFile).isTrue()
+        assertThat(pom.isFile).isTrue()
 
         val project = rule.readMavenProject(pom.parentFile)
 
@@ -138,7 +137,7 @@ class KtlintReportTest {
     fun getDescription() {
         val pom = File("target/test-scenarios/check-with-errors/pom.xml")
 
-        Assertions.assertThat(pom.isFile).isTrue()
+        assertThat(pom.isFile).isTrue()
 
         val project = rule.readMavenProject(pom.parentFile)
 
