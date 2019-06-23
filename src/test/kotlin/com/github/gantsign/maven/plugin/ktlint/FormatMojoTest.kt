@@ -25,10 +25,9 @@
  */
 package com.github.gantsign.maven.plugin.ktlint
 
-import com.nhaarman.mockito_kotlin.atLeastOnce
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.verifyNoMoreInteractions
+import io.mockk.confirmVerified
+import io.mockk.mockk
+import io.mockk.verify
 import org.apache.maven.plugin.logging.Log
 import org.apache.maven.plugin.testing.MojoRule
 import org.assertj.core.api.Assertions.assertThat
@@ -52,22 +51,24 @@ class FormatMojoTest {
 
         val formatMojo = rule.lookupConfiguredMojo(project, "format") as FormatMojo
 
-        val log = mock<Log>()
+        val log = mockk<Log>(relaxed = true)
         formatMojo.log = log
 
         assertThat(formatMojo).isNotNull
         formatMojo.execute()
 
-        verify(log, atLeastOnce()).isDebugEnabled
-        verify(log).debug("Disabled ruleset 'experimental'")
-        verify(log).debug("checking format: src/main/kotlin/example/Example.kt")
-        verify(log).debug(
-            "Format could not fix > src/main/kotlin/example/Example.kt:29:1: " +
-                "Exceeded max line length (80)"
-        )
-        verify(log).debug("Format fixed > src/main/kotlin/example/Example.kt")
-        verify(log).warn("Source root doesn't exist: src/test/kotlin")
-        verifyNoMoreInteractions(log)
+        verify(atLeast = 1) { log.isDebugEnabled }
+        verify { log.debug("Disabled ruleset 'experimental'") }
+        verify { log.debug("checking format: src/main/kotlin/example/Example.kt") }
+        verify {
+            log.debug(
+                "Format could not fix > src/main/kotlin/example/Example.kt:29:1: " +
+                    "Exceeded max line length (80)"
+            )
+        }
+        verify { log.debug("Format fixed > src/main/kotlin/example/Example.kt") }
+        verify { log.warn("Source root doesn't exist: src/test/kotlin") }
+        confirmVerified(log)
     }
 
     @Test
@@ -80,22 +81,24 @@ class FormatMojoTest {
 
         val formatMojo = rule.lookupConfiguredMojo(project, "format") as FormatMojo
 
-        val log = mock<Log>()
+        val log = mockk<Log>(relaxed = true)
         formatMojo.log = log
 
         assertThat(formatMojo).isNotNull
         formatMojo.execute()
 
-        verify(log, atLeastOnce()).isDebugEnabled
-        verify(log).debug("Disabled ruleset 'experimental'")
-        verify(log).debug("checking format: src/main/kotlin/example/Example.kts")
-        verify(log).debug(
-            "Format could not fix > src/main/kotlin/example/Example.kts:29:1: " +
-                "Exceeded max line length (80)"
-        )
-        verify(log).debug("Format fixed > src/main/kotlin/example/Example.kts")
-        verify(log).warn("Source root doesn't exist: src/test/kotlin")
-        verifyNoMoreInteractions(log)
+        verify(atLeast = 1) { log.isDebugEnabled }
+        verify { log.debug("Disabled ruleset 'experimental'") }
+        verify { log.debug("checking format: src/main/kotlin/example/Example.kts") }
+        verify {
+            log.debug(
+                "Format could not fix > src/main/kotlin/example/Example.kts:29:1: " +
+                    "Exceeded max line length (80)"
+            )
+        }
+        verify { log.debug("Format fixed > src/main/kotlin/example/Example.kts") }
+        verify { log.warn("Source root doesn't exist: src/test/kotlin") }
+        confirmVerified(log)
     }
 
     @Test
@@ -108,15 +111,15 @@ class FormatMojoTest {
 
         val formatMojo = rule.lookupConfiguredMojo(project, "format") as FormatMojo
 
-        val log = mock<Log>()
+        val log = mockk<Log>(relaxed = true)
         formatMojo.log = log
 
         assertThat(formatMojo).isNotNull
         formatMojo.execute()
 
-        verify(log).warn("Source root doesn't exist: src/main/kotlin")
-        verify(log).warn("Source root doesn't exist: src/test/kotlin")
-        verifyNoMoreInteractions(log)
+        verify { log.warn("Source root doesn't exist: src/main/kotlin") }
+        verify { log.warn("Source root doesn't exist: src/test/kotlin") }
+        confirmVerified(log)
     }
 
     @Test
@@ -129,12 +132,12 @@ class FormatMojoTest {
 
         val formatMojo = rule.lookupConfiguredMojo(project, "format") as FormatMojo
 
-        val log = mock<Log>()
+        val log = mockk<Log>()
         formatMojo.log = log
 
         assertThat(formatMojo).isNotNull
         formatMojo.execute()
 
-        verifyNoMoreInteractions(log)
+        confirmVerified(log)
     }
 }

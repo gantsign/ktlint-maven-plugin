@@ -47,6 +47,7 @@
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <maven.version>3.5.4</maven.version>
+    <mockk.version>1.9.3</mockk.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <slf4j.version>1.7.26</slf4j.version>
@@ -58,11 +59,6 @@
         <groupId>com.google.guava</groupId>
         <artifactId>guava</artifactId>
         <version>28.0-jre</version>
-      </dependency>
-      <dependency>
-        <groupId>com.nhaarman</groupId>
-        <artifactId>mockito-kotlin</artifactId>
-        <version>1.6.0</version>
       </dependency>
       <dependency>
         <groupId>com.pinterest</groupId>
@@ -98,6 +94,16 @@
         <groupId>commons-logging</groupId>
         <artifactId>commons-logging</artifactId>
         <version>1.2</version>
+      </dependency>
+      <dependency>
+        <groupId>io.mockk</groupId>
+        <artifactId>mockk</artifactId>
+        <version>${mockk.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.mockk</groupId>
+        <artifactId>mockk-dsl-jvm</artifactId>
+        <version>${mockk.version}</version>
       </dependency>
       <dependency>
         <groupId>junit</groupId>
@@ -263,11 +269,6 @@
         <groupId>org.jetbrains.kotlin</groupId>
         <artifactId>kotlin-test-junit</artifactId>
         <version>${kotlin.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.mockito</groupId>
-        <artifactId>mockito-core</artifactId>
-        <version>2.28.2</version>
       </dependency>
       <dependency>
         <groupId>org.slf4j</groupId>
@@ -442,14 +443,19 @@
       <scope>runtime</scope>
     </dependency>
     <dependency>
-      <groupId>com.nhaarman</groupId>
-      <artifactId>mockito-kotlin</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
       <groupId>com.vaadin.external.google</groupId>
       <artifactId>android-json</artifactId>
       <version>0.0.20131108.vaadin1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.mockk</groupId>
+      <artifactId>mockk</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.mockk</groupId>
+      <artifactId>mockk-dsl-jvm</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -487,11 +493,6 @@
     <dependency>
       <groupId>org.jetbrains.kotlin</groupId>
       <artifactId>kotlin-test-junit</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-core</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>

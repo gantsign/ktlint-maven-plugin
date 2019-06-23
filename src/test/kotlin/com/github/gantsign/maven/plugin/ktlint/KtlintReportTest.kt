@@ -25,11 +25,10 @@
  */
 package com.github.gantsign.maven.plugin.ktlint
 
-import com.nhaarman.mockito_kotlin.atLeastOnce
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.verifyNoMoreInteractions
-import com.nhaarman.mockito_kotlin.whenever
+import io.mockk.confirmVerified
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
 import org.apache.maven.plugin.logging.Log
 import org.apache.maven.plugin.testing.MojoRule
 import org.assertj.core.api.Assertions.assertThat
@@ -54,32 +53,34 @@ class KtlintReportTest {
 
         val ktlintReport = rule.lookupConfiguredMojo(project, "ktlint") as KtlintReport
 
-        val log = mock<Log>()
+        val log = mockk<Log>(relaxed = true)
         ktlintReport.log = log
-        whenever(log.isDebugEnabled).thenReturn(true)
+        every { log.isDebugEnabled } returns true
 
         assertThat(ktlintReport).isNotNull
 
         ktlintReport.execute()
 
-        verify(log, atLeastOnce()).isDebugEnabled
-        verify(log).debug("Discovered .editorconfig ()")
-        verify(log).debug(
-            "{charset=utf-8, continuation_indent_size=4, indent_size=4, indent_style=space, " +
-                "insert_final_newline=true, max_line_length=120, trim_trailing_whitespace=true} " +
-                "loaded from .editorconfig"
-        )
-        verify(log).debug("Discovered ruleset 'standard'")
-        verify(log).debug("Discovered ruleset 'experimental'")
-        verify(log).debug("Disabled ruleset 'experimental'")
-        verify(log).debug("Discovered reporter 'maven'")
-        verify(log).debug("Discovered reporter 'plain'")
-        verify(log).debug("Discovered reporter 'json'")
-        verify(log).debug("Discovered reporter 'checkstyle'")
-        verify(log).debug("checking: src/main/kotlin/example/Example.kt")
-        verify(log).debug("Style error > src/main/kotlin/example/Example.kt:29:39: Unnecessary semicolon")
-        verify(log).warn("Source root doesn't exist: src/test/kotlin")
-        verifyNoMoreInteractions(log)
+        verify(atLeast = 1) { log.isDebugEnabled }
+        verify { log.debug("Discovered .editorconfig ()") }
+        verify {
+            log.debug(
+                "{charset=utf-8, continuation_indent_size=4, indent_size=4, indent_style=space, " +
+                    "insert_final_newline=true, max_line_length=120, trim_trailing_whitespace=true} " +
+                    "loaded from .editorconfig"
+            )
+        }
+        verify { log.debug("Discovered ruleset 'standard'") }
+        verify { log.debug("Discovered ruleset 'experimental'") }
+        verify { log.debug("Disabled ruleset 'experimental'") }
+        verify { log.debug("Discovered reporter 'maven'") }
+        verify { log.debug("Discovered reporter 'plain'") }
+        verify { log.debug("Discovered reporter 'json'") }
+        verify { log.debug("Discovered reporter 'checkstyle'") }
+        verify { log.debug("checking: src/main/kotlin/example/Example.kt") }
+        verify { log.debug("Style error > src/main/kotlin/example/Example.kt:29:39: Unnecessary semicolon") }
+        verify { log.warn("Source root doesn't exist: src/test/kotlin") }
+        confirmVerified(log)
     }
 
     @Test
@@ -92,13 +93,13 @@ class KtlintReportTest {
 
         val ktlintReport = rule.lookupConfiguredMojo(project, "ktlint") as KtlintReport
 
-        val log = mock<Log>()
+        val log = mockk<Log>()
         ktlintReport.log = log
 
         assertThat(ktlintReport).isNotNull
         ktlintReport.execute()
 
-        verifyNoMoreInteractions(log)
+        confirmVerified(log)
     }
 
     @Test
@@ -111,13 +112,13 @@ class KtlintReportTest {
 
         val ktlintReport = rule.lookupConfiguredMojo(project, "ktlint") as KtlintReport
 
-        val log = mock<Log>()
+        val log = mockk<Log>()
         ktlintReport.log = log
 
         assertThat(ktlintReport).isNotNull
         ktlintReport.execute()
 
-        verifyNoMoreInteractions(log)
+        confirmVerified(log)
     }
 
     @Test
