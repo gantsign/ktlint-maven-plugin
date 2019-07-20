@@ -88,7 +88,7 @@ internal abstract class AbstractCheckSupport(
 
             val reporterLoader = ServiceLoader.load(ReporterProvider::class.java)
 
-            val reporterProviderById = reporterLoader.associate { it.id to it }
+            val reporterProviderById = reporterLoader.associateBy { it.id }
             for ((id) in reporterProviderById) {
                 log.debug("Discovered reporter '$id'")
             }
@@ -107,10 +107,10 @@ internal abstract class AbstractCheckSupport(
                         (output?.let { ", output=$it" } ?: ""))
                 }
                 val stream =
-                    if (output != null) {
-                        Files.createDirectories(Paths.get(output).parent)
-                        PrintStream(output, "UTF-8")
-                    } else System.out
+                    output?.let {
+                        Files.createDirectories(Paths.get(it).parent)
+                        return@let PrintStream(it, "UTF-8")
+                    } ?: System.out
 
                 val reporter =
                     if (reporterProvider is MavenLogReporterProvider)

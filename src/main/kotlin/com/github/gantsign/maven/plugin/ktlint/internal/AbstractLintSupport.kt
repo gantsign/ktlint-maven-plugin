@@ -117,6 +117,6 @@ internal abstract class AbstractLintSupport(
         }
 
     companion object {
-        val none = "none.gantsign.com"
+        const val none = "none.gantsign.com"
     }
 }
