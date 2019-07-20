@@ -43,7 +43,7 @@
   <properties>
     <doxia.version>1.9</doxia.version>
     <kotlin.version>1.3.41</kotlin.version>
-    <ktlint.version>0.33.0</ktlint.version>
+    <ktlint.version>0.34.0</ktlint.version>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <maven.version>3.5.4</maven.version>
@@ -68,6 +68,31 @@
       <dependency>
         <groupId>com.pinterest.ktlint</groupId>
         <artifactId>ktlint-core</artifactId>
+        <version>${ktlint.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.pinterest.ktlint</groupId>
+        <artifactId>ktlint-reporter-checkstyle</artifactId>
+        <version>${ktlint.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.pinterest.ktlint</groupId>
+        <artifactId>ktlint-reporter-json</artifactId>
+        <version>${ktlint.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.pinterest.ktlint</groupId>
+        <artifactId>ktlint-reporter-plain</artifactId>
+        <version>${ktlint.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.pinterest.ktlint</groupId>
+        <artifactId>ktlint-ruleset-experimental</artifactId>
+        <version>${ktlint.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.pinterest.ktlint</groupId>
+        <artifactId>ktlint-ruleset-standard</artifactId>
         <version>${ktlint.version}</version>
       </dependency>
       <dependency>
@@ -307,67 +332,6 @@
       </exclusions>
     </dependency>
     <dependency>
-      <groupId>com.pinterest</groupId>
-      <artifactId>ktlint</artifactId>
-      <exclusions>
-        <exclusion>
-          <!-- provided by maven -->
-          <groupId>org.slf4j</groupId>
-          <artifactId>slf4j-nop</artifactId>
-        </exclusion>
-        <exclusion>
-          <!-- provided by kotlin-compiler-embeddable -->
-          <groupId>org.jetbrains</groupId>
-          <artifactId>annotations</artifactId>
-        </exclusion>
-        <exclusion>
-          <!-- provided by maven-resolver-impl -->
-          <groupId>org.eclipse.aether</groupId>
-          <artifactId>aether-impl</artifactId>
-        </exclusion>
-        <exclusion>
-          <!-- provided by maven-resolver-spi -->
-          <groupId>org.eclipse.aether</groupId>
-          <artifactId>aether-spi</artifactId>
-        </exclusion>
-        <exclusion>
-          <!-- provided by maven-resolver-api -->
-          <groupId>org.eclipse.aether</groupId>
-          <artifactId>aether-api</artifactId>
-        </exclusion>
-        <exclusion>
-          <!-- provided by maven-resolver-provider -->
-          <groupId>org.apache.maven</groupId>
-          <artifactId>maven-aether-provider</artifactId>
-        </exclusion>
-        <exclusion>
-          <!-- provided by maven-resolver-util -->
-          <groupId>org.eclipse.aether</groupId>
-          <artifactId>aether-util</artifactId>
-        </exclusion>
-        <exclusion>
-          <!-- not required -->
-          <groupId>org.eclipse.aether</groupId>
-          <artifactId>aether-connector-basic</artifactId>
-        </exclusion>
-        <exclusion>
-          <!-- not required -->
-          <groupId>org.eclipse.aether</groupId>
-          <artifactId>aether-transport-file</artifactId>
-        </exclusion>
-        <exclusion>
-          <!-- not required -->
-          <groupId>org.eclipse.aether</groupId>
-          <artifactId>aether-transport-http</artifactId>
-        </exclusion>
-        <exclusion>
-          <!-- not required for core plugin features and not available from Maven Central -->
-          <groupId>com.andreapivetta.kolor</groupId>
-          <artifactId>kolor</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
       <groupId>com.pinterest.ktlint</groupId>
       <artifactId>ktlint-core</artifactId>
     </dependency>
@@ -434,6 +398,38 @@
     <dependency>
       <groupId>org.jetbrains.kotlin</groupId>
       <artifactId>kotlin-stdlib-jdk8</artifactId>
+      <exclusions>
+        <exclusion>
+          <!-- provided by kotlin-compiler-embeddable -->
+          <groupId>org.jetbrains</groupId>
+          <artifactId>annotations</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>com.pinterest.ktlint</groupId>
+      <artifactId>ktlint-reporter-checkstyle</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.pinterest.ktlint</groupId>
+      <artifactId>ktlint-reporter-json</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.pinterest.ktlint</groupId>
+      <artifactId>ktlint-reporter-plain</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.pinterest.ktlint</groupId>
+      <artifactId>ktlint-ruleset-experimental</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.pinterest.ktlint</groupId>
+      <artifactId>ktlint-ruleset-standard</artifactId>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <!-- required by maven-reporting-impl -->

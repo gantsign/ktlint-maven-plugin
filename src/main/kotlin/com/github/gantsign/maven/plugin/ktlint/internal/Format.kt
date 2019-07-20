@@ -90,28 +90,20 @@ internal class Format(
 
                     log.debug("checking format: $relativePath")
 
-                    val formatFunc =
-                        when (file.extension) {
-                            "kt" -> ::formatKt
-                            "kts" -> ::formatKts
-                            else -> {
-                                log.debug("ignoring non Kotlin file: $relativePath")
-                                return@forEach
-                            }
-                        }
-
-                    val userData = userData + ("file_path" to relativePath)
+                    val userData = mapOf("android" to android.toString())
 
                     val sourceText = file.readText(charset)
 
-                    val formattedText = formatFunc(
+                    val formattedText = formatFile(
+                        relativePath,
                         sourceText,
                         ruleSets,
                         userData,
                         { (line, col, _, detail), corrected ->
                             val lintError = "$relativePath:$line:$col: $detail"
                             log.debug("Format ${if (corrected) "fixed" else "could not fix"} > $lintError")
-                        }
+                        },
+                        file.editorConfigPath
                     )
                     if (formattedText !== sourceText) {
                         log.debug("Format fixed > $relativePath")
@@ -122,17 +114,22 @@ internal class Format(
         }
     }
 
-    private fun formatKt(
+    private fun formatFile(
+        fileName: String,
         sourceText: String,
         ruleSets: List<RuleSet>,
         userData: Map<String, String>,
-        onError: (err: LintError, corrected: Boolean) -> Unit
-    ): String = KtLint.format(sourceText, ruleSets, userData, onError)
-
-    private fun formatKts(
-        sourceText: String,
-        ruleSets: List<RuleSet>,
-        userData: Map<String, String>,
-        onError: (err: LintError, corrected: Boolean) -> Unit
-    ): String = KtLint.formatScript(sourceText, ruleSets, userData, onError)
+        onError: (err: LintError, corrected: Boolean) -> Unit,
+        editorConfigPath: String?
+    ): String = KtLint.format(
+        KtLint.Params(
+            fileName = fileName,
+            text = sourceText,
+            ruleSets = ruleSets,
+            userData = userData,
+            script = !fileName.endsWith(".kt", ignoreCase = true),
+            cb = onError,
+            editorConfigPath = editorConfigPath
+        )
+    )
 }
