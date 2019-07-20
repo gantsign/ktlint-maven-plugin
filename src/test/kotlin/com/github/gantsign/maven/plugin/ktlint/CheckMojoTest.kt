@@ -71,14 +71,6 @@ class CheckMojoTest {
         }
 
         verify(atLeast = 1) { log.isDebugEnabled }
-        verify { log.debug("Discovered .editorconfig ()") }
-        verify {
-            log.debug(
-                "{charset=utf-8, continuation_indent_size=4, indent_size=4, indent_style=space, " +
-                    "insert_final_newline=true, max_line_length=120, trim_trailing_whitespace=true} " +
-                    "loaded from .editorconfig"
-            )
-        }
         verify { log.debug("Discovered ruleset 'standard'") }
         verify { log.debug("Discovered ruleset 'experimental'") }
         verify { log.debug("Disabled ruleset 'experimental'") }
@@ -117,14 +109,6 @@ class CheckMojoTest {
         }
 
         verify(atLeast = 1) { log.isDebugEnabled }
-        verify { log.debug("Discovered .editorconfig ()") }
-        verify {
-            log.debug(
-                "{charset=utf-8, continuation_indent_size=4, indent_size=4, indent_style=space, " +
-                    "insert_final_newline=true, max_line_length=120, trim_trailing_whitespace=true} " +
-                    "loaded from .editorconfig"
-            )
-        }
         verify { log.debug("Discovered ruleset 'standard'") }
         verify { log.debug("Discovered ruleset 'experimental'") }
         verify { log.debug("Disabled ruleset 'experimental'") }
@@ -159,14 +143,6 @@ class CheckMojoTest {
         checkMojo.execute()
 
         verify(atLeast = 1) { log.isDebugEnabled }
-        verify { log.debug("Discovered .editorconfig ()") }
-        verify {
-            log.debug(
-                "{charset=utf-8, continuation_indent_size=4, indent_size=4, indent_style=space, " +
-                    "insert_final_newline=true, max_line_length=120, trim_trailing_whitespace=true} " +
-                    "loaded from .editorconfig"
-            )
-        }
         verify { log.debug("Discovered ruleset 'standard'") }
         verify { log.debug("Discovered ruleset 'experimental'") }
         verify { log.debug("Disabled ruleset 'experimental'") }

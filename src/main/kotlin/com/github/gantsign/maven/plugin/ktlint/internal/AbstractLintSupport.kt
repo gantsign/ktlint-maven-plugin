@@ -27,16 +27,16 @@ package com.github.gantsign.maven.plugin.ktlint.internal
 
 import com.pinterest.ktlint.core.RuleSet
 import com.pinterest.ktlint.core.RuleSetProvider
-import com.pinterest.ktlint.internal.EditorConfig
 import org.apache.maven.plugin.logging.Log
 import java.io.File
 import java.util.Comparator.comparingInt
 import java.util.ServiceLoader
+import java.util.concurrent.ConcurrentHashMap
 
 internal abstract class AbstractLintSupport(
     protected val log: Log,
     protected val basedir: File,
-    private val android: Boolean,
+    protected val android: Boolean,
     private val enableExperimentalRules: Boolean
 ) {
 
@@ -70,18 +70,53 @@ internal abstract class AbstractLintSupport(
         return@lazy ruleSets
     }
 
-    protected val userData: Map<String, String> by lazy {
-        val editorConfig = EditorConfig.of(basedir.toPath())
-        if (editorConfig != null && log.isDebugEnabled) {
-            val editorConfigs =
-                generateSequence(editorConfig, EditorConfig::parent).map {
-                    it.path.parent.toFile().toRelativeString(basedir)
+    private val editorConfigPathCache = ConcurrentHashMap<File, String>()
+
+    protected val File.editorConfigPath: String?
+        get() {
+            val basedir: File = this.parentFile ?: return null
+
+            var path = editorConfigPathCache[this]
+            if (path != null) {
+                return if (path == none) null else path
+            }
+            var editorconfig = File(basedir, ".editorconfig")
+            if (editorconfig.isFile) {
+                path = editorconfig.absolutePath
+                editorConfigPathCache[basedir] = path
+                return path
+            }
+
+            val childDirs = mutableListOf(basedir)
+            var dir: File? = basedir.parentFile
+
+            while (dir != null) {
+                path = editorConfigPathCache[this]
+                if (path != null) {
+                    for (childDir in childDirs) {
+                        editorConfigPathCache[childDir] = path
+                    }
+                    return if (path == none) null else path
                 }
-            log.debug(
-                "Discovered .editorconfig (${editorConfigs.joinToString()})"
-            )
-            log.debug("${editorConfig.toMap()} loaded from .editorconfig")
+                editorconfig = File(dir, ".editorconfig")
+                if (editorconfig.isFile) {
+                    path = editorconfig.absolutePath
+                    editorConfigPathCache[dir] = path
+                    for (childDir in childDirs) {
+                        editorConfigPathCache[childDir] = path
+                    }
+                    return path
+                }
+                childDirs += dir
+                dir = dir.parentFile
+            }
+            for (childDir in childDirs) {
+                editorConfigPathCache[childDir] = none
+            }
+            return null
         }
-        return@lazy (editorConfig ?: emptyMap<String, String>()) + ("android" to android.toString())
+
+    companion object {
+        val none = "none.gantsign.com"
     }
 }

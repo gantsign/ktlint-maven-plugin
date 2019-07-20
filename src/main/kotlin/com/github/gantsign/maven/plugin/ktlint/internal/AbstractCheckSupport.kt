@@ -156,7 +156,10 @@ internal abstract class AbstractCheckSupport(
                 }
 
                 val includesArray =
-                    includes.takeUnless(Set<String>::isEmpty)?.toTypedArray() ?: arrayOf("**/*.kt")
+                    includes.takeUnless(Set<String>::isEmpty)?.toTypedArray() ?: arrayOf(
+                        "**/*.kt",
+                        "**/*.kts"
+                    )
                 val excludesArray = excludes.toTypedArray()
 
                 val ds = DirectoryScanner().apply {
@@ -179,21 +182,12 @@ internal abstract class AbstractCheckSupport(
 
                     log.debug("checking: $relativePath")
 
-                    val formatFunc =
-                        when (file.extension) {
-                            "kt" -> ::lintKt
-                            "kts" -> ::lintKts
-                            else -> {
-                                log.debug("ignoring non Kotlin file: $relativePath")
-                                return@forEach
-                            }
-                        }
-
-                    val userData = userData + ("file_path" to relativePath)
+                    val userData = mapOf("android" to android.toString())
 
                     val sourceText = file.readText(charset)
 
-                    formatFunc(
+                    lintFile(
+                        relativePath,
                         sourceText,
                         ruleSets,
                         userData,
@@ -205,7 +199,8 @@ internal abstract class AbstractCheckSupport(
                             log.debug("Style error > $lintError")
 
                             hasErrors = true
-                        }
+                        },
+                        file.editorConfigPath
                     )
 
                     reporter.after(relativePath)
@@ -216,17 +211,22 @@ internal abstract class AbstractCheckSupport(
         return hasErrors
     }
 
-    private fun lintKt(
+    private fun lintFile(
+        fileName: String,
         sourceText: String,
         ruleSets: List<RuleSet>,
         userData: Map<String, String>,
-        onError: (error: LintError) -> Unit
-    ) = KtLint.lint(sourceText, ruleSets, userData, onError)
-
-    private fun lintKts(
-        sourceText: String,
-        ruleSets: List<RuleSet>,
-        userData: Map<String, String>,
-        onError: (error: LintError) -> Unit
-    ) = KtLint.lintScript(sourceText, ruleSets, userData, onError)
+        onError: (error: LintError) -> Unit,
+        editorConfigPath: String?
+    ) = KtLint.lint(
+        KtLint.Params(
+            fileName = fileName,
+            text = sourceText,
+            ruleSets = ruleSets,
+            userData = userData,
+            script = !fileName.endsWith(".kt", ignoreCase = true),
+            cb = { e, _ -> onError(e) },
+            editorConfigPath = editorConfigPath
+        )
+    )
 }
