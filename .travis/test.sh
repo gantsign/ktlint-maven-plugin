@@ -9,4 +9,9 @@ sdk install maven "$MAVEN_VERSION"
 
 export M2_HOME="$HOME/.sdkman/candidates/maven/$MAVEN_VERSION"
 
-"$M2_HOME/bin/mvn" install --batch-mode --show-version
+"$M2_HOME/bin/mvn" install --batch-mode --show-version || (
+    cat target/its/check/build.log
+    cat target/its/checkstyle/build.log
+    cat target/its/format/build.log
+    cat target/its/report/build.log
+)
