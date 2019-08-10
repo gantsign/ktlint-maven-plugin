@@ -28,11 +28,11 @@ package com.github.gantsign.maven.plugin.ktlint.internal
 import com.pinterest.ktlint.core.KtLint
 import com.pinterest.ktlint.core.LintError
 import com.pinterest.ktlint.core.RuleSet
+import java.io.File
+import java.nio.charset.Charset
 import org.apache.maven.plugin.MojoFailureException
 import org.apache.maven.plugin.logging.Log
 import org.apache.maven.shared.utils.io.DirectoryScanner
-import java.io.File
-import java.nio.charset.Charset
 
 internal class Format(
     log: Log,

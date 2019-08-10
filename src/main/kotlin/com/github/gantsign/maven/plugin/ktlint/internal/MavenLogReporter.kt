@@ -27,11 +27,11 @@ package com.github.gantsign.maven.plugin.ktlint.internal
 
 import com.pinterest.ktlint.core.LintError
 import com.pinterest.ktlint.core.Reporter
-import org.apache.maven.plugin.logging.Log
-import org.apache.maven.shared.utils.logging.MessageUtils
 import java.io.File
 import java.util.ArrayList
 import java.util.concurrent.ConcurrentHashMap
+import org.apache.maven.plugin.logging.Log
+import org.apache.maven.shared.utils.logging.MessageUtils
 
 internal class MavenLogReporter(
     val log: Log,

@@ -28,12 +28,12 @@ package com.github.gantsign.maven.plugin.ktlint
 import io.mockk.confirmVerified
 import io.mockk.mockk
 import io.mockk.verify
+import java.io.File
 import org.apache.maven.plugin.logging.Log
 import org.apache.maven.plugin.testing.MojoRule
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Rule
 import org.junit.Test
-import java.io.File
 
 class FormatMojoTest {
 
