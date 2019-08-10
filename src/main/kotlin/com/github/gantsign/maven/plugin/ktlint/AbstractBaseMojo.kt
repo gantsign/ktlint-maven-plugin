@@ -25,9 +25,9 @@
  */
 package com.github.gantsign.maven.plugin.ktlint
 
+import java.io.File
 import org.apache.maven.plugin.AbstractMojo
 import org.apache.maven.plugins.annotations.Parameter
-import java.io.File
 
 abstract class AbstractBaseMojo : AbstractMojo() {
 

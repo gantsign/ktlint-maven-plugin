@@ -27,11 +27,11 @@ package com.github.gantsign.maven.plugin.ktlint.internal
 
 import com.pinterest.ktlint.core.RuleSet
 import com.pinterest.ktlint.core.RuleSetProvider
-import org.apache.maven.plugin.logging.Log
 import java.io.File
 import java.util.Comparator.comparingInt
 import java.util.ServiceLoader
 import java.util.concurrent.ConcurrentHashMap
+import org.apache.maven.plugin.logging.Log
 
 internal abstract class AbstractLintSupport(
     protected val log: Log,

@@ -32,15 +32,15 @@ import com.pinterest.ktlint.core.LintError
 import com.pinterest.ktlint.core.Reporter
 import com.pinterest.ktlint.core.ReporterProvider
 import com.pinterest.ktlint.core.RuleSet
-import org.apache.maven.plugin.MojoFailureException
-import org.apache.maven.plugin.logging.Log
-import org.apache.maven.shared.utils.io.DirectoryScanner
 import java.io.File
 import java.io.PrintStream
 import java.nio.charset.Charset
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.util.ServiceLoader
+import org.apache.maven.plugin.MojoFailureException
+import org.apache.maven.plugin.logging.Log
+import org.apache.maven.shared.utils.io.DirectoryScanner
 
 internal abstract class AbstractCheckSupport(
     log: Log,

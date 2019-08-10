@@ -29,16 +29,16 @@ import com.github.gantsign.maven.plugin.ktlint.internal.KtlintReportGenerator
 import com.github.gantsign.maven.plugin.ktlint.internal.Report
 import com.github.gantsign.maven.plugin.ktlint.internal.Sources
 import com.github.gantsign.maven.plugin.ktlint.internal.get
-import org.apache.maven.plugins.annotations.LifecyclePhase
-import org.apache.maven.plugins.annotations.Mojo
-import org.apache.maven.plugins.annotations.Parameter
-import org.apache.maven.plugins.annotations.ResolutionScope
-import org.apache.maven.reporting.AbstractMavenReport
 import java.io.File
 import java.nio.charset.Charset
 import java.nio.charset.StandardCharsets.UTF_8
 import java.util.Locale
 import java.util.ResourceBundle
+import org.apache.maven.plugins.annotations.LifecyclePhase
+import org.apache.maven.plugins.annotations.Mojo
+import org.apache.maven.plugins.annotations.Parameter
+import org.apache.maven.plugins.annotations.ResolutionScope
+import org.apache.maven.reporting.AbstractMavenReport
 
 /**
  * A reporting task that performs `ktlint` analysis and generates a HTML report on any violations that `ktlint` finds.

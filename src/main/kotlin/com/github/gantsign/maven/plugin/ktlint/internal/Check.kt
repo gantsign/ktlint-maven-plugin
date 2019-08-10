@@ -26,10 +26,10 @@
 package com.github.gantsign.maven.plugin.ktlint.internal
 
 import com.github.gantsign.maven.plugin.ktlint.ReporterConfig
-import org.apache.maven.plugin.MojoFailureException
-import org.apache.maven.plugin.logging.Log
 import java.io.File
 import java.nio.charset.Charset
+import org.apache.maven.plugin.MojoFailureException
+import org.apache.maven.plugin.logging.Log
 
 internal class Check(
     log: Log,

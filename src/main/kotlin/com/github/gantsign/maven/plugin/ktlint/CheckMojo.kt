@@ -27,12 +27,12 @@ package com.github.gantsign.maven.plugin.ktlint
 
 import com.github.gantsign.maven.plugin.ktlint.internal.Check
 import com.github.gantsign.maven.plugin.ktlint.internal.Sources
+import java.nio.charset.Charset
+import java.nio.charset.StandardCharsets.UTF_8
 import org.apache.maven.plugins.annotations.LifecyclePhase
 import org.apache.maven.plugins.annotations.Mojo
 import org.apache.maven.plugins.annotations.Parameter
 import org.apache.maven.plugins.annotations.ResolutionScope
-import java.nio.charset.Charset
-import java.nio.charset.StandardCharsets.UTF_8
 
 /**
  * Checks for violations of the code style.

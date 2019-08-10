@@ -27,8 +27,8 @@ package com.github.gantsign.maven.plugin.ktlint.internal
 
 import com.github.gantsign.maven.doxia.sink.kotlin.invoke
 import com.pinterest.ktlint.core.KtLint
-import org.apache.maven.doxia.sink.Sink
 import java.util.ResourceBundle
+import org.apache.maven.doxia.sink.Sink
 
 internal class KtlintReportGenerator(
     private val sink: Sink,
