@@ -1076,6 +1076,7 @@
 
   <organization>
     <name>GantSign Ltd.</name>
+    <url>https://github.com/gantsign</url>
   </organization>
 
   <licenses>
@@ -1092,6 +1093,7 @@
       <name>John Freeman</name>
       <url>https://github.com/freemanjp</url>
       <organization>GantSign Ltd.</organization>
+      <organizationUrl>https://github.com/gantsign</organizationUrl>
       <roles>
         <role>architect</role>
         <role>developer</role>
