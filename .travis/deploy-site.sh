@@ -15,6 +15,7 @@ set -e
 
 ./mvnw scm-publish:publish-scm \
     --settings .travis/settings.xml \
+    -P gh-pages \
     -DskipTests \
     -Dinvoker.skip=true \
     --batch-mode
