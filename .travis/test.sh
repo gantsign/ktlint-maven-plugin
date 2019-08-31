@@ -9,4 +9,4 @@ sdk install maven "$MAVEN_VERSION"
 
 export M2_HOME="$HOME/.sdkman/candidates/maven/$MAVEN_VERSION"
 
-"$M2_HOME/bin/mvn" install --batch-mode --show-version
+"$M2_HOME/bin/mvn" install --batch-mode --show-version -Dinvoker.streamLogs=true
