@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="Date-Revision-yyyymmdd" content="20190905" />
     <meta http-equiv="Content-Language" content="en" />
-    <title>Java Application Maven Archetype &#x2013; Project Summary</title>
+    <title>Java Application Maven Archetype &#x2013; ktlint:help</title>
     <link rel="stylesheet" href="./css/apache-maven-fluido-1.5.min.css" />
     <link rel="stylesheet" href="./css/site.css" />
     <link rel="stylesheet" href="./css/print.css" media="print" />
@@ -88,104 +88,13 @@
         Usage</a>
             </li>
                               <li class="nav-header">Project Documentation</li>
-                                                                                                                                                                                                                                                                                                                  
+                                                                                                                                                                                                                                                                                                        
       <li>
   
                           <a href="project-info.html" title="Project Information">
-          <span class="icon-chevron-down"></span>
+          <span class="icon-chevron-right"></span>
         Project Information</a>
-                    <ul class="nav nav-list">
-                    
-      <li>
-  
-                          <a href="ci-management.html" title="CI Management">
-          <span class="none"></span>
-        CI Management</a>
-            </li>
-                    
-      <li>
-  
-                          <a href="dependencies.html" title="Dependencies">
-          <span class="none"></span>
-        Dependencies</a>
-            </li>
-                    
-      <li>
-  
-                          <a href="dependency-info.html" title="Dependency Information">
-          <span class="none"></span>
-        Dependency Information</a>
-            </li>
-                    
-      <li>
-  
-                          <a href="dependency-management.html" title="Dependency Management">
-          <span class="none"></span>
-        Dependency Management</a>
-            </li>
-                    
-      <li>
-  
-                          <a href="distribution-management.html" title="Distribution Management">
-          <span class="none"></span>
-        Distribution Management</a>
-            </li>
-                    
-      <li>
-  
-                          <a href="index.html" title="About">
-          <span class="none"></span>
-        About</a>
-            </li>
-                    
-      <li>
-  
-                          <a href="issue-management.html" title="Issue Management">
-          <span class="none"></span>
-        Issue Management</a>
-            </li>
-                    
-      <li>
-  
-                          <a href="licenses.html" title="Licenses">
-          <span class="none"></span>
-        Licenses</a>
-            </li>
-                    
-      <li>
-  
-                          <a href="plugin-management.html" title="Plugin Management">
-          <span class="none"></span>
-        Plugin Management</a>
-            </li>
-                    
-      <li>
-  
-                          <a href="plugins.html" title="Plugins">
-          <span class="none"></span>
-        Plugins</a>
-            </li>
-                    
-      <li>
-  
-                          <a href="scm.html" title="Source Code Management">
-          <span class="none"></span>
-        Source Code Management</a>
-            </li>
-                    
-      <li class="active">
-  
-            <a href="#"><span class="none"></span>Summary</a>
-          </li>
-                    
-      <li>
-  
-                          <a href="team.html" title="Team">
-          <span class="none"></span>
-        Team</a>
-            </li>
-              </ul>
-        </li>
+                  </li>
                                                                                                                                           
       <li>
   
@@ -213,50 +122,148 @@
                 
         <div id="bodyColumn"  class="span10" >
                                   
-            <section>
-<h2><a name="Project_Summary"></a>Project Summary</h2><a name="Project_Summary"></a><section>
-<h3><a name="Project_Information"></a>Project Information</h3><a name="Project_Information"></a>
-<table border="0" class="table table-striped">
+            
+  
+    <section>
+<h2><a name="ktlint:help"></a>ktlint:help</h2>
+      
+<p><b>Full name</b>:</p>
+      
+<p>com.github.gantsign.maven:ktlint-maven-plugin:1.2.2:help</p>
+      
+<p><b>Description</b>:</p>
+      
+<div>Display help information on ktlint-maven-plugin.<br />
+Call mvn ktlint:help -Ddetail=true
+-Dgoal=&lt;goal-name&gt; to display parameter details.</div>
+      
+<p><b>Attributes</b>:</p>
+      <section>
+<h3><a name="Optional_Parameters"></a>Optional Parameters</h3>
+        
+<table class="table table-striped" border="0">
+          
 <tr class="a">
-<th>Field</th>
-<th>Value</th></tr>
+            
+<th>Name</th>
+            
+<th>Type</th>
+            
+<th>Since</th>
+            
+<th>Description</th>
+          </tr>
+          
 <tr class="b">
-<td>Name</td>
-<td>ktlint Maven Plugin</td></tr>
+            
+<td><a href="#detail">&lt;detail&gt;</a></td>
+            
+<td>boolean</td>
+            
+<td>-</td>
+            
+<td>If true, display all settable properties for each
+goal.<br /><b>Default value is</b>: false.<br /><b>User property is</b>: detail.<br /></td>
+          </tr>
+          
 <tr class="a">
-<td>Description</td>
-<td>Maven plugin for the ktlint Kotlin linter.</td></tr>
+            
+<td><a href="#goal">&lt;goal&gt;</a></td>
+            
+<td>String</td>
+            
+<td>-</td>
+            
+<td>The name of the goal for which to show help. If unspecified, all
+goals will be displayed.<br /><b>User property is</b>: goal.<br /></td>
+          </tr>
+          
 <tr class="b">
-<td>Homepage</td>
-<td><a class="externalLink" href="https://github.com/gantsign/ktlint-maven-plugin">https://github.com/gantsign/ktlint-maven-plugin</a></td></tr></table></section><section>
-<h3><a name="Project_Organization"></a>Project Organization</h3><a name="Project_Organization"></a>
-<table border="0" class="table table-striped">
+            
+<td><a href="#indentSize">&lt;indentSize&gt;</a></td>
+            
+<td>int</td>
+            
+<td>-</td>
+            
+<td>The number of spaces per indentation level, should be positive.<br /><b>Default value is</b>: 2.<br /><b>User property is</b>: indentSize.<br /></td>
+          </tr>
+          
 <tr class="a">
-<th>Field</th>
-<th>Value</th></tr>
-<tr class="b">
-<td>Name</td>
-<td>GantSign Ltd.</td></tr>
-<tr class="a">
-<td>URL</td>
-<td><a class="externalLink" href="https://github.com/gantsign">https://github.com/gantsign</a></td></tr></table></section><section>
-<h3><a name="Build_Information"></a>Build Information</h3><a name="Build_Information"></a>
-<table border="0" class="table table-striped">
-<tr class="a">
-<th>Field</th>
-<th>Value</th></tr>
-<tr class="b">
-<td>GroupId</td>
-<td>com.github.gantsign.maven</td></tr>
-<tr class="a">
-<td>ArtifactId</td>
-<td>ktlint-maven-plugin</td></tr>
-<tr class="b">
-<td>Version</td>
-<td>1.2.2</td></tr>
-<tr class="a">
-<td>Type</td>
-<td>maven-plugin</td></tr></table></section></section>
+            
+<td><a href="#lineLength">&lt;lineLength&gt;</a></td>
+            
+<td>int</td>
+            
+<td>-</td>
+            
+<td>The maximum length of a display line, should be positive.<br /><b>Default value is</b>: 80.<br /><b>User property is</b>: lineLength.<br /></td>
+          </tr>
+        </table>
+      </section>
+      <section>
+<h3><a name="Parameter_Details"></a>Parameter Details</h3>
+        <section>
+<h4><a name="a.3Cdetail.3E"></a><b><a name="detail">&lt;detail&gt;</a></b></h4>
+        
+<div>If true, display all settable properties for each
+goal.</div>
+        
+<ul>
+          
+<li><b>Type</b>: boolean</li>
+          
+<li><b>Required</b>: No</li>
+          
+<li><b>User Property</b>: detail</li>
+          
+<li><b>Default</b>: false</li>
+        </ul><hr /></section><section>
+<h4><a name="a.3Cgoal.3E"></a><b><a name="goal">&lt;goal&gt;</a></b></h4>
+        
+<div>The name of the goal for which to show help. If unspecified, all
+goals will be displayed.</div>
+        
+<ul>
+          
+<li><b>Type</b>: java.lang.String</li>
+          
+<li><b>Required</b>: No</li>
+          
+<li><b>User Property</b>: goal</li>
+        </ul><hr /></section><section>
+<h4><a name="a.3CindentSize.3E"></a><b><a name="indentSize">&lt;indentSize&gt;</a></b></h4>
+        
+<div>The number of spaces per indentation level, should be positive.</div>
+        
+<ul>
+          
+<li><b>Type</b>: int</li>
+          
+<li><b>Required</b>: No</li>
+          
+<li><b>User Property</b>: indentSize</li>
+          
+<li><b>Default</b>: 2</li>
+        </ul><hr /></section><section>
+<h4><a name="a.3ClineLength.3E"></a><b><a name="lineLength">&lt;lineLength&gt;</a></b></h4>
+        
+<div>The maximum length of a display line, should be positive.</div>
+        
+<ul>
+          
+<li><b>Type</b>: int</li>
+          
+<li><b>Required</b>: No</li>
+          
+<li><b>User Property</b>: lineLength</li>
+          
+<li><b>Default</b>: 80</li>
+        </ul>
+      </section></section>
+    </section>
+  
+
                   </div>
             </div>
           </div>
