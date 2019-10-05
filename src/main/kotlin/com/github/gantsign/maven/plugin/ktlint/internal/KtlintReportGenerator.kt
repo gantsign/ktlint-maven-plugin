@@ -54,7 +54,7 @@ internal class KtlintReportGenerator(
                     }
                     paragraph {
                         +"${bundle["report.ktlint.ktlintlink"]} "
-                        link("https://github.com/shyiko/ktlint") {
+                        link("https://github.com/pinterest/ktlint") {
                             +"ktlint"
                         }
                         if (ktlintVersion != null) {
