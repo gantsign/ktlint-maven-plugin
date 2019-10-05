@@ -5,9 +5,9 @@
 [![codecov](https://codecov.io/gh/gantsign/ktlint-maven-plugin/branch/master/graph/badge.svg)](https://codecov.io/gh/gantsign/ktlint-maven-plugin)
 [![Known Vulnerabilities](https://snyk.io/test/github/gantsign/ktlint-maven-plugin/badge.svg)](https://snyk.io/test/github/gantsign/ktlint-maven-plugin)
 
-This plugin provides the ability to use [ktlint](https://github.com/shyiko/ktlint)
-to format and check your source code against the ktlint anti-bikeshedding code
-style.
+This plugin provides the ability to use
+[ktlint](https://github.com/pinterest/ktlint) to format and check your source
+code against the ktlint anti-bikeshedding code style.
 
 ## Goals Overview
 
