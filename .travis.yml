@@ -24,8 +24,6 @@
 # #L%
 ###
 ---
-sudo: false
-
 language: java
 
 jdk: openjdk8
