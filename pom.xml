@@ -48,7 +48,7 @@
   </prerequisites>
 
   <properties>
-    <doxia.version>1.9</doxia.version>
+    <doxia.version>1.9.1</doxia.version>
     <ktlint.version>0.36.0</ktlint.version>
     <license-maven-plugin.version>1.20</license-maven-plugin.version>
     <maven.version>3.5.4</maven.version>
