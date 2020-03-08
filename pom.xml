@@ -245,7 +245,7 @@
     <dependency>
       <groupId>com.github.gantsign.maven.doxia</groupId>
       <artifactId>doxia-sink-api-ktx</artifactId>
-      <version>1.0.0</version>
+      <version>1.1.0</version>
       <exclusions>
         <exclusion>
           <!-- provided by guava -->
