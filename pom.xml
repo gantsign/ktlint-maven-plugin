@@ -542,7 +542,7 @@
           <dependency>
             <groupId>com.github.gantsign.maven.plugin-tools</groupId>
             <artifactId>kotlin-maven-plugin-tools</artifactId>
-            <version>0.9.24</version>
+            <version>0.9.25</version>
           </dependency>
         </dependencies>
         <executions>
