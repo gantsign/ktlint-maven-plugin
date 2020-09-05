@@ -62,7 +62,7 @@ class FormatMojoTest {
         verify { log.debug("checking format: src/main/kotlin/example/Example.kt") }
         verify {
             log.debug(
-                "Format could not fix > src/main/kotlin/example/Example.kt:29:1: " +
+                "Format could not fix > src/main/kotlin/example/Example.kt:29:14: " +
                     "Exceeded max line length (80)"
             )
         }
@@ -92,7 +92,7 @@ class FormatMojoTest {
         verify { log.debug("checking format: src/main/kotlin/example/Example.kts") }
         verify {
             log.debug(
-                "Format could not fix > src/main/kotlin/example/Example.kts:29:1: " +
+                "Format could not fix > src/main/kotlin/example/Example.kts:29:14: " +
                     "Exceeded max line length (80)"
             )
         }
