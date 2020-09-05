@@ -103,8 +103,10 @@ internal abstract class AbstractCheckSupport(
                     )
                 }
                 if (log.isDebugEnabled) {
-                    log.debug("Initializing '$id' reporter with $config" +
-                        (output?.let { ", output=$it" } ?: ""))
+                    log.debug(
+                        "Initializing '$id' reporter with $config" +
+                            (output?.let { ", output=$it" } ?: "")
+                    )
                 }
                 val stream =
                     output?.let {

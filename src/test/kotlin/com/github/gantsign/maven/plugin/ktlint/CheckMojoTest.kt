@@ -182,7 +182,8 @@ class CheckMojoTest {
         }
 
         //language=JSON
-        val expected = """
+        val expected =
+            """
             [
                 {
                     "file": "src/main/kotlin/example/Example.kt",
