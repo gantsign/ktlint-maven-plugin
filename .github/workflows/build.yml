@@ -70,6 +70,8 @@ jobs:
           GPG_KEY_NAME: ${{ secrets.GPG_KEY_NAME }}
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
       - name: Delete GPG secret key
+        if: ${{ always() }}
         run: gpg --batch --yes --delete-secret-keys ${{ secrets.GPG_KEY_NAME }} || true
       - name: Delete GPG public key
+        if: ${{ always() }}
         run: gpg --batch --yes --delete-keys ${{ secrets.GPG_KEY_NAME }}
