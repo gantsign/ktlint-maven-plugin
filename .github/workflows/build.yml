@@ -1,0 +1,75 @@
+name: Build
+on:
+  push:
+    branches:
+      - master
+env:
+  JAVA_TOOL_OPTIONS: >-
+    -XX:TieredStopAtLevel=1
+    -XX:+UseParallelGC
+    -Dstyle.color=always
+    -Djansi.force=true
+
+jobs:
+  build:
+    name: Maven build
+    runs-on: ubuntu-18.04
+
+    strategy:
+      matrix:
+        maven-version:
+          - '3.3.9'
+          - '3.6.1'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+      - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: '1.8'
+      - name: Build with Maven
+        run: .github/scripts/build.sh
+        env:
+          MAVEN_VERSION: ${{ matrix.maven-version }}
+      - name: Code coverage report
+        if: matrix.maven-version == '3.6.1'
+        uses: codecov/codecov-action@v1
+
+  build-all:
+    if: ${{ always() }}
+    name: Build (matrix)
+    runs-on: ubuntu-18.04
+    needs: build
+    steps:
+      - name: Check build matrix status
+        run: "[[ '${{ needs.build.result }}' == 'success' ]] || exit 1"
+
+  deploy:
+    name: Maven deploy
+    runs-on: ubuntu-18.04
+    needs: build-all
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: '1.8'
+      - name: Install GPG key
+        run: |-
+          gpg --batch --import-options import-show --import << EOF
+          ${{ secrets.GPG_KEY }}
+          EOF
+      - name: Deploy with Maven
+        run: .github/scripts/deploy.sh
+        env:
+          OSSRH_USER: ${{ secrets.OSSRH_USER }}
+          OSSRH_TOKEN: ${{ secrets.OSSRH_TOKEN }}
+          GPG_KEY_NAME: ${{ secrets.GPG_KEY_NAME }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+      - name: Delete GPG secret key
+        run: gpg --batch --yes --delete-secret-keys ${{ secrets.GPG_KEY_NAME }} || true
+      - name: Delete GPG public key
+        run: gpg --batch --yes --delete-keys ${{ secrets.GPG_KEY_NAME }}
