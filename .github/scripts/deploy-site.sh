@@ -14,7 +14,7 @@ set -e
     --batch-mode
 
 ./mvnw scm-publish:publish-scm \
-    --settings .travis/settings.xml \
+    --settings .github/maven/settings.xml \
     -P gh-pages \
     -DskipTests \
     -Dinvoker.skip=true \
