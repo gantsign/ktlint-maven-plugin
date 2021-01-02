@@ -89,10 +89,10 @@ jobs:
           java-version: '1.8'
       - name: Configure Git user
         run: >-
-          git config user.name 'John Freeman' &&
-          git config user.name '17984707+freemanjp@users.noreply.github.com'
+          git config --global user.name 'John Freeman' &&
+          git config --global user.email '17984707+freemanjp@users.noreply.github.com'
       - name: Deploy Maven site
         run: .github/scripts/deploy-site.sh
         env:
-          GITHUB_USER: ${{ secrets.GITHUB_USER }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_USER: ${{ secrets.GH_USER }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
