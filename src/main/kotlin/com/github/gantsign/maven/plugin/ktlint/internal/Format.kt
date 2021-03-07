@@ -30,6 +30,7 @@ import com.pinterest.ktlint.core.LintError
 import com.pinterest.ktlint.core.RuleSet
 import java.io.File
 import java.nio.charset.Charset
+import java.util.concurrent.atomic.AtomicInteger
 import org.apache.maven.plugin.MojoFailureException
 import org.apache.maven.plugin.logging.Log
 import org.apache.maven.shared.utils.io.DirectoryScanner
@@ -43,6 +44,8 @@ internal class Format(
     android: Boolean,
     enableExperimentalRules: Boolean
 ) : AbstractLintSupport(log, basedir, android, enableExperimentalRules) {
+
+    private val formattedFileCount = AtomicInteger()
 
     operator fun invoke() {
         val checkedFiles = mutableSetOf<File>()
@@ -108,10 +111,12 @@ internal class Format(
                     if (formattedText !== sourceText) {
                         log.debug("Format fixed > $relativePath")
                         file.writeText(formattedText, charset)
+                        formattedFileCount.incrementAndGet()
                     }
                 }
             }
         }
+        log.info("${formattedFileCount.get()} file(s) formatted.")
     }
 
     private fun formatFile(
