@@ -94,7 +94,7 @@ class KtlintReport : AbstractMavenReport() {
     private var includeScripts = true
 
     /**
-     * File file encoding of the Kotlin source files.
+     * File encoding of the Kotlin source files.
      */
     @Parameter(property = "encoding", defaultValue = "\${project.build.sourceEncoding}")
     private val encoding: String? = null
