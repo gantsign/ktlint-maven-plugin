@@ -41,6 +41,11 @@ class FormatMojoTest {
     @JvmField
     var rule = MojoRule()
 
+    private val source = File("src/main/kotlin/example/Example.kt").path
+    private val scriptSource = File("src/main/kotlin/example/Example.kts").path
+    private val mainRoot = File("src/main/kotlin").path
+    private val testRoot = File("src/test/kotlin").path
+
     @Test
     fun happy() {
         val pom = File("target/test-scenarios/format-happy/pom.xml")
@@ -59,15 +64,16 @@ class FormatMojoTest {
 
         verify(atLeast = 1) { log.isDebugEnabled }
         verify { log.debug("Disabled ruleset 'experimental'") }
-        verify { log.debug("checking format: src/main/kotlin/example/Example.kt") }
+        verify { log.debug("checking format: $source") }
         verify {
             log.debug(
-                "Format could not fix > src/main/kotlin/example/Example.kt:29:1: " +
+                "Format could not fix > $source:29:1: " +
                     "Exceeded max line length (80)"
             )
         }
-        verify { log.debug("Format fixed > src/main/kotlin/example/Example.kt") }
-        verify { log.warn("Source root doesn't exist: src/test/kotlin") }
+        verify { log.debug("Format fixed > $source") }
+        verify { log.warn("Source root doesn't exist: $testRoot") }
+        verify { log.info("1 file(s) formatted.") }
         confirmVerified(log)
     }
 
@@ -89,15 +95,16 @@ class FormatMojoTest {
 
         verify(atLeast = 1) { log.isDebugEnabled }
         verify { log.debug("Disabled ruleset 'experimental'") }
-        verify { log.debug("checking format: src/main/kotlin/example/Example.kts") }
+        verify { log.debug("checking format: $scriptSource") }
         verify {
             log.debug(
-                "Format could not fix > src/main/kotlin/example/Example.kts:29:1: " +
+                "Format could not fix > $scriptSource:29:1: " +
                     "Exceeded max line length (80)"
             )
         }
-        verify { log.debug("Format fixed > src/main/kotlin/example/Example.kts") }
-        verify { log.warn("Source root doesn't exist: src/test/kotlin") }
+        verify { log.debug("Format fixed > $scriptSource") }
+        verify { log.warn("Source root doesn't exist: $testRoot") }
+        verify { log.info("1 file(s) formatted.") }
         confirmVerified(log)
     }
 
@@ -117,8 +124,9 @@ class FormatMojoTest {
         assertThat(formatMojo).isNotNull
         formatMojo.execute()
 
-        verify { log.warn("Source root doesn't exist: src/main/kotlin") }
-        verify { log.warn("Source root doesn't exist: src/test/kotlin") }
+        verify { log.warn("Source root doesn't exist: $mainRoot") }
+        verify { log.warn("Source root doesn't exist: $testRoot") }
+        verify { log.info("0 file(s) formatted.") }
         confirmVerified(log)
     }
 
