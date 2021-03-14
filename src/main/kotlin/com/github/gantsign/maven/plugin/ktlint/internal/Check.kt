@@ -40,6 +40,8 @@ internal class Check(
     android: Boolean,
     reporterConfig: Set<ReporterConfig>,
     verbose: Boolean,
+    reporterColor: Boolean,
+    reporterColorName: String,
     enableExperimentalRules: Boolean,
     private val failOnViolation: Boolean
 ) : AbstractCheckSupport(
@@ -51,6 +53,8 @@ internal class Check(
     android,
     addMavenReporter(reporterConfig),
     verbose,
+    reporterColor,
+    reporterColorName,
     enableExperimentalRules
 ) {
     operator fun invoke() {

@@ -51,6 +51,8 @@ internal abstract class AbstractCheckSupport(
     android: Boolean,
     private val reporterConfig: Set<ReporterConfig>,
     protected val verbose: Boolean,
+    private var reporterColor: Boolean,
+    private var reporterColorName: String,
     enableExperimentalRules: Boolean
 ) : AbstractLintSupport(log, basedir, android, enableExperimentalRules) {
 
@@ -79,7 +81,9 @@ internal abstract class AbstractCheckSupport(
                         ReporterTemplate(
                             id = reporterId,
                             config = mapOf(
-                                "verbose" to verbose.toString()
+                                "verbose" to verbose.toString(),
+                                "color" to reporterColor.toString(),
+                                "color_name" to reporterColorName
                             ) + properties,
                             output = output?.toString()
                         )

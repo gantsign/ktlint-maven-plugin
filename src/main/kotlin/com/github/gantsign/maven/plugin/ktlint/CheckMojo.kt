@@ -27,6 +27,7 @@ package com.github.gantsign.maven.plugin.ktlint
 
 import com.github.gantsign.maven.plugin.ktlint.internal.Check
 import com.github.gantsign.maven.plugin.ktlint.internal.Sources
+import com.pinterest.ktlint.reporter.plain.internal.Color
 import java.nio.charset.Charset
 import java.nio.charset.StandardCharsets.UTF_8
 import org.apache.maven.plugins.annotations.LifecyclePhase
@@ -52,6 +53,18 @@ class CheckMojo : AbstractBaseMojo() {
      */
     @Parameter
     private var reporters: Set<ReporterConfig>? = null
+
+    /**
+     * Whether the KtLint reporter should output in color (doesn't affect the Maven output).
+     */
+    @Parameter
+    private var reporterColor: Boolean = false
+
+    /**
+     * The color the KtLint reporter should output in (doesn't affect the Maven output).
+     */
+    @Parameter
+    private var reporterColorName: String = Color.DARK_GRAY.name
 
     /**
      * Show error codes.
@@ -105,6 +118,8 @@ class CheckMojo : AbstractBaseMojo() {
             android = android,
             reporterConfig = reporters ?: emptySet(),
             verbose = verbose,
+            reporterColor = reporterColor,
+            reporterColorName = reporterColorName,
             enableExperimentalRules = experimental,
             failOnViolation = failOnViolation
         )()
