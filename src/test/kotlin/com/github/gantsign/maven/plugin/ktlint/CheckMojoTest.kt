@@ -78,7 +78,7 @@ class CheckMojoTest {
         verify { log.debug("Discovered reporter 'plain'") }
         verify { log.debug("Discovered reporter 'json'") }
         verify { log.debug("Discovered reporter 'checkstyle'") }
-        verify { log.debug("Initializing 'maven' reporter with {verbose=false}") }
+        verify { log.debug("Initializing 'maven' reporter with {verbose=false, color=false, color_name=DARK_GRAY}") }
         verify { log.debug("checking: src/main/kotlin/example/Example.kt") }
         verify { log.debug("Style error > src/main/kotlin/example/Example.kt:29:39: Unnecessary semicolon") }
         verify { log.error("src/main/kotlin/example/Example.kt:29:39: Unnecessary semicolon") }
@@ -116,7 +116,12 @@ class CheckMojoTest {
         verify { log.debug("Discovered reporter 'plain'") }
         verify { log.debug("Discovered reporter 'json'") }
         verify { log.debug("Discovered reporter 'checkstyle'") }
-        verify { log.debug("Initializing 'maven' reporter with {verbose=true, group_by_file=true}") }
+        verify {
+            log.debug(
+                "Initializing 'maven' reporter with {verbose=true, color=false, color_name=DARK_GRAY, " +
+                    "group_by_file=true}"
+            )
+        }
         verify { log.debug("checking: src/main/kotlin/example/Example.kt") }
         verify { log.debug("Style error > src/main/kotlin/example/Example.kt:29:39: Unnecessary semicolon") }
         verify { log.error("src/main/kotlin/example/Example.kt") }
@@ -150,7 +155,7 @@ class CheckMojoTest {
         verify { log.debug("Discovered reporter 'plain'") }
         verify { log.debug("Discovered reporter 'json'") }
         verify { log.debug("Discovered reporter 'checkstyle'") }
-        verify { log.debug("Initializing 'maven' reporter with {verbose=false}") }
+        verify { log.debug("Initializing 'maven' reporter with {verbose=false, color=false, color_name=DARK_GRAY}") }
         verify { log.debug("checking: src/main/kotlin/example/Example.kt") }
         verify { log.debug("Style error > src/main/kotlin/example/Example.kt:29:39: Unnecessary semicolon") }
         verify { log.error("src/main/kotlin/example/Example.kt:29:39: Unnecessary semicolon") }
