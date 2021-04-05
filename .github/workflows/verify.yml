@@ -33,6 +33,7 @@ jobs:
         run: .github/scripts/build.sh
         env:
           MAVEN_VERSION: ${{ matrix.maven-version }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Code coverage report
         if: matrix.maven-version == '3.6.1'
         uses: codecov/codecov-action@v1
