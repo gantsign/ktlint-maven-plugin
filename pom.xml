@@ -489,7 +489,7 @@
                   <message>Best Practice is to never define repositories in pom.xml (use a repository manager instead)</message>
                   <allowedPluginRepositories>
                     <!-- for kotlin-maven-plugin-tools -->
-                    <repository>bintray-gantsign-maven</repository>
+                    <repository>github</repository>
                     <!-- for dokka-maven-plugin -->
                     <repository>jcenter</repository>
                   </allowedPluginRepositories>
@@ -541,7 +541,7 @@
           <dependency>
             <groupId>com.github.gantsign.maven.plugin-tools</groupId>
             <artifactId>kotlin-maven-plugin-tools</artifactId>
-            <version>0.9.25</version>
+            <version>0.9.26</version>
           </dependency>
         </dependencies>
         <executions>
@@ -735,9 +735,9 @@
       <snapshots>
         <enabled>false</enabled>
       </snapshots>
-      <id>bintray-gantsign-maven</id>
-      <name>bintray-gantsign-plugins</name>
-      <url>https://dl.bintray.com/gantsign/maven</url>
+      <id>github</id>
+      <name>kotlin-maven-plugin-tools</name>
+      <url>https://maven.pkg.github.com/gantsign/kotlin-maven-plugin-tools</url>
     </pluginRepository>
     <pluginRepository>
       <id>jcenter</id>

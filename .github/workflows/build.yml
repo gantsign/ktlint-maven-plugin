@@ -33,6 +33,7 @@ jobs:
         run: .github/scripts/build.sh
         env:
           MAVEN_VERSION: ${{ matrix.maven-version }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Code coverage report
         if: matrix.maven-version == '3.6.1'
         uses: codecov/codecov-action@v1
@@ -69,6 +70,7 @@ jobs:
           OSSRH_TOKEN: ${{ secrets.OSSRH_TOKEN }}
           GPG_KEY_NAME: ${{ secrets.GPG_KEY_NAME }}
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Delete GPG secret key
         if: ${{ always() }}
         run: gpg --batch --yes --delete-secret-keys ${{ secrets.GPG_KEY_NAME }} || true
