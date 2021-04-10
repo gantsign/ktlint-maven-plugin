@@ -51,7 +51,7 @@
     <doxia.version>1.9.1</doxia.version>
     <ktlint.version>0.41.0</ktlint.version>
     <license-maven-plugin.version>1.20</license-maven-plugin.version>
-    <maven.version>3.5.4</maven.version>
+    <maven.version>3.8.1</maven.version>
     <mockk.version>1.9.3</mockk.version>
     <plexus-containers.version>2.1.0</plexus-containers.version>
   </properties>
