@@ -31,12 +31,12 @@
     <groupId>com.github.gantsign.parent</groupId>
     <artifactId>kotlin-parent</artifactId>
     <version>2.13.0</version>
-    <relativePath/>
+    <relativePath />
   </parent>
 
   <groupId>com.github.gantsign.maven</groupId>
   <artifactId>ktlint-maven-plugin</artifactId>
-  <version>1.10.2</version>
+  <version>1.10.3-SNAPSHOT</version>
 
   <packaging>maven-plugin</packaging>
 
@@ -462,13 +462,13 @@
                   <version>[1.8,1.9)</version>
                 </requireJavaVersion>
                 <!-- When there are multiple versions of a dependency you have to choose which one to use. -->
-                <dependencyConvergence/>
+                <dependencyConvergence />
                 <requireReleaseDeps>
                   <message>No Snapshots Allowed!</message>
                   <onlyWhenRelease>true</onlyWhenRelease>
                 </requireReleaseDeps>
                 <!-- When there are multiple versions of a dependency you have to choose the maximum version. -->
-                <requireUpperBoundDeps/>
+                <requireUpperBoundDeps />
                 <requirePluginVersions>
                   <message>Best Practice is to always define plugin versions!</message>
                   <banLatest>true</banLatest>
@@ -719,7 +719,7 @@
     <connection>scm:git:https://github.com/gantsign/ktlint-maven-plugin.git</connection>
     <developerConnection>scm:git:git@github.com:gantsign/ktlint-maven-plugin.git</developerConnection>
     <url>https://github.com/gantsign/ktlint-maven-plugin</url>
-    <tag>1.10.2</tag>
+    <tag>HEAD</tag>
   </scm>
 
   <issueManagement>
