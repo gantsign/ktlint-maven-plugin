@@ -1,0 +1,60 @@
+version: 2
+updates:
+- package-ecosystem: maven
+  directory: "/"
+  schedule:
+    interval: weekly
+    day: saturday
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: org.apache.maven:maven-artifact
+    versions:
+    - "> 3.5.4, < 4"
+  - dependency-name: org.apache.maven:maven-artifact
+    versions:
+    - "< 3.7, >= 3.6.a"
+  - dependency-name: org.apache.maven:maven-compat
+    versions:
+    - "> 3.5.4, < 4"
+  - dependency-name: org.apache.maven:maven-compat
+    versions:
+    - "< 3.7, >= 3.6.a"
+  - dependency-name: org.apache.maven:maven-core
+    versions:
+    - "> 3.5.4, < 4"
+  - dependency-name: org.apache.maven:maven-core
+    versions:
+    - "< 3.7, >= 3.6.a"
+  - dependency-name: org.apache.maven:maven-model
+    versions:
+    - "> 3.5.4, < 4"
+  - dependency-name: org.apache.maven:maven-model
+    versions:
+    - "< 3.7, >= 3.6.a"
+  - dependency-name: org.apache.maven:maven-model-builder
+    versions:
+    - "> 3.5.4, < 4"
+  - dependency-name: org.apache.maven:maven-model-builder
+    versions:
+    - "< 3.7, >= 3.6.a"
+  - dependency-name: org.apache.maven:maven-plugin-api
+    versions:
+    - "> 3.5.4, < 4"
+  - dependency-name: org.apache.maven:maven-plugin-api
+    versions:
+    - "< 3.7, >= 3.6.a"
+  - dependency-name: org.apache.maven:maven-repository-metadata
+    versions:
+    - "> 3.5.4, < 4"
+  - dependency-name: org.apache.maven:maven-repository-metadata
+    versions:
+    - "< 3.7, >= 3.6.a"
+  - dependency-name: org.apache.maven:maven-settings
+    versions:
+    - "> 3.5.4, < 4"
+  - dependency-name: org.apache.maven:maven-settings
+    versions:
+    - "< 3.7, >= 3.6.a"
+  - dependency-name: org.jetbrains.dokka:dokka-maven-plugin
+    versions:
+    - 1.4.20-dev-65
