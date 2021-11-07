@@ -49,6 +49,7 @@
 
   <properties>
     <doxia.version>1.10</doxia.version>
+    <guice.version>4.2.0</guice.version>
     <jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
     <kotlin.version>1.5.20</kotlin.version>
     <ktlint.version>0.42.1</ktlint.version>
@@ -60,6 +61,17 @@
 
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>com.google.inject</groupId>
+        <artifactId>guice</artifactId>
+        <version>${guice.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.google.inject</groupId>
+        <artifactId>guice</artifactId>
+        <version>${guice.version}</version>
+        <classifier>no_aop</classifier>
+      </dependency>
       <dependency>
         <groupId>com.pinterest</groupId>
         <artifactId>ktlint</artifactId>
@@ -382,6 +394,13 @@
       <groupId>io.mockk</groupId>
       <artifactId>mockk</artifactId>
       <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <!-- provided by org.slf4j:log4j-over-slf4j -->
+          <groupId>log4j</groupId>
+          <artifactId>log4j</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
@@ -424,6 +443,11 @@
       <groupId>org.skyscreamer</groupId>
       <artifactId>jsonassert</artifactId>
       <version>1.5.0</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>log4j-over-slf4j</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
