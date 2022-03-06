@@ -33,7 +33,6 @@ import java.nio.charset.StandardCharsets.UTF_8
 import org.apache.maven.plugins.annotations.LifecyclePhase
 import org.apache.maven.plugins.annotations.Mojo
 import org.apache.maven.plugins.annotations.Parameter
-import org.apache.maven.plugins.annotations.ResolutionScope
 
 /**
  * Checks for violations of the code style.
@@ -41,8 +40,6 @@ import org.apache.maven.plugins.annotations.ResolutionScope
 @Mojo(
     name = "check",
     defaultPhase = LifecyclePhase.VERIFY,
-    requiresDependencyResolution = ResolutionScope.TEST,
-    requiresDependencyCollection = ResolutionScope.TEST,
     requiresProject = true,
     threadSafe = true
 )

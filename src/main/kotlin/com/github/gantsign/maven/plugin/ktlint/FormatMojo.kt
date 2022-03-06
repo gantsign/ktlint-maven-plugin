@@ -32,7 +32,6 @@ import java.nio.charset.StandardCharsets.UTF_8
 import org.apache.maven.plugins.annotations.LifecyclePhase
 import org.apache.maven.plugins.annotations.Mojo
 import org.apache.maven.plugins.annotations.Parameter
-import org.apache.maven.plugins.annotations.ResolutionScope
 
 /**
  * Automatically fixes violations of the code style (when possible).
@@ -40,8 +39,6 @@ import org.apache.maven.plugins.annotations.ResolutionScope
 @Mojo(
     name = "format",
     defaultPhase = LifecyclePhase.PROCESS_SOURCES,
-    requiresDependencyResolution = ResolutionScope.TEST,
-    requiresDependencyCollection = ResolutionScope.TEST,
     requiresProject = true,
     threadSafe = true
 )

@@ -37,7 +37,6 @@ import java.util.ResourceBundle
 import org.apache.maven.plugins.annotations.LifecyclePhase
 import org.apache.maven.plugins.annotations.Mojo
 import org.apache.maven.plugins.annotations.Parameter
-import org.apache.maven.plugins.annotations.ResolutionScope
 import org.apache.maven.reporting.AbstractMavenReport
 
 /**
@@ -46,8 +45,6 @@ import org.apache.maven.reporting.AbstractMavenReport
 @Mojo(
     name = "ktlint",
     defaultPhase = LifecyclePhase.VERIFY,
-    requiresDependencyResolution = ResolutionScope.TEST,
-    requiresDependencyCollection = ResolutionScope.TEST,
     requiresProject = true,
     threadSafe = true
 )
