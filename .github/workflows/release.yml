@@ -57,6 +57,7 @@ jobs:
   deploy:
     name: Maven deploy
     runs-on: ubuntu-18.04
+    if: github.repository == 'gantsign/ktlint-maven-plugin'
     needs: build-all
     steps:
       - name: Checkout
@@ -89,6 +90,7 @@ jobs:
   deploy-site:
     name: Maven deploy site
     runs-on: ubuntu-18.04
+    if: github.repository == 'gantsign/ktlint-maven-plugin'
     needs: deploy
     steps:
       - name: Checkout
