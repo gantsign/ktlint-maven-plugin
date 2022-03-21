@@ -28,7 +28,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: 8
-          distribution: 'zulu'
+          distribution: 'temurin'
       - uses: actions/cache@v2
         with:
           path: ~/.m2
@@ -64,7 +64,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: 8
-          distribution: 'zulu'
+          distribution: 'temurin'
       - name: Install GPG key
         run: |-
           gpg --batch --import-options import-show --import << EOF
