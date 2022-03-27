@@ -14,7 +14,6 @@ jobs:
   build:
     name: Maven build
     runs-on: ubuntu-18.04
-
     strategy:
       matrix:
         maven-version:
@@ -22,13 +21,15 @@ jobs:
           - '3.6.1'
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 2
       - name: Set up JDK
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v3
         with:
-          java-version: '1.8'
+          java-version: 8
+          distribution: 'temurin'
+          cache: 'maven'
       - name: Build with Maven
         run: .github/scripts/build.sh
         env:
@@ -50,14 +51,16 @@ jobs:
   deploy:
     name: Maven deploy
     runs-on: ubuntu-18.04
+    if: github.repository == 'gantsign/ktlint-maven-plugin'
     needs: build-all
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Set up JDK
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v3
         with:
-          java-version: '1.8'
+          java-version: 8
+          distribution: 'temurin'
       - name: Install GPG key
         run: |-
           gpg --batch --import-options import-show --import << EOF
