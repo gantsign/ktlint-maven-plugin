@@ -29,7 +29,20 @@ jobs:
         with:
           java-version: 8
           distribution: 'temurin'
-          cache: 'maven'
+      # Since code changes to this project are infrequent, and most commits
+      # change the pom.xml, we cache by date interval rather than file hash.
+      - name: Calculate cache interval
+        run: |
+          leveler="$(wc -c <<< "$GITHUB_REPOSITORY")"
+          echo "::set-output name=CACHE_INTERVAL::$(date +%Y)-$(($(($leveler + $(date +%-j))) / 30))"
+        id: cache-interval
+      - name: Cache multiple paths
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.m2/repository
+            !~/.m2/repository/com/github/gantsign/maven
+          key: ${{ runner.os }}-maven-${{ steps.cache-interval.outputs.CACHE_INTERVAL }}
       - name: Build with Maven
         run: .github/scripts/build.sh
         env:
@@ -61,6 +74,20 @@ jobs:
         with:
           java-version: 8
           distribution: 'temurin'
+      # Since code changes to this project are infrequent, and most commits
+      # change the pom.xml, we cache by date interval rather than file hash.
+      - name: Calculate cache interval
+        run: |
+          leveler="$(wc -c <<< "$GITHUB_REPOSITORY")"
+          echo "::set-output name=CACHE_INTERVAL::$(date +%Y)-$(($(($leveler + $(date +%-j))) / 30))"
+        id: cache-interval
+      - name: Cache multiple paths
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.m2/repository
+            !~/.m2/repository/com/github/gantsign/maven
+          key: ${{ runner.os }}-maven-${{ steps.cache-interval.outputs.CACHE_INTERVAL }}
       - name: Install GPG key
         run: |-
           gpg --batch --import-options import-show --import << EOF
