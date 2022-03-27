@@ -36,7 +36,7 @@ jobs:
           leveler="$(wc -c <<< "$GITHUB_REPOSITORY")"
           echo "::set-output name=CACHE_INTERVAL::$(date +%Y)-$(($(($leveler + $(date +%-j))) / 30))"
         id: cache-interval
-      - name: Cache multiple paths
+      - name: Cache local Maven repository
         uses: actions/cache@v3
         with:
           path: |
