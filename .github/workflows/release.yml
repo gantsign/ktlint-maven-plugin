@@ -36,7 +36,7 @@ jobs:
           leveler="$(wc -c <<< "$GITHUB_REPOSITORY")"
           echo "::set-output name=CACHE_INTERVAL::$(date +%Y)-$(($(($leveler + $(date +%-j))) / 30))"
         id: cache-interval
-      - name: Cache multiple paths
+      - name: Cache local Maven repository
         uses: actions/cache@v3
         with:
           path: |
@@ -81,13 +81,15 @@ jobs:
           leveler="$(wc -c <<< "$GITHUB_REPOSITORY")"
           echo "::set-output name=CACHE_INTERVAL::$(date +%Y)-$(($(($leveler + $(date +%-j))) / 30))"
         id: cache-interval
-      - name: Cache multiple paths
+      - name: Cache local Maven repository
         uses: actions/cache@v3
         with:
           path: |
             ~/.m2/repository
             !~/.m2/repository/com/github/gantsign/maven
-          key: ${{ runner.os }}-maven-${{ steps.cache-interval.outputs.CACHE_INTERVAL }}
+          key: ${{ runner.os }}-maven-${{ steps.cache-interval.outputs.CACHE_INTERVAL }}-deploy
+          restore-keys: |
+            ${{ runner.os }}-maven-${{ steps.cache-interval.outputs.CACHE_INTERVAL }}
       - name: Install GPG key
         run: |-
           gpg --batch --import-options import-show --import << EOF
@@ -128,13 +130,15 @@ jobs:
           leveler="$(wc -c <<< "$GITHUB_REPOSITORY")"
           echo "::set-output name=CACHE_INTERVAL::$(date +%Y)-$(($(($leveler + $(date +%-j))) / 30))"
         id: cache-interval
-      - name: Cache multiple paths
+      - name: Cache local Maven repository
         uses: actions/cache@v3
         with:
           path: |
             ~/.m2/repository
             !~/.m2/repository/com/github/gantsign/maven
-          key: ${{ runner.os }}-maven-${{ steps.cache-interval.outputs.CACHE_INTERVAL }}
+          key: ${{ runner.os }}-maven-${{ steps.cache-interval.outputs.CACHE_INTERVAL }}-deploy-site
+          restore-keys: |
+            ${{ runner.os }}-maven-${{ steps.cache-interval.outputs.CACHE_INTERVAL }}
       - name: Configure Git user
         run: >-
           git config --global user.name 'John Freeman' &&
