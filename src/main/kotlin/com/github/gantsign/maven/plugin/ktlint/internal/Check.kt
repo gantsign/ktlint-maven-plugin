@@ -25,6 +25,7 @@
  */
 package com.github.gantsign.maven.plugin.ktlint.internal
 
+import com.github.gantsign.maven.plugin.ktlint.MavenLogReporter
 import com.github.gantsign.maven.plugin.ktlint.ReporterConfig
 import java.io.File
 import java.nio.charset.Charset
