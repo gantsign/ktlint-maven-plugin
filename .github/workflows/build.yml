@@ -13,7 +13,7 @@ env:
 jobs:
   build:
     name: Maven build
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     strategy:
       matrix:
         maven-version:
@@ -55,7 +55,7 @@ jobs:
   build-all:
     if: ${{ always() }}
     name: Build (matrix)
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     needs: build
     steps:
       - name: Check build matrix status
@@ -63,7 +63,7 @@ jobs:
 
   deploy:
     name: Maven deploy
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     if: github.repository == 'gantsign/ktlint-maven-plugin'
     needs: build-all
     steps:
