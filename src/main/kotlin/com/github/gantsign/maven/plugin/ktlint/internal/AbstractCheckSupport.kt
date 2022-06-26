@@ -32,6 +32,9 @@ import com.pinterest.ktlint.core.LintError
 import com.pinterest.ktlint.core.Reporter
 import com.pinterest.ktlint.core.ReporterProvider
 import com.pinterest.ktlint.core.RuleSet
+import com.pinterest.ktlint.core.api.DefaultEditorConfigProperties
+import com.pinterest.ktlint.core.api.EditorConfigOverride
+import com.pinterest.ktlint.core.api.EditorConfigOverride.Companion.plus
 import java.io.File
 import java.io.PrintStream
 import java.nio.charset.Charset
@@ -188,7 +191,10 @@ internal abstract class AbstractCheckSupport(
 
                     log.debug("checking: $relativePath")
 
-                    val userData = mapOf("android" to android.toString())
+                    val editorConfigOverride = EditorConfigOverride.emptyEditorConfigOverride
+                    if (android) {
+                        editorConfigOverride.plus(DefaultEditorConfigProperties.codeStyleSetProperty to android)
+                    }
 
                     val sourceText = file.readText(charset)
 
@@ -196,7 +202,6 @@ internal abstract class AbstractCheckSupport(
                         relativePath,
                         sourceText,
                         ruleSets,
-                        userData,
                         { error ->
                             reporter.onLintError(relativePath, error, false)
 
@@ -206,6 +211,7 @@ internal abstract class AbstractCheckSupport(
 
                             hasErrors = true
                         },
+                        editorConfigOverride,
                         file.editorConfigPath
                     )
 
@@ -221,17 +227,17 @@ internal abstract class AbstractCheckSupport(
         fileName: String,
         sourceText: String,
         ruleSets: List<RuleSet>,
-        userData: Map<String, String>,
         onError: (error: LintError) -> Unit,
+        editorConfigOverride: EditorConfigOverride,
         editorConfigPath: String?
     ) = KtLint.lint(
-        KtLint.Params(
+        KtLint.ExperimentalParams(
             fileName = fileName,
             text = sourceText,
             ruleSets = ruleSets,
-            userData = userData,
             script = !fileName.endsWith(".kt", ignoreCase = true),
             cb = { e, _ -> onError(e) },
+            editorConfigOverride = editorConfigOverride,
             editorConfigPath = editorConfigPath
         )
     )

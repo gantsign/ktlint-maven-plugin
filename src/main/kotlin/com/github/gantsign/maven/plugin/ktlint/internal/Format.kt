@@ -28,6 +28,9 @@ package com.github.gantsign.maven.plugin.ktlint.internal
 import com.pinterest.ktlint.core.KtLint
 import com.pinterest.ktlint.core.LintError
 import com.pinterest.ktlint.core.RuleSet
+import com.pinterest.ktlint.core.api.DefaultEditorConfigProperties.codeStyleSetProperty
+import com.pinterest.ktlint.core.api.EditorConfigOverride
+import com.pinterest.ktlint.core.api.EditorConfigOverride.Companion.plus
 import java.io.File
 import java.nio.charset.Charset
 import java.util.concurrent.atomic.AtomicInteger
@@ -93,7 +96,10 @@ internal class Format(
 
                     log.debug("checking format: $relativePath")
 
-                    val userData = mapOf("android" to android.toString())
+                    val editorConfigOverride = EditorConfigOverride.emptyEditorConfigOverride
+                    if (android) {
+                        editorConfigOverride.plus(codeStyleSetProperty to android)
+                    }
 
                     val sourceText = file.readText(charset)
 
@@ -101,11 +107,11 @@ internal class Format(
                         relativePath,
                         sourceText,
                         ruleSets,
-                        userData,
                         { (line, col, _, detail), corrected ->
                             val lintError = "$relativePath:$line:$col: $detail"
                             log.debug("Format ${if (corrected) "fixed" else "could not fix"} > $lintError")
                         },
+                        editorConfigOverride,
                         file.editorConfigPath
                     )
                     if (formattedText !== sourceText) {
@@ -123,17 +129,17 @@ internal class Format(
         fileName: String,
         sourceText: String,
         ruleSets: List<RuleSet>,
-        userData: Map<String, String>,
         onError: (err: LintError, corrected: Boolean) -> Unit,
+        editorConfigOverride: EditorConfigOverride,
         editorConfigPath: String?
     ): String = KtLint.format(
-        KtLint.Params(
+        KtLint.ExperimentalParams(
             fileName = fileName,
             text = sourceText,
             ruleSets = ruleSets,
-            userData = userData,
             script = !fileName.endsWith(".kt", ignoreCase = true),
             cb = onError,
+            editorConfigOverride = editorConfigOverride,
             editorConfigPath = editorConfigPath
         )
     )
