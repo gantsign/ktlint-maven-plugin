@@ -67,7 +67,7 @@ class FormatMojoTest {
         verify { log.debug("checking format: $source") }
         verify {
             log.debug(
-                "Format could not fix > $source:29:1: " +
+                "Format could not fix > $source:29:14: " +
                     "Exceeded max line length (80)"
             )
         }
@@ -98,7 +98,7 @@ class FormatMojoTest {
         verify { log.debug("checking format: $scriptSource") }
         verify {
             log.debug(
-                "Format could not fix > $scriptSource:29:1: " +
+                "Format could not fix > $scriptSource:29:14: " +
                     "Exceeded max line length (80)"
             )
         }
