@@ -1,8 +1,6 @@
-name: Release
+name: Maven build
 on:
-  push:
-    tags:
-      - '*'
+  workflow_call:
 env:
   JAVA_TOOL_OPTIONS: >-
     -XX:TieredStopAtLevel=1
@@ -12,23 +10,18 @@ env:
 
 jobs:
   build:
-    name: Build
-    uses: './.github/workflows/maven-build.yml'
-
-  deploy:
-    name: Deploy
-    needs: build
-    uses: './.github/workflows/maven-deploy.yml'
-    secrets: inherit
-
-  deploy-site:
-    name: Maven deploy site
+    name: Maven build
     runs-on: ubuntu-20.04
-    if: github.repository == 'gantsign/ktlint-maven-plugin'
-    needs: deploy
+    strategy:
+      matrix:
+        maven-version:
+          - '3.3.9'
+          - '3.6.1'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
@@ -47,14 +40,12 @@ jobs:
           path: |
             ~/.m2/repository
             !~/.m2/repository/com/github/gantsign/maven
-          key: ${{ runner.os }}-maven-${{ steps.cache-interval.outputs.CACHE_INTERVAL }}-deploy-site
-          restore-keys: |
-            ${{ runner.os }}-maven-${{ steps.cache-interval.outputs.CACHE_INTERVAL }}
-      - name: Configure Git user
-        run: >-
-          git config --global user.name 'John Freeman' &&
-          git config --global user.email '17984707+freemanjp@users.noreply.github.com'
-      - name: Deploy Maven site
-        run: .github/scripts/deploy-site.sh
+          key: ${{ runner.os }}-maven-${{ steps.cache-interval.outputs.CACHE_INTERVAL }}
+      - name: Build with Maven
+        run: .github/scripts/build.sh
         env:
+          MAVEN_VERSION: ${{ matrix.maven-version }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Code coverage report
+        if: matrix.maven-version == '3.6.1'
+        uses: codecov/codecov-action@v3.1.0

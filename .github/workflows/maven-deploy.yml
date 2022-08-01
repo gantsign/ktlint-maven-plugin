@@ -1,8 +1,6 @@
-name: Release
+name: Maven deploy
 on:
-  push:
-    tags:
-      - '*'
+  workflow_call:
 env:
   JAVA_TOOL_OPTIONS: >-
     -XX:TieredStopAtLevel=1
@@ -11,21 +9,10 @@ env:
     -Djansi.force=true
 
 jobs:
-  build:
-    name: Build
-    uses: './.github/workflows/maven-build.yml'
-
   deploy:
-    name: Deploy
-    needs: build
-    uses: './.github/workflows/maven-deploy.yml'
-    secrets: inherit
-
-  deploy-site:
-    name: Maven deploy site
+    name: Maven deploy
     runs-on: ubuntu-20.04
     if: github.repository == 'gantsign/ktlint-maven-plugin'
-    needs: deploy
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -47,14 +34,25 @@ jobs:
           path: |
             ~/.m2/repository
             !~/.m2/repository/com/github/gantsign/maven
-          key: ${{ runner.os }}-maven-${{ steps.cache-interval.outputs.CACHE_INTERVAL }}-deploy-site
+          key: ${{ runner.os }}-maven-${{ steps.cache-interval.outputs.CACHE_INTERVAL }}-deploy
           restore-keys: |
             ${{ runner.os }}-maven-${{ steps.cache-interval.outputs.CACHE_INTERVAL }}
-      - name: Configure Git user
-        run: >-
-          git config --global user.name 'John Freeman' &&
-          git config --global user.email '17984707+freemanjp@users.noreply.github.com'
-      - name: Deploy Maven site
-        run: .github/scripts/deploy-site.sh
+      - name: Install GPG key
+        run: |-
+          gpg --batch --import-options import-show --import << EOF
+          ${{ secrets.GPG_KEY }}
+          EOF
+      - name: Deploy with Maven
+        run: .github/scripts/deploy.sh
         env:
+          OSSRH_USER: ${{ secrets.OSSRH_USER }}
+          OSSRH_TOKEN: ${{ secrets.OSSRH_TOKEN }}
+          GPG_KEY_NAME: ${{ secrets.GPG_KEY_NAME }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Delete GPG secret key
+        if: ${{ always() }}
+        run: gpg --batch --yes --delete-secret-keys ${{ secrets.GPG_KEY_NAME }} || true
+      - name: Delete GPG public key
+        if: ${{ always() }}
+        run: gpg --batch --yes --delete-keys ${{ secrets.GPG_KEY_NAME }}
