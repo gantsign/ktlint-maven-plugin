@@ -25,6 +25,7 @@ jobs:
       - name: Cache local Maven repository
         uses: gantsign/maven-periodic-cache-action@v1
         with:
+          key-suffix: '-deploy'
           additional-path: '!~/.m2/repository/com/github/gantsign/maven'
       - name: Deploy with Maven
         run: .github/scripts/deploy.sh
