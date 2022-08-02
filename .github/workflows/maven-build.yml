@@ -31,10 +31,24 @@ jobs:
         uses: gantsign/maven-periodic-cache-action@v1
         with:
           additional-path: '!~/.m2/repository/com/github/gantsign/maven'
-      - name: Build with Maven
-        run: .github/scripts/build.sh
+      - name: Install Maven ${{ matrix.maven-version }}
+        shell: bash
+        run: |
+          set -e
+          curl --silent 'https://get.sdkman.io' | bash
+          echo sdkman_auto_answer=true > ~/.sdkman/etc/config
+          source ~/.sdkman/bin/sdkman-init.sh
+          sdk install maven "$MAVEN_VERSION"
+          echo "M2_HOME=$HOME/.sdkman/candidates/maven/$MAVEN_VERSION" >> $GITHUB_ENV
         env:
           MAVEN_VERSION: ${{ matrix.maven-version }}
+      - name: Build with Maven
+        run: |
+          "$M2_HOME/bin/mvn" install \
+              --batch-mode \
+              --show-version \
+              -Dinvoker.streamLogs=true
+        env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Code coverage report
         if: matrix.maven-version == '3.6.1'

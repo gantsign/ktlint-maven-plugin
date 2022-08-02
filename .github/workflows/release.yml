@@ -43,7 +43,30 @@ jobs:
         run: >-
           git config --global user.name 'John Freeman' &&
           git config --global user.email '17984707+freemanjp@users.noreply.github.com'
+      - name: Build Maven site
+        run: |
+          ./mvnw site \
+              -DskipTests \
+              -Dinvoker.skip=true \
+              --batch-mode \
+              --show-version
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Stage Maven site
+        run: |
+          ./mvnw site:stage \
+              -DskipTests \
+              -Dinvoker.skip=true \
+              --batch-mode
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Deploy Maven site
-        run: .github/scripts/deploy-site.sh
+        run: |
+          ./mvnw scm-publish:publish-scm \
+              --settings .github/maven/settings.xml \
+              -P gh-pages \
+              -DskipTests \
+              -Dinvoker.skip=true \
+              --batch-mode
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
