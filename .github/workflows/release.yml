@@ -63,7 +63,6 @@ jobs:
       - name: Deploy Maven site
         run: |
           ./mvnw scm-publish:publish-scm \
-              --settings .github/maven/settings.xml \
               -P gh-pages \
               -DskipTests \
               -Dinvoker.skip=true \
