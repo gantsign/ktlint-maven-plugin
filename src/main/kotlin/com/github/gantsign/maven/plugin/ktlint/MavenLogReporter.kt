@@ -73,7 +73,6 @@ class MavenLogReporter(
         log.error(MessageUtils.buffer().a(file.dir()).strong(file.name()).toString())
 
         for ((line, col, ruleId, detail) in errList) {
-
             val buf = MessageUtils.buffer()
                 .a(" ")
                 .strong(line)

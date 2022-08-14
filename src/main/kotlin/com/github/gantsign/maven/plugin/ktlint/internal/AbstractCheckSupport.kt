@@ -122,9 +122,9 @@ internal abstract class AbstractCheckSupport(
                     } ?: System.out
 
                 val reporter =
-                    if (reporterProvider is MavenLogReporterProvider)
+                    if (reporterProvider is MavenLogReporterProvider) {
                         reporterProvider.get(log, config)
-                    else reporterProvider.get(stream, config)
+                    } else reporterProvider.get(stream, config)
 
                 if (output == null) {
                     return reporter
