@@ -51,9 +51,12 @@
     <doxia.version>1.11.1</doxia.version>
     <guice.version>4.2.0</guice.version>
     <jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
+    <java.require.version>11</java.require.version>
+    <jdeps.multiRelease>11</jdeps.multiRelease>
     <kotlin.version>1.7.0</kotlin.version>
     <ktlint.version>0.46.1</ktlint.version>
     <license-maven-plugin.version>1.20</license-maven-plugin.version>
+    <maven.compiler.release>8</maven.compiler.release>
     <maven.version>3.5.4</maven.version>
     <mockk.version>1.9.3</mockk.version>
     <plexus-containers.version>2.1.1</plexus-containers.version>
@@ -476,6 +479,11 @@
     <pluginManagement>
       <plugins>
         <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>animal-sniffer-maven-plugin</artifactId>
+          <version>1.20</version>
+        </plugin>
+        <plugin>
           <groupId>org.jetbrains.dokka</groupId>
           <artifactId>dokka-maven-plugin</artifactId>
           <version>1.7.10</version>
@@ -498,7 +506,7 @@
                   <version>[3.3.9,3.7)</version>
                 </requireMavenVersion>
                 <requireJavaVersion>
-                  <version>[1.8,1.9)</version>
+                  <version>[11,12)</version>
                 </requireJavaVersion>
                 <!-- When there are multiple versions of a dependency you have to choose which one to use. -->
                 <dependencyConvergence/>
@@ -547,6 +555,9 @@
                     </dependency>
                   </dependencies>
                 </banDuplicateClasses>
+                <enforceBytecodeVersion>
+                  <maxJdkVersion>8</maxJdkVersion>
+                </enforceBytecodeVersion>
               </rules>
             </configuration>
           </execution>
@@ -626,6 +637,26 @@
         <configuration>
           <skipDeploy>true</skipDeploy>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>animal-sniffer-maven-plugin</artifactId>
+        <configuration>
+          <signature>
+            <groupId>org.codehaus.mojo.signature</groupId>
+            <artifactId>java18</artifactId>
+            <version>1.0</version>
+          </signature>
+        </configuration>
+        <executions>
+          <execution>
+            <id>verify-java8</id>
+            <goals>
+              <goal>check</goal>
+            </goals>
+            <phase>test</phase>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
