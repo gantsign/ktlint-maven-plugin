@@ -23,6 +23,8 @@
  * THE SOFTWARE.
  * #L%
  */
+@file:Suppress("ktlint:filename")
+
 package com.github.gantsign.maven.plugin.ktlint.internal
 
 import java.util.ResourceBundle

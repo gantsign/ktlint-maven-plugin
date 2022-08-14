@@ -94,7 +94,6 @@ internal class KtlintReportGenerator(
                     results.errors.groupBy(FileLintError::file).toSortedMap()
 
                 if (errorsByFile.isNotEmpty()) {
-
                     section(1) {
                         title {
                             +bundle["report.ktlint.files"]
