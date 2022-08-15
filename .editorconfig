@@ -55,7 +55,7 @@ trim_trailing_whitespaces = false
 indent_size=4
 continuation_indent_size=4
 charset = utf-8
-ij_kotlin_imports_layout = ascii
+ij_kotlin_imports_layout = *
 
 # Files with a smaller indent
 [*.{java,xml}]
