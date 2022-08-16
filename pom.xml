@@ -503,7 +503,7 @@
             <configuration>
               <rules>
                 <requireMavenVersion>
-                  <version>[3.3.9,3.7)</version>
+                  <version>[3.3.9,3.9)</version>
                 </requireMavenVersion>
                 <requireJavaVersion>
                   <version>[11,12)</version>
