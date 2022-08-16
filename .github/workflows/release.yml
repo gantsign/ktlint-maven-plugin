@@ -7,8 +7,6 @@ env:
   JAVA_TOOL_OPTIONS: >-
     -XX:TieredStopAtLevel=1
     -XX:+UseParallelGC
-    -Dstyle.color=always
-    -Djansi.force=true
 
 jobs:
   build:
@@ -49,7 +47,8 @@ jobs:
               -DskipTests \
               -Dinvoker.skip=true \
               --batch-mode \
-              --show-version
+              --show-version \
+              -Dstyle.color=always
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Stage Maven site
@@ -57,7 +56,8 @@ jobs:
           ./mvnw site:stage \
               -DskipTests \
               -Dinvoker.skip=true \
-              --batch-mode
+              --batch-mode \
+              -Dstyle.color=always
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Deploy Maven site
@@ -66,6 +66,7 @@ jobs:
               -P gh-pages \
               -DskipTests \
               -Dinvoker.skip=true \
-              --batch-mode
+              --batch-mode \
+              -Dstyle.color=always
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
