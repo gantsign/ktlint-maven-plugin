@@ -5,8 +5,6 @@ env:
   JAVA_TOOL_OPTIONS: >-
     -XX:TieredStopAtLevel=1
     -XX:+UseParallelGC
-    -Dstyle.color=always
-    -Djansi.force=true
 
 jobs:
   build:
@@ -47,7 +45,8 @@ jobs:
           "$M2_HOME/bin/mvn" install \
               --batch-mode \
               --show-version \
-              -Dinvoker.streamLogs=true
+              -Dinvoker.streamLogs=true \
+              -Dstyle.color=always
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Code coverage report
