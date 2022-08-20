@@ -25,12 +25,10 @@
  */
 package com.github.gantsign.maven.plugin.ktlint.internal
 
-import com.pinterest.ktlint.core.RuleSet
-import com.pinterest.ktlint.core.RuleSetProvider
+import com.pinterest.ktlint.core.RuleProvider
+import com.pinterest.ktlint.core.RuleSetProviderV2
 import java.io.File
-import java.util.Comparator.comparingInt
 import java.util.ServiceLoader
-import java.util.concurrent.ConcurrentHashMap
 import org.apache.maven.plugin.logging.Log
 
 internal abstract class AbstractLintSupport(
@@ -39,84 +37,23 @@ internal abstract class AbstractLintSupport(
     protected val android: Boolean,
     private val enableExperimentalRules: Boolean
 ) {
-
-    protected val ruleSets: List<RuleSet> by lazy {
-
-        val ruleSetComparator =
-            comparingInt<RuleSet> {
-                return@comparingInt when (it.id) {
-                    "standard" -> 0
-                    "experimental" -> 1
-                    else -> 2
+    protected val ruleProviders: Set<RuleProvider> by lazy {
+        return@lazy ServiceLoader.load(RuleSetProviderV2::class.java)
+            .asSequence()
+            .map { ruleSetProviderV2 -> Pair(ruleSetProviderV2.id, ruleSetProviderV2.getRuleProviders()) }
+            .distinctBy { (id, _) -> id }
+            .onEach { (id, _) ->
+                if (log.isDebugEnabled) {
+                    log.debug("Discovered RuleSetProviderV2 '$id'")
                 }
-            }.thenComparing(RuleSet::id)
-
-        var ruleSets: List<RuleSet> =
-            ServiceLoader.load(RuleSetProvider::class.java)
-                .map(RuleSetProvider::get)
-                .sortedWith(ruleSetComparator)
-
-        if (log.isDebugEnabled) {
-            for (ruleSet in ruleSets) {
-                log.debug("Discovered ruleset '${ruleSet.id}'")
             }
-        }
-
-        if (!enableExperimentalRules) {
-            ruleSets = ruleSets.filter { it.id != "experimental" }
-            log.debug("Disabled ruleset 'experimental'")
-        }
-
-        return@lazy ruleSets
-    }
-
-    private val editorConfigPathCache = ConcurrentHashMap<File, String>()
-
-    protected val File.editorConfigPath: String?
-        get() {
-            val basedir: File = this.parentFile ?: return null
-
-            var path = editorConfigPathCache[this]
-            if (path != null) {
-                return if (path == none) null else path
+            .filter { (id, _) ->
+                if (!enableExperimentalRules && id == "experimental") {
+                    log.debug("Disabled RuleSetProviderV2 'experimental'")
+                    false
+                } else true
             }
-            var editorconfig = File(basedir, ".editorconfig")
-            if (editorconfig.isFile) {
-                path = editorconfig.absolutePath
-                editorConfigPathCache[basedir] = path
-                return path
-            }
-
-            val childDirs = mutableListOf(basedir)
-            var dir: File? = basedir.parentFile
-
-            while (dir != null) {
-                path = editorConfigPathCache[this]
-                if (path != null) {
-                    for (childDir in childDirs) {
-                        editorConfigPathCache[childDir] = path
-                    }
-                    return if (path == none) null else path
-                }
-                editorconfig = File(dir, ".editorconfig")
-                if (editorconfig.isFile) {
-                    path = editorconfig.absolutePath
-                    editorConfigPathCache[dir] = path
-                    for (childDir in childDirs) {
-                        editorConfigPathCache[childDir] = path
-                    }
-                    return path
-                }
-                childDirs += dir
-                dir = dir.parentFile
-            }
-            for (childDir in childDirs) {
-                editorConfigPathCache[childDir] = none
-            }
-            return null
-        }
-
-    companion object {
-        const val none = "none.gantsign.com"
+            .flatMap { (_, ruleProviders) -> ruleProviders }
+            .toSet()
     }
 }

@@ -27,7 +27,7 @@ package com.github.gantsign.maven.plugin.ktlint.internal
 
 import com.pinterest.ktlint.core.KtLint
 import com.pinterest.ktlint.core.LintError
-import com.pinterest.ktlint.core.RuleSet
+import com.pinterest.ktlint.core.RuleProvider
 import com.pinterest.ktlint.core.api.DefaultEditorConfigProperties.codeStyleSetProperty
 import com.pinterest.ktlint.core.api.EditorConfigOverride
 import com.pinterest.ktlint.core.api.EditorConfigOverride.Companion.plus
@@ -87,14 +87,17 @@ internal class Format(
 
                 val sourceFiles = ds.includedFiles.map { File(sourceRoot, it) }
 
+                val workingDir = File(".").absoluteFile
+
                 sourceFiles.forEach { file ->
                     if (!checkedFiles.add(file.canonicalFile)) {
                         return@forEach
                     }
 
-                    val relativePath = file.toRelativeString(basedir)
+                    val workingRelativePath = file.toRelativeString(workingDir)
+                    val baseRelativePath = file.toRelativeString(basedir)
 
-                    log.debug("checking format: $relativePath")
+                    log.debug("checking format: $baseRelativePath")
 
                     val editorConfigOverride = EditorConfigOverride.emptyEditorConfigOverride
                     if (android) {
@@ -104,18 +107,17 @@ internal class Format(
                     val sourceText = file.readText(charset)
 
                     val formattedText = formatFile(
-                        relativePath,
+                        workingRelativePath,
                         sourceText,
-                        ruleSets,
+                        ruleProviders,
                         { (line, col, _, detail), corrected ->
-                            val lintError = "$relativePath:$line:$col: $detail"
+                            val lintError = "$baseRelativePath:$line:$col: $detail"
                             log.debug("Format ${if (corrected) "fixed" else "could not fix"} > $lintError")
                         },
-                        editorConfigOverride,
-                        file.editorConfigPath
+                        editorConfigOverride
                     )
                     if (formattedText !== sourceText) {
-                        log.debug("Format fixed > $relativePath")
+                        log.debug("Format fixed > $baseRelativePath")
                         file.writeText(formattedText, charset)
                         formattedFileCount.incrementAndGet()
                     }
@@ -128,19 +130,17 @@ internal class Format(
     private fun formatFile(
         fileName: String,
         sourceText: String,
-        ruleSets: List<RuleSet>,
+        ruleProviders: Set<RuleProvider>,
         onError: (err: LintError, corrected: Boolean) -> Unit,
-        editorConfigOverride: EditorConfigOverride,
-        editorConfigPath: String?
+        editorConfigOverride: EditorConfigOverride
     ): String = KtLint.format(
         KtLint.ExperimentalParams(
             fileName = fileName,
             text = sourceText,
-            ruleSets = ruleSets,
+            ruleProviders = ruleProviders,
             script = !fileName.endsWith(".kt", ignoreCase = true),
             cb = onError,
-            editorConfigOverride = editorConfigOverride,
-            editorConfigPath = editorConfigPath
+            editorConfigOverride = editorConfigOverride
         )
     )
 }
