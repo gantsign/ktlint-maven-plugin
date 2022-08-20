@@ -53,7 +53,7 @@
     <jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
     <java.require.version>11</java.require.version>
     <jdeps.multiRelease>11</jdeps.multiRelease>
-    <kotlin.version>1.7.0</kotlin.version>
+    <kotlin.version>1.7.10</kotlin.version>
     <ktlint.version>0.47.0</ktlint.version>
     <license-maven-plugin.version>1.20</license-maven-plugin.version>
     <maven.compiler.release>8</maven.compiler.release>

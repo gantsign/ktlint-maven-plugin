@@ -31,7 +31,7 @@ import com.pinterest.ktlint.core.KtLint
 import com.pinterest.ktlint.core.LintError
 import com.pinterest.ktlint.core.Reporter
 import com.pinterest.ktlint.core.ReporterProvider
-import com.pinterest.ktlint.core.RuleSet
+import com.pinterest.ktlint.core.RuleProvider
 import com.pinterest.ktlint.core.api.DefaultEditorConfigProperties
 import com.pinterest.ktlint.core.api.EditorConfigOverride
 import com.pinterest.ktlint.core.api.EditorConfigOverride.Companion.plus
@@ -181,15 +181,18 @@ internal abstract class AbstractCheckSupport(
 
                 val sourceFiles = ds.includedFiles.map { File(sourceRoot, it) }
 
+                val workingDir = File(".").absoluteFile
+
                 sourceFiles.forEach { file ->
                     if (!checkedFiles.add(file.canonicalFile)) {
                         return@forEach
                     }
 
-                    val relativePath = file.toRelativeString(basedir)
-                    reporter.before(relativePath)
+                    val workingRelativePath = file.toRelativeString(workingDir)
+                    val baseRelativePath = file.toRelativeString(basedir)
+                    reporter.before(baseRelativePath)
 
-                    log.debug("checking: $relativePath")
+                    log.debug("checking: $baseRelativePath")
 
                     val editorConfigOverride = EditorConfigOverride.emptyEditorConfigOverride
                     if (android) {
@@ -199,23 +202,22 @@ internal abstract class AbstractCheckSupport(
                     val sourceText = file.readText(charset)
 
                     lintFile(
-                        relativePath,
+                        workingRelativePath,
                         sourceText,
-                        ruleSets,
+                        ruleProviders,
                         { error ->
-                            reporter.onLintError(relativePath, error, false)
+                            reporter.onLintError(baseRelativePath, error, false)
 
                             val lintError =
-                                "$relativePath:${error.line}:${error.col}: ${error.detail}"
+                                "$baseRelativePath:${error.line}:${error.col}: ${error.detail}"
                             log.debug("Style error > $lintError")
 
                             hasErrors = true
                         },
-                        editorConfigOverride,
-                        file.editorConfigPath
+                        editorConfigOverride
                     )
 
-                    reporter.after(relativePath)
+                    reporter.after(baseRelativePath)
                 }
             }
         }
@@ -226,19 +228,17 @@ internal abstract class AbstractCheckSupport(
     private fun lintFile(
         fileName: String,
         sourceText: String,
-        ruleSets: List<RuleSet>,
+        ruleProviders: Set<RuleProvider>,
         onError: (error: LintError) -> Unit,
-        editorConfigOverride: EditorConfigOverride,
-        editorConfigPath: String?
+        editorConfigOverride: EditorConfigOverride
     ) = KtLint.lint(
         KtLint.ExperimentalParams(
             fileName = fileName,
             text = sourceText,
-            ruleSets = ruleSets,
+            ruleProviders = ruleProviders,
             script = !fileName.endsWith(".kt", ignoreCase = true),
             cb = { e, _ -> onError(e) },
-            editorConfigOverride = editorConfigOverride,
-            editorConfigPath = editorConfigPath
+            editorConfigOverride = editorConfigOverride
         )
     )
 }

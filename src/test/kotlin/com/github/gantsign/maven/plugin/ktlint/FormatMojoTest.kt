@@ -63,14 +63,17 @@ class FormatMojoTest {
         formatMojo.execute()
 
         verify(atLeast = 1) { log.isDebugEnabled }
-        verify { log.debug("Disabled ruleset 'experimental'") }
+        verify { log.debug("Disabled RuleSetProviderV2 'experimental'") }
         verify { log.debug("checking format: $source") }
+        verify { log.debug("Format fixed > $source:1:1: Unnecessary semicolon") }
         verify {
             log.debug(
-                "Format could not fix > $source:29:14: " +
-                    "Exceeded max line length (80)"
+                "Format fixed > $source:29:13: Argument should be on a separate line " +
+                    "(unless all arguments can fit a single line)"
             )
         }
+        verify { log.debug("Format fixed > $source:30:8: Missing newline before \")\"") }
+        verify { log.debug("Format could not fix > $source:29:14: Exceeded max line length (80)") }
         verify { log.debug("Format fixed > $source") }
         verify { log.warn("Source root doesn't exist: $testRoot") }
         verify { log.info("1 file(s) formatted.") }
@@ -94,14 +97,17 @@ class FormatMojoTest {
         formatMojo.execute()
 
         verify(atLeast = 1) { log.isDebugEnabled }
-        verify { log.debug("Disabled ruleset 'experimental'") }
+        verify { log.debug("Disabled RuleSetProviderV2 'experimental'") }
         verify { log.debug("checking format: $scriptSource") }
+        verify { log.debug("Format fixed > $scriptSource:1:1: Unnecessary semicolon") }
         verify {
             log.debug(
-                "Format could not fix > $scriptSource:29:14: " +
-                    "Exceeded max line length (80)"
+                "Format fixed > $scriptSource:29:13: Argument should be on a separate line " +
+                    "(unless all arguments can fit a single line)"
             )
         }
+        verify { log.debug("Format fixed > $scriptSource:30:8: Missing newline before \")\"") }
+        verify { log.debug("Format could not fix > $scriptSource:29:14: Exceeded max line length (80)") }
         verify { log.debug("Format fixed > $scriptSource") }
         verify { log.warn("Source root doesn't exist: $testRoot") }
         verify { log.info("1 file(s) formatted.") }
