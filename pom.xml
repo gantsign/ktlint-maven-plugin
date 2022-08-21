@@ -539,8 +539,6 @@
                   <allowedPluginRepositories>
                     <!-- for kotlin-maven-plugin-tools -->
                     <repository>github</repository>
-                    <!-- for dokka-maven-plugin -->
-                    <repository>jcenter</repository>
                   </allowedPluginRepositories>
                 </requireNoRepositories>
                 <banDuplicateClasses>
@@ -810,11 +808,6 @@
       <id>github</id>
       <name>kotlin-maven-plugin-tools</name>
       <url>https://maven.pkg.github.com/gantsign/kotlin-maven-plugin-tools</url>
-    </pluginRepository>
-    <pluginRepository>
-      <id>jcenter</id>
-      <name>JCenter</name>
-      <url>https://jcenter.bintray.com/</url>
     </pluginRepository>
   </pluginRepositories>
 
