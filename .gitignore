@@ -422,3 +422,6 @@ $RECYCLE.BIN/
 # Non-Java project
 /.idea/checkstyle-idea.xml
 /.idea/google-java-format.xml
+
+# To reduce churn
+.idea/kotlinc.xml
