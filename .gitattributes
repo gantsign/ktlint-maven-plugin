@@ -28,12 +28,14 @@
 
 # Explicitly declare text files you want to always be normalized and converted
 # to native line endings on checkout.
+.editorconfig text
 .gitignore text
 .gitattributes text
 *.xml text
 *.yml text
 *.yaml text
 *.json text
+*.toml text
 *.txt text
 *.md text
 *.htm text
@@ -45,6 +47,7 @@
 *.kt text
 *.kts text
 *.properties text
+LICENSE text
 
 # Declare files that will always have CRLF line endings on checkout.
 *.bat text eol=crlf
@@ -52,6 +55,7 @@
 
 # Declare files that will always have LF line endings on checkout.
 *.sh text eol=lf
+mvnw text eol=lf
 
 # Denote all files that are truly binary and should not be modified.
 *.png binary
