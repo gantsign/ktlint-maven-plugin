@@ -5,6 +5,7 @@ env:
   JAVA_TOOL_OPTIONS: >-
     -XX:TieredStopAtLevel=1
     -XX:+UseParallelGC
+    --illegal-access=deny
 
 jobs:
   build:

@@ -9,6 +9,27 @@ This plugin provides the ability to use
 [ktlint](https://github.com/pinterest/ktlint) to format and check your source
 code against the ktlint anti-bikeshedding code style.
 
+## Using Java 17 and later
+
+Java 17 is the first LTS release to enforce strong encapsulation. For `ktlint`
+to work we need to add `--add-opens java.base/java.lang=ALL-UNNAMED` to the JVM
+arguments.
+
+We recommend that you add a `.mvn/jvm.config` file (relative to the top level
+project directory) to all of your projects using this plugin. The file should
+have the following contents:
+
+```
+--add-opens java.base/java.lang=ALL-UNNAMED
+```
+
+We also recommend adding this to all of your projects using this plugin and
+building with Java 11, as it'll suppress an illegal-access warning during the
+build.
+
+For other options see:
+[https://maven.apache.org/configure.html](https://maven.apache.org/configure.html)
+
 ## Goals Overview
 
   * [ktlint:format](http://gantsign.com/ktlint-maven-plugin/format-mojo.html)
