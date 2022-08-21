@@ -2,7 +2,7 @@
 
 [![Release](https://github.com/gantsign/ktlint-maven-plugin/workflows/Build/badge.svg)](https://github.com/gantsign/ktlint-maven-plugin/actions?query=workflow%3ABuild)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.gantsign.maven/ktlint-maven-plugin/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.gantsign.maven/ktlint-maven-plugin)
-[![codecov](https://codecov.io/gh/gantsign/ktlint-maven-plugin/branch/master/graph/badge.svg)](https://codecov.io/gh/gantsign/ktlint-maven-plugin)
+[![codecov](https://codecov.io/gh/gantsign/ktlint-maven-plugin/branch/main/graph/badge.svg)](https://codecov.io/gh/gantsign/ktlint-maven-plugin)
 [![Known Vulnerabilities](https://snyk.io/test/github/gantsign/ktlint-maven-plugin/badge.svg)](https://snyk.io/test/github/gantsign/ktlint-maven-plugin)
 
 This plugin provides the ability to use
