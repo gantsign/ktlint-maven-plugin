@@ -691,7 +691,7 @@
             <phase>process-sources</phase>
             <configuration>
               <roots>${basedir}</roots>
-              <includes>.editorconfig,.gitattributes,.travis.yml,pom.xml</includes>
+              <includes>.editorconfig,.gitattributes,.github/workflows/*.yml,pom.xml</includes>
               <extraExtensions>
                 <editorconfig>properties</editorconfig>
                 <gitattributes>properties</gitattributes>
@@ -792,8 +792,8 @@
   </issueManagement>
 
   <ciManagement>
-    <system>Travis CI</system>
-    <url>https://travis-ci.org/gantsign/ktlint-maven-plugin</url>
+    <system>GitHub Actions</system>
+    <url>https://github.com/gantsign/ktlint-maven-plugin/actions</url>
   </ciManagement>
 
   <distributionManagement>
