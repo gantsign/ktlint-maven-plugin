@@ -536,10 +536,6 @@
                 </bannedPlugins>
                 <requireNoRepositories>
                   <message>Best Practice is to never define repositories in pom.xml (use a repository manager instead)</message>
-                  <allowedPluginRepositories>
-                    <!-- for kotlin-maven-plugin-tools -->
-                    <repository>github</repository>
-                  </allowedPluginRepositories>
                 </requireNoRepositories>
                 <banDuplicateClasses>
                   <findAllDuplicates>true</findAllDuplicates>
@@ -799,17 +795,6 @@
     <system>Travis CI</system>
     <url>https://travis-ci.org/gantsign/ktlint-maven-plugin</url>
   </ciManagement>
-
-  <pluginRepositories>
-    <pluginRepository>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-      <id>github</id>
-      <name>kotlin-maven-plugin-tools</name>
-      <url>https://maven.pkg.github.com/gantsign/kotlin-maven-plugin-tools</url>
-    </pluginRepository>
-  </pluginRepositories>
 
   <distributionManagement>
     <snapshotRepository>
