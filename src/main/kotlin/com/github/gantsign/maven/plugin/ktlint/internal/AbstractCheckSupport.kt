@@ -181,14 +181,12 @@ internal abstract class AbstractCheckSupport(
 
                 val sourceFiles = ds.includedFiles.map { File(sourceRoot, it) }
 
-                val workingDir = File(".").absoluteFile
-
                 sourceFiles.forEach { file ->
                     if (!checkedFiles.add(file.canonicalFile)) {
                         return@forEach
                     }
 
-                    val workingRelativePath = file.toRelativeString(workingDir)
+                    val absolutePath = file.absolutePath
                     val baseRelativePath = file.toRelativeString(basedir)
                     reporter.before(baseRelativePath)
 
@@ -202,7 +200,7 @@ internal abstract class AbstractCheckSupport(
                     val sourceText = file.readText(charset)
 
                     lintFile(
-                        workingRelativePath,
+                        absolutePath,
                         sourceText,
                         ruleProviders,
                         { error ->

@@ -87,14 +87,12 @@ internal class Format(
 
                 val sourceFiles = ds.includedFiles.map { File(sourceRoot, it) }
 
-                val workingDir = File(".").absoluteFile
-
                 sourceFiles.forEach { file ->
                     if (!checkedFiles.add(file.canonicalFile)) {
                         return@forEach
                     }
 
-                    val workingRelativePath = file.toRelativeString(workingDir)
+                    val absolutePath = file.absolutePath
                     val baseRelativePath = file.toRelativeString(basedir)
 
                     log.debug("checking format: $baseRelativePath")
@@ -107,7 +105,7 @@ internal class Format(
                     val sourceText = file.readText(charset)
 
                     val formattedText = formatFile(
-                        workingRelativePath,
+                        absolutePath,
                         sourceText,
                         ruleProviders,
                         { (line, col, _, detail), corrected ->
