@@ -490,7 +490,7 @@
         <plugin>
           <groupId>org.jetbrains.dokka</groupId>
           <artifactId>dokka-maven-plugin</artifactId>
-          <version>1.7.10</version>
+          <version>1.7.20</version>
         </plugin>
       </plugins>
     </pluginManagement>
