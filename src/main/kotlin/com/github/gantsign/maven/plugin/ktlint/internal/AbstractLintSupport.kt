@@ -51,7 +51,9 @@ internal abstract class AbstractLintSupport(
                 if (!enableExperimentalRules && id == "experimental") {
                     log.debug("Disabled RuleSetProviderV2 'experimental'")
                     false
-                } else true
+                } else {
+                    true
+                }
             }
             .flatMap { (_, ruleProviders) -> ruleProviders }
             .toSet()
