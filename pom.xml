@@ -56,6 +56,7 @@
     <kotlin.version>1.8.0</kotlin.version>
     <ktlint.version>0.48.2</ktlint.version>
     <license-maven-plugin.version>1.20</license-maven-plugin.version>
+    <maven-plugin-plugin.version>3.6.4</maven-plugin-plugin.version>
     <maven.compiler.release>8</maven.compiler.release>
     <maven.version>3.5.4</maven.version>
     <plexus-containers.version>2.1.1</plexus-containers.version>
