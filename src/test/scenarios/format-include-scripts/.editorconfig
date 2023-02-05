@@ -55,6 +55,7 @@ trim_trailing_whitespaces = false
 indent_size=4
 continuation_indent_size=4
 charset = utf-8
+ktlint_standard_trailing-comma-on-call-site = disabled
 
 # Files with a smaller indent
 [*.{java,xml}]

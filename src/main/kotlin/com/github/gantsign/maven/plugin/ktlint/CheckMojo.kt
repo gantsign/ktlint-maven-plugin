@@ -27,7 +27,7 @@ package com.github.gantsign.maven.plugin.ktlint
 
 import com.github.gantsign.maven.plugin.ktlint.internal.Check
 import com.github.gantsign.maven.plugin.ktlint.internal.Sources
-import com.pinterest.ktlint.reporter.plain.internal.Color
+import com.pinterest.ktlint.reporter.plain.Color
 import java.nio.charset.Charset
 import java.nio.charset.StandardCharsets.UTF_8
 import org.apache.maven.plugins.annotations.LifecyclePhase

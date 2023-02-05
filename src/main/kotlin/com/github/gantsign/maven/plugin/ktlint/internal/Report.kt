@@ -27,7 +27,7 @@ package com.github.gantsign.maven.plugin.ktlint.internal
 
 import com.github.gantsign.maven.plugin.ktlint.ReporterConfig
 import com.pinterest.ktlint.core.Reporter
-import com.pinterest.ktlint.reporter.plain.internal.Color
+import com.pinterest.ktlint.reporter.plain.Color
 import java.io.File
 import java.nio.charset.Charset
 import org.apache.maven.plugin.logging.Log
