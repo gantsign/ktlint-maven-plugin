@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"com.github.gantsign.maven.plugin.ktlint","l":"HelpMojo"}]
