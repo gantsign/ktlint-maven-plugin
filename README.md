@@ -9,9 +9,9 @@ This plugin provides the ability to use
 [ktlint](https://github.com/pinterest/ktlint) to format and check your source
 code against the ktlint anti-bikeshedding code style.
 
-## Using Java 17 and later
+## Using Java 16 and later
 
-Java 17 is the first LTS release to enforce strong encapsulation. For `ktlint`
+Java 16 is the first release to enforce strong encapsulation. For `ktlint`
 to work we need to add `--add-opens java.base/java.lang=ALL-UNNAMED` to the JVM
 arguments.
 
