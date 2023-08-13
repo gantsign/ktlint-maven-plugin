@@ -32,7 +32,7 @@ import org.apache.maven.doxia.sink.Sink
 
 internal class KtlintReportGenerator(
     private val sink: Sink,
-    private val bundle: ResourceBundle
+    private val bundle: ResourceBundle,
 ) {
 
     private val title = bundle["report.ktlint.title"]
@@ -133,7 +133,7 @@ internal class KtlintReportGenerator(
                             val sortedErrors = errors.sortedWith(
                                 Comparator.comparingInt(FileLintError::line)
                                     .thenComparingInt(FileLintError::col)
-                                    .thenComparing(FileLintError::ruleId)
+                                    .thenComparing(FileLintError::ruleId),
                             )
                             section(2, id = file.replace('/', '.')) {
                                 title {

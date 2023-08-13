@@ -41,7 +41,7 @@ class MavenLogReporterProvider : ReporterProvider<MavenLogReporter> {
             log = log,
             verbose = opt["verbose"].emptyOrTrue(),
             groupByFile = opt["group_by_file"].emptyOrTrue(),
-            pad = opt["pad"].emptyOrTrue()
+            pad = opt["pad"].emptyOrTrue(),
         )
 
     private fun String?.emptyOrTrue() = this == "" || this == "true"

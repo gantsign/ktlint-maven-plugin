@@ -43,7 +43,7 @@ abstract class AbstractBaseMojo : AbstractMojo() {
     @Parameter(
         defaultValue = "\${project.testCompileSourceRoots}",
         readonly = true,
-        required = true
+        required = true,
     )
     protected lateinit var testSourceRoots: List<String>
 

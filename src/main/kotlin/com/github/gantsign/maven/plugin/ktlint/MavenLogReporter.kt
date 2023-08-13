@@ -36,7 +36,7 @@ class MavenLogReporter(
     val log: Log,
     val verbose: Boolean,
     val groupByFile: Boolean,
-    val pad: Boolean
+    val pad: Boolean,
 ) : Reporter {
 
     private val acc = ConcurrentHashMap<String, MutableList<LintError>>()

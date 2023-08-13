@@ -68,14 +68,14 @@ class FormatMojoTest {
         verify {
             log.debug(
                 "Format could not fix > src/main/kotlin/example/Example.kt:30:8: " +
-                    "Missing trailing comma before \")\""
+                    "Missing trailing comma before \")\"",
             )
         }
         verify { log.debug("Format fixed > $source:30:39: Unnecessary semicolon") }
         verify {
             log.debug(
                 "Format fixed > $source:29:13: Argument should be on a separate line " +
-                    "(unless all arguments can fit a single line)"
+                    "(unless all arguments can fit a single line)",
             )
         }
         verify { log.debug("Format fixed > $source:30:8: Missing newline before \")\"") }
@@ -109,7 +109,7 @@ class FormatMojoTest {
         verify {
             log.debug(
                 "Format fixed > $scriptSource:29:13: Argument should be on a separate line " +
-                    "(unless all arguments can fit a single line)"
+                    "(unless all arguments can fit a single line)",
             )
         }
         verify { log.debug("Format fixed > $scriptSource:30:8: Missing newline before \")\"") }

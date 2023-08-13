@@ -41,7 +41,7 @@ internal class Report(
     android: Boolean,
     reporterConfig: Set<ReporterConfig>,
     verbose: Boolean,
-    enableExperimentalRules: Boolean
+    enableExperimentalRules: Boolean,
 ) : AbstractCheckSupport(
     log,
     basedir,
@@ -53,7 +53,7 @@ internal class Report(
     verbose,
     false,
     Color.DARK_GRAY.name,
-    enableExperimentalRules
+    enableExperimentalRules,
 ) {
     operator fun invoke(): CheckResults {
         val modelReporter = ModelReporter()

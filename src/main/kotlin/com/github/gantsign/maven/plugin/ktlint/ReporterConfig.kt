@@ -31,5 +31,5 @@ import java.util.Properties
 data class ReporterConfig @JvmOverloads constructor(
     var name: String? = null,
     var output: File? = null,
-    var properties: Properties? = null
+    var properties: Properties? = null,
 )

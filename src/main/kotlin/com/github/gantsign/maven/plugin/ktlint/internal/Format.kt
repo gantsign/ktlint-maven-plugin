@@ -45,7 +45,7 @@ internal class Format(
     private val sources: List<Sources>,
     private val charset: Charset,
     android: Boolean,
-    enableExperimentalRules: Boolean
+    enableExperimentalRules: Boolean,
 ) : AbstractLintSupport(log, basedir, android, enableExperimentalRules) {
 
     private val formattedFileCount = AtomicInteger()
@@ -69,7 +69,7 @@ internal class Format(
                 }
                 if (!sourceRoot.isDirectory) {
                     throw MojoFailureException(
-                        "Source root is not a directory: ${sourceRoot.toRelativeString(basedir)}"
+                        "Source root is not a directory: ${sourceRoot.toRelativeString(basedir)}",
                     )
                 }
 
@@ -112,7 +112,7 @@ internal class Format(
                             val lintError = "$baseRelativePath:$line:$col: $detail"
                             log.debug("Format ${if (corrected) "fixed" else "could not fix"} > $lintError")
                         },
-                        editorConfigOverride
+                        editorConfigOverride,
                     )
                     if (formattedText !== sourceText) {
                         log.debug("Format fixed > $baseRelativePath")
@@ -130,7 +130,7 @@ internal class Format(
         sourceText: String,
         ruleProviders: Set<RuleProvider>,
         onError: (err: LintError, corrected: Boolean) -> Unit,
-        editorConfigOverride: EditorConfigOverride
+        editorConfigOverride: EditorConfigOverride,
     ): String = KtLint.format(
         KtLint.ExperimentalParams(
             fileName = fileName,
@@ -138,7 +138,7 @@ internal class Format(
             ruleProviders = ruleProviders,
             script = !fileName.endsWith(".kt", ignoreCase = true),
             cb = onError,
-            editorConfigOverride = editorConfigOverride
-        )
+            editorConfigOverride = editorConfigOverride,
+        ),
     )
 }

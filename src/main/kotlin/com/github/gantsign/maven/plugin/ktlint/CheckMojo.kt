@@ -41,7 +41,7 @@ import org.apache.maven.plugins.annotations.Parameter
     name = "check",
     defaultPhase = LifecyclePhase.VERIFY,
     requiresProject = true,
-    threadSafe = true
+    threadSafe = true,
 )
 class CheckMojo : AbstractBaseMojo() {
 
@@ -94,20 +94,20 @@ class CheckMojo : AbstractBaseMojo() {
                     isIncluded = includeSources,
                     sourceRoots = sourceRoots,
                     includes = sourcesIncludes,
-                    excludes = sourcesExcludes
+                    excludes = sourcesExcludes,
                 ),
                 Sources(
                     isIncluded = includeTestSources,
                     sourceRoots = testSourceRoots,
                     includes = testSourcesIncludes,
-                    excludes = testSourcesExcludes
+                    excludes = testSourcesExcludes,
                 ),
                 Sources(
                     isIncluded = includeScripts,
                     sourceRoots = scriptRoots,
                     includes = scriptsIncludes,
-                    excludes = scriptsExcludes
-                )
+                    excludes = scriptsExcludes,
+                ),
             ),
             charset = encoding?.trim()?.takeUnless(String::isEmpty)
                 ?.let { Charset.forName(it) }
@@ -118,7 +118,7 @@ class CheckMojo : AbstractBaseMojo() {
             reporterColor = reporterColor,
             reporterColorName = reporterColorName,
             enableExperimentalRules = experimental,
-            failOnViolation = failOnViolation
+            failOnViolation = failOnViolation,
         )()
     }
 }
