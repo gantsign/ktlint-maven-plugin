@@ -56,7 +56,7 @@ internal abstract class AbstractCheckSupport(
     protected val verbose: Boolean,
     private var reporterColor: Boolean,
     private var reporterColorName: String,
-    enableExperimentalRules: Boolean
+    enableExperimentalRules: Boolean,
 ) : AbstractLintSupport(log, basedir, android, enableExperimentalRules) {
 
     protected open val reporter: Reporter
@@ -64,7 +64,7 @@ internal abstract class AbstractCheckSupport(
             data class ReporterTemplate(
                 val id: String,
                 val config: Map<String, String>,
-                var output: String?
+                var output: String?,
             )
 
             val templates: List<ReporterTemplate> =
@@ -86,9 +86,9 @@ internal abstract class AbstractCheckSupport(
                             config = mapOf(
                                 "verbose" to verbose.toString(),
                                 "color" to reporterColor.toString(),
-                                "color_name" to reporterColorName
+                                "color_name" to reporterColorName,
                             ) + properties,
-                            output = output?.toString()
+                            output = output?.toString(),
                         )
                     }
                     .distinct()
@@ -106,13 +106,13 @@ internal abstract class AbstractCheckSupport(
                     val availableReporters = reporterProviderById.keys.sorted()
                     throw MojoFailureException(
                         "Error: reporter '$id' wasn't found (available: " +
-                            "${availableReporters.joinToString(",")})"
+                            "${availableReporters.joinToString(",")})",
                     )
                 }
                 if (log.isDebugEnabled) {
                     log.debug(
                         "Initializing '$id' reporter with $config" +
-                            (output?.let { ", output=$it" } ?: "")
+                            (output?.let { ", output=$it" } ?: ""),
                     )
                 }
                 val stream =
@@ -162,14 +162,14 @@ internal abstract class AbstractCheckSupport(
                 }
                 if (!sourceRoot.isDirectory) {
                     throw MojoFailureException(
-                        "Source root is not a directory: ${sourceRoot.toRelativeString(basedir)}"
+                        "Source root is not a directory: ${sourceRoot.toRelativeString(basedir)}",
                     )
                 }
 
                 val includesArray =
                     includes.takeUnless(Set<String>::isEmpty)?.toTypedArray() ?: arrayOf(
                         "**/*.kt",
-                        "**/*.kts"
+                        "**/*.kts",
                     )
                 val excludesArray = excludes.toTypedArray()
 
@@ -214,7 +214,7 @@ internal abstract class AbstractCheckSupport(
 
                             hasErrors = true
                         },
-                        editorConfigOverride
+                        editorConfigOverride,
                     )
 
                     reporter.after(baseRelativePath)
@@ -230,7 +230,7 @@ internal abstract class AbstractCheckSupport(
         sourceText: String,
         ruleProviders: Set<RuleProvider>,
         onError: (error: LintError) -> Unit,
-        editorConfigOverride: EditorConfigOverride
+        editorConfigOverride: EditorConfigOverride,
     ) = KtLint.lint(
         KtLint.ExperimentalParams(
             fileName = fileName,
@@ -238,7 +238,7 @@ internal abstract class AbstractCheckSupport(
             ruleProviders = ruleProviders,
             script = !fileName.endsWith(".kt", ignoreCase = true),
             cb = { e, _ -> onError(e) },
-            editorConfigOverride = editorConfigOverride
-        )
+            editorConfigOverride = editorConfigOverride,
+        ),
     )
 }

@@ -46,7 +46,7 @@ import org.apache.maven.reporting.AbstractMavenReport
     name = "ktlint",
     defaultPhase = LifecyclePhase.VERIFY,
     requiresProject = true,
-    threadSafe = true
+    threadSafe = true,
 )
 class KtlintReport : AbstractMavenReport() {
 
@@ -62,7 +62,7 @@ class KtlintReport : AbstractMavenReport() {
     @Parameter(
         defaultValue = "\${project.testCompileSourceRoots}",
         readonly = true,
-        required = true
+        required = true,
     )
     private lateinit var testSourceRoots: List<String>
 
@@ -166,7 +166,7 @@ class KtlintReport : AbstractMavenReport() {
         return ResourceBundle.getBundle(
             "ktlint-report",
             locale,
-            AbstractMavenReport::class.java.classLoader
+            AbstractMavenReport::class.java.classLoader,
         )
     }
 
@@ -191,20 +191,20 @@ class KtlintReport : AbstractMavenReport() {
                     isIncluded = includeSources,
                     sourceRoots = sourceRoots,
                     includes = sourcesIncludes,
-                    excludes = sourcesExcludes
+                    excludes = sourcesExcludes,
                 ),
                 Sources(
                     isIncluded = includeTestSources,
                     sourceRoots = testSourceRoots,
                     includes = testSourcesIncludes,
-                    excludes = testSourcesExcludes
+                    excludes = testSourcesExcludes,
                 ),
                 Sources(
                     isIncluded = includeScripts,
                     sourceRoots = scriptRoots,
                     includes = scriptsIncludes,
-                    excludes = scriptsExcludes
-                )
+                    excludes = scriptsExcludes,
+                ),
             ),
             charset = encoding?.trim()?.takeUnless(String::isEmpty)
                 ?.let { Charset.forName(it) }
@@ -212,7 +212,7 @@ class KtlintReport : AbstractMavenReport() {
             android = android,
             reporterConfig = reporters ?: emptySet(),
             verbose = verbose,
-            enableExperimentalRules = experimental
+            enableExperimentalRules = experimental,
         )()
         KtlintReportGenerator(sink, getBundle(locale)).generatorReport(results)
     }

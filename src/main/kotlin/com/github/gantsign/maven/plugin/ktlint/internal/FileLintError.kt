@@ -32,13 +32,13 @@ internal class FileLintError(
     val line: Int,
     val col: Int,
     val ruleId: String,
-    val detail: String
+    val detail: String,
 ) {
     constructor(file: String, lintError: LintError) : this(
         file,
         lintError.line,
         lintError.col,
         lintError.ruleId,
-        lintError.detail
+        lintError.detail,
     )
 }

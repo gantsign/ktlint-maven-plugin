@@ -40,7 +40,7 @@ import org.apache.maven.plugins.annotations.Parameter
     name = "format",
     defaultPhase = LifecyclePhase.PROCESS_SOURCES,
     requiresProject = true,
-    threadSafe = true
+    threadSafe = true,
 )
 class FormatMojo : AbstractBaseMojo() {
 
@@ -63,26 +63,26 @@ class FormatMojo : AbstractBaseMojo() {
                     isIncluded = includeSources,
                     sourceRoots = sourceRoots,
                     includes = sourcesIncludes,
-                    excludes = sourcesExcludes
+                    excludes = sourcesExcludes,
                 ),
                 Sources(
                     isIncluded = includeTestSources,
                     sourceRoots = testSourceRoots,
                     includes = testSourcesIncludes,
-                    excludes = testSourcesExcludes
+                    excludes = testSourcesExcludes,
                 ),
                 Sources(
                     isIncluded = includeScripts,
                     sourceRoots = scriptRoots,
                     includes = scriptsIncludes,
-                    excludes = scriptsExcludes
-                )
+                    excludes = scriptsExcludes,
+                ),
             ),
             charset = encoding?.trim()?.takeUnless(String::isEmpty)
                 ?.let { Charset.forName(it) }
                 ?: UTF_8,
             android = android,
-            enableExperimentalRules = experimental
+            enableExperimentalRules = experimental,
         )()
     }
 }

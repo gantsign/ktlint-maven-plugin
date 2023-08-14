@@ -35,7 +35,7 @@ internal abstract class AbstractLintSupport(
     protected val log: Log,
     protected val basedir: File,
     protected val android: Boolean,
-    private val enableExperimentalRules: Boolean
+    private val enableExperimentalRules: Boolean,
 ) {
     protected val ruleProviders: Set<RuleProvider> by lazy {
         return@lazy ServiceLoader.load(RuleSetProviderV2::class.java)

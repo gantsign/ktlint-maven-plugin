@@ -31,17 +31,17 @@ data class Sources constructor(
     val isIncluded: Boolean,
     val sourceRoots: Set<File>,
     val includes: Set<String>,
-    val excludes: Set<String>
+    val excludes: Set<String>,
 ) {
     constructor(
         isIncluded: Boolean,
         sourceRoots: Collection<String>?,
         includes: Collection<String>?,
-        excludes: Collection<String>?
+        excludes: Collection<String>?,
     ) : this(
         isIncluded,
         sourceRoots?.asSequence()?.map(::File)?.toSet() ?: emptySet(),
         includes?.toSet() ?: emptySet(),
-        excludes?.toSet() ?: emptySet()
+        excludes?.toSet() ?: emptySet(),
     )
 }

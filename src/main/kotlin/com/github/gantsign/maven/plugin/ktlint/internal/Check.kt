@@ -44,7 +44,7 @@ internal class Check(
     reporterColor: Boolean,
     reporterColorName: String,
     enableExperimentalRules: Boolean,
-    private val failOnViolation: Boolean
+    private val failOnViolation: Boolean,
 ) : AbstractCheckSupport(
     log,
     basedir,
@@ -56,7 +56,7 @@ internal class Check(
     verbose,
     reporterColor,
     reporterColorName,
-    enableExperimentalRules
+    enableExperimentalRules,
 ) {
     operator fun invoke() {
         val reporter = reporter

@@ -119,7 +119,7 @@ class CheckMojoTest {
         verify {
             log.debug(
                 "Initializing 'maven' reporter with {verbose=true, color=false, color_name=DARK_GRAY, " +
-                    "group_by_file=true}"
+                    "group_by_file=true}",
             )
         }
         verify { log.debug("checking: src/main/kotlin/example/Example.kt") }
