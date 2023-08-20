@@ -25,12 +25,12 @@
  */
 package com.github.gantsign.maven.plugin.ktlint.internal
 
-import com.pinterest.ktlint.core.LintError
-import com.pinterest.ktlint.core.Reporter
+import com.pinterest.ktlint.cli.reporter.core.api.KtlintCliError
+import com.pinterest.ktlint.cli.reporter.core.api.ReporterV2
 import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.atomic.AtomicInteger
 
-internal class ModelReporter : Reporter {
+internal class ModelReporter : ReporterV2 {
 
     private val _errors = CopyOnWriteArrayList<FileLintError>()
     private val _fileCount = AtomicInteger()
@@ -41,8 +41,8 @@ internal class ModelReporter : Reporter {
     val errors: List<FileLintError>
         get() = _errors
 
-    override fun onLintError(file: String, err: LintError, corrected: Boolean) {
-        _errors.add(FileLintError(file, err))
+    override fun onLintError(file: String, ktlintCliError: KtlintCliError) {
+        _errors.add(FileLintError(file, ktlintCliError))
     }
 
     override fun after(file: String) {

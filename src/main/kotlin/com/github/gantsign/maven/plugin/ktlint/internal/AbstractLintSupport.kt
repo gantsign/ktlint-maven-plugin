@@ -25,8 +25,8 @@
  */
 package com.github.gantsign.maven.plugin.ktlint.internal
 
-import com.pinterest.ktlint.core.RuleProvider
-import com.pinterest.ktlint.core.RuleSetProviderV2
+import com.pinterest.ktlint.cli.ruleset.core.api.RuleSetProviderV3
+import com.pinterest.ktlint.rule.engine.core.api.RuleProvider
 import java.io.File
 import java.util.ServiceLoader
 import org.apache.maven.plugin.logging.Log
@@ -35,24 +35,16 @@ internal abstract class AbstractLintSupport(
     protected val log: Log,
     protected val basedir: File,
     protected val android: Boolean,
-    private val enableExperimentalRules: Boolean,
+    protected val enableExperimentalRules: Boolean,
 ) {
     protected val ruleProviders: Set<RuleProvider> by lazy {
-        return@lazy ServiceLoader.load(RuleSetProviderV2::class.java)
+        return@lazy ServiceLoader.load(RuleSetProviderV3::class.java)
             .asSequence()
-            .map { ruleSetProviderV2 -> Pair(ruleSetProviderV2.id, ruleSetProviderV2.getRuleProviders()) }
+            .map { ruleSetProviderV3 -> Pair(ruleSetProviderV3.id, ruleSetProviderV3.getRuleProviders()) }
             .distinctBy { (id, _) -> id }
             .onEach { (id, _) ->
                 if (log.isDebugEnabled) {
-                    log.debug("Discovered RuleSetProviderV2 '$id'")
-                }
-            }
-            .filter { (id, _) ->
-                if (!enableExperimentalRules && id == "experimental") {
-                    log.debug("Disabled RuleSetProviderV2 'experimental'")
-                    false
-                } else {
-                    true
+                    log.debug("Discovered RuleSetProviderV3 '$id'")
                 }
             }
             .flatMap { (_, ruleProviders) -> ruleProviders }

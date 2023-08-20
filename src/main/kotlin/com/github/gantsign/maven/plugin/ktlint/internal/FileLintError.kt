@@ -25,7 +25,7 @@
  */
 package com.github.gantsign.maven.plugin.ktlint.internal
 
-import com.pinterest.ktlint.core.LintError
+import com.pinterest.ktlint.cli.reporter.core.api.KtlintCliError
 
 internal class FileLintError(
     val file: String,
@@ -33,12 +33,14 @@ internal class FileLintError(
     val col: Int,
     val ruleId: String,
     val detail: String,
+    val status: KtlintCliError.Status,
 ) {
-    constructor(file: String, lintError: LintError) : this(
+    constructor(file: String, lintError: KtlintCliError) : this(
         file,
         lintError.line,
         lintError.col,
         lintError.ruleId,
         lintError.detail,
+        lintError.status,
     )
 }

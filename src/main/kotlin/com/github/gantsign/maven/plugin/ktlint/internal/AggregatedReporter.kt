@@ -2,7 +2,7 @@
  * #%L
  * ktlint-maven-plugin
  * %%
- * Copyright (C) 2018 GantSign Ltd.
+ * Copyright (C) 2018 - 2023 GantSign Ltd.
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,26 +23,29 @@
  * THE SOFTWARE.
  * #L%
  */
-package com.github.gantsign.maven.plugin.ktlint
+package com.github.gantsign.maven.plugin.ktlint.internal
 
-import com.pinterest.ktlint.cli.reporter.core.api.ReporterProviderV2
-import java.io.PrintStream
-import org.apache.maven.plugin.logging.Log
+import com.pinterest.ktlint.cli.reporter.core.api.KtlintCliError
+import com.pinterest.ktlint.cli.reporter.core.api.ReporterV2
 
-class MavenLogReporterProvider : ReporterProviderV2<MavenLogReporter> {
+class AggregatedReporter(private val reporters: List<ReporterV2>) : ReporterV2 {
+    override fun after(file: String) {
+        reporters.forEach { it.after(file) }
+    }
 
-    override val id: String = "maven"
+    override fun afterAll() {
+        reporters.forEach(ReporterV2::afterAll)
+    }
 
-    override fun get(out: PrintStream, opt: Map<String, String>): MavenLogReporter =
-        throw UnsupportedOperationException("Use MavenLogReporterProvider.get(Log, Map<String, String>) instead.")
+    override fun before(file: String) {
+        reporters.forEach { it.before(file) }
+    }
 
-    fun get(log: Log, opt: Map<String, String>): MavenLogReporter =
-        MavenLogReporter(
-            log = log,
-            verbose = opt["verbose"].emptyOrTrue(),
-            groupByFile = opt["group_by_file"].emptyOrTrue(),
-            pad = opt["pad"].emptyOrTrue(),
-        )
+    override fun beforeAll() {
+        reporters.forEach(ReporterV2::beforeAll)
+    }
 
-    private fun String?.emptyOrTrue() = this == "" || this == "true"
+    override fun onLintError(file: String, ktlintCliError: KtlintCliError) {
+        reporters.forEach { it.onLintError(file, ktlintCliError) }
+    }
 }

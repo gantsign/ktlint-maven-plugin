@@ -27,8 +27,6 @@ package com.github.gantsign.maven.plugin.ktlint
 
 import com.github.gantsign.maven.plugin.ktlint.internal.Format
 import com.github.gantsign.maven.plugin.ktlint.internal.Sources
-import java.nio.charset.Charset
-import java.nio.charset.StandardCharsets.UTF_8
 import org.apache.maven.plugins.annotations.LifecyclePhase
 import org.apache.maven.plugins.annotations.Mojo
 import org.apache.maven.plugins.annotations.Parameter
@@ -78,9 +76,6 @@ class FormatMojo : AbstractBaseMojo() {
                     excludes = scriptsExcludes,
                 ),
             ),
-            charset = encoding?.trim()?.takeUnless(String::isEmpty)
-                ?.let { Charset.forName(it) }
-                ?: UTF_8,
             android = android,
             enableExperimentalRules = experimental,
         )()

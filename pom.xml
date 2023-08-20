@@ -53,8 +53,8 @@
     <jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
     <java.require.version>11</java.require.version>
     <jdeps.multiRelease>11</jdeps.multiRelease>
-    <kotlin.version>1.8.0</kotlin.version>
-    <ktlint.version>0.48.2</ktlint.version>
+    <kotlin.version>1.8.22</kotlin.version>
+    <ktlint.version>0.50.0</ktlint.version>
     <license-maven-plugin.version>1.20</license-maven-plugin.version>
     <maven-plugin-plugin.version>3.6.4</maven-plugin-plugin.version>
     <maven.compiler.release>8</maven.compiler.release>
@@ -82,7 +82,17 @@
       </dependency>
       <dependency>
         <groupId>com.pinterest.ktlint</groupId>
-        <artifactId>ktlint-core</artifactId>
+        <artifactId>ktlint-cli-reporter</artifactId>
+        <version>${ktlint.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.pinterest.ktlint</groupId>
+        <artifactId>ktlint-cli-ruleset-core</artifactId>
+        <version>${ktlint.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.pinterest.ktlint</groupId>
+        <artifactId>ktlint-reporter-baseline</artifactId>
         <version>${ktlint.version}</version>
       </dependency>
       <dependency>
@@ -102,7 +112,12 @@
       </dependency>
       <dependency>
         <groupId>com.pinterest.ktlint</groupId>
-        <artifactId>ktlint-ruleset-experimental</artifactId>
+        <artifactId>ktlint-rule-engine</artifactId>
+        <version>${ktlint.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.pinterest.ktlint</groupId>
+        <artifactId>ktlint-rule-engine-core</artifactId>
         <version>${ktlint.version}</version>
       </dependency>
       <dependency>
@@ -291,7 +306,19 @@
     </dependency>
     <dependency>
       <groupId>com.pinterest.ktlint</groupId>
-      <artifactId>ktlint-core</artifactId>
+      <artifactId>ktlint-cli-reporter</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.pinterest.ktlint</groupId>
+      <artifactId>ktlint-cli-ruleset-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.pinterest.ktlint</groupId>
+      <artifactId>ktlint-reporter-plain</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.pinterest.ktlint</groupId>
+      <artifactId>ktlint-rule-engine</artifactId>
       <exclusions>
         <exclusion>
           <!-- Slf4j is natively supported by Maven -->
@@ -302,7 +329,14 @@
     </dependency>
     <dependency>
       <groupId>com.pinterest.ktlint</groupId>
-      <artifactId>ktlint-reporter-plain</artifactId>
+      <artifactId>ktlint-rule-engine-core</artifactId>
+      <exclusions>
+        <exclusion>
+          <!-- Slf4j is natively supported by Maven -->
+          <groupId>ch.qos.logback</groupId>
+          <artifactId>logback-classic</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.apache.maven</groupId>
@@ -377,17 +411,17 @@
     </dependency>
     <dependency>
       <groupId>com.pinterest.ktlint</groupId>
+      <artifactId>ktlint-reporter-baseline</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.pinterest.ktlint</groupId>
       <artifactId>ktlint-reporter-checkstyle</artifactId>
       <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>com.pinterest.ktlint</groupId>
       <artifactId>ktlint-reporter-json</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.pinterest.ktlint</groupId>
-      <artifactId>ktlint-ruleset-experimental</artifactId>
       <scope>runtime</scope>
     </dependency>
     <dependency>

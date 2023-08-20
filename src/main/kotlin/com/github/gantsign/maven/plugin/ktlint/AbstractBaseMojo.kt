@@ -72,12 +72,6 @@ abstract class AbstractBaseMojo : AbstractMojo() {
     protected var includeScripts = true
 
     /**
-     * File file encoding of the Kotlin source files.
-     */
-    @Parameter(property = "encoding", defaultValue = "\${project.build.sourceEncoding}")
-    protected val encoding: String? = null
-
-    /**
      * A list of inclusion filters for the source files to be processed under the source roots.
      */
     @Parameter(defaultValue = "**/*.kt")

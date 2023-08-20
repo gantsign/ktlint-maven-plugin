@@ -25,8 +25,8 @@
  */
 package com.github.gantsign.maven.plugin.ktlint
 
-import com.pinterest.ktlint.core.LintError
-import com.pinterest.ktlint.core.Reporter
+import com.pinterest.ktlint.cli.reporter.core.api.KtlintCliError
+import com.pinterest.ktlint.cli.reporter.core.api.ReporterV2
 import java.io.File
 import java.util.concurrent.ConcurrentHashMap
 import org.apache.maven.plugin.logging.Log
@@ -37,17 +37,15 @@ class MavenLogReporter(
     val verbose: Boolean,
     val groupByFile: Boolean,
     val pad: Boolean,
-) : Reporter {
+) : ReporterV2 {
 
-    private val acc = ConcurrentHashMap<String, MutableList<LintError>>()
+    private val acc = ConcurrentHashMap<String, MutableList<KtlintCliError>>()
 
-    override fun onLintError(file: String, err: LintError, corrected: Boolean) {
-        if (corrected) return
-
-        val (line, col, ruleId, detail) = err
+    override fun onLintError(file: String, ktlintCliError: KtlintCliError) {
+        val (line, col, ruleId, detail) = ktlintCliError
 
         if (groupByFile) {
-            acc.getOrPut(file) { ArrayList() }.add(err)
+            acc.getOrPut<String?, MutableList<KtlintCliError>?>(file, ::ArrayList)!!.add(ktlintCliError)
             return
         }
 
