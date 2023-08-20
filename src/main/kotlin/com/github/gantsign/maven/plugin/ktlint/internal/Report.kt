@@ -26,10 +26,8 @@
 package com.github.gantsign.maven.plugin.ktlint.internal
 
 import com.github.gantsign.maven.plugin.ktlint.ReporterConfig
-import com.pinterest.ktlint.core.Reporter
-import com.pinterest.ktlint.reporter.plain.Color
+import com.pinterest.ktlint.cli.reporter.plain.Color
 import java.io.File
-import java.nio.charset.Charset
 import org.apache.maven.plugin.logging.Log
 
 internal class Report(
@@ -37,7 +35,6 @@ internal class Report(
     basedir: File,
     modulePackaging: String,
     sources: List<Sources>,
-    charset: Charset,
     android: Boolean,
     reporterConfig: Set<ReporterConfig>,
     verbose: Boolean,
@@ -47,7 +44,6 @@ internal class Report(
     basedir,
     modulePackaging,
     sources,
-    charset,
     android,
     reporterConfig,
     verbose,
@@ -57,7 +53,7 @@ internal class Report(
 ) {
     operator fun invoke(): CheckResults {
         val modelReporter = ModelReporter()
-        val reporter = Reporter.from(reporter, modelReporter)
+        val reporter = AggregatedReporter(listOf(reporter, modelReporter))
 
         hasErrors(reporter)
 

@@ -27,39 +27,48 @@ package com.github.gantsign.maven.plugin.ktlint.internal
 
 import com.github.gantsign.maven.plugin.ktlint.MavenLogReporterProvider
 import com.github.gantsign.maven.plugin.ktlint.ReporterConfig
-import com.pinterest.ktlint.core.KtLint
-import com.pinterest.ktlint.core.LintError
-import com.pinterest.ktlint.core.Reporter
-import com.pinterest.ktlint.core.ReporterProvider
-import com.pinterest.ktlint.core.RuleProvider
-import com.pinterest.ktlint.core.api.DefaultEditorConfigProperties
-import com.pinterest.ktlint.core.api.EditorConfigOverride
-import com.pinterest.ktlint.core.api.EditorConfigOverride.Companion.plus
+import com.pinterest.ktlint.cli.reporter.core.api.KtlintCliError
+import com.pinterest.ktlint.cli.reporter.core.api.KtlintCliError.Status.LINT_CAN_BE_AUTOCORRECTED
+import com.pinterest.ktlint.cli.reporter.core.api.KtlintCliError.Status.LINT_CAN_NOT_BE_AUTOCORRECTED
+import com.pinterest.ktlint.cli.reporter.core.api.ReporterProviderV2
+import com.pinterest.ktlint.cli.reporter.core.api.ReporterV2
+import com.pinterest.ktlint.rule.engine.api.Code
+import com.pinterest.ktlint.rule.engine.api.EditorConfigDefaults
+import com.pinterest.ktlint.rule.engine.api.EditorConfigOverride
+import com.pinterest.ktlint.rule.engine.api.EditorConfigOverride.Companion.plus
+import com.pinterest.ktlint.rule.engine.api.KtLintRuleEngine
+import com.pinterest.ktlint.rule.engine.core.api.editorconfig.CODE_STYLE_PROPERTY
+import com.pinterest.ktlint.rule.engine.core.api.editorconfig.CodeStyleValue
+import com.pinterest.ktlint.rule.engine.core.api.editorconfig.EXPERIMENTAL_RULES_EXECUTION_PROPERTY
+import com.pinterest.ktlint.rule.engine.core.api.editorconfig.RuleExecution
+import com.pinterest.ktlint.rule.engine.core.api.propertyTypes
 import java.io.File
 import java.io.PrintStream
-import java.nio.charset.Charset
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.util.ServiceLoader
+import java.util.concurrent.atomic.AtomicBoolean
 import org.apache.maven.plugin.MojoFailureException
 import org.apache.maven.plugin.logging.Log
 import org.apache.maven.shared.utils.io.DirectoryScanner
+import org.jetbrains.kotlin.utils.addToStdlib.applyIf
 
 internal abstract class AbstractCheckSupport(
     log: Log,
     basedir: File,
     private val modulePackaging: String,
     private val sources: List<Sources>,
-    private val charset: Charset,
     android: Boolean,
     private val reporterConfig: Set<ReporterConfig>,
-    protected val verbose: Boolean,
+    private val verbose: Boolean,
     private var reporterColor: Boolean,
     private var reporterColorName: String,
     enableExperimentalRules: Boolean,
 ) : AbstractLintSupport(log, basedir, android, enableExperimentalRules) {
 
-    protected open val reporter: Reporter
+    private val adviseToUseFormat = AtomicBoolean()
+
+    protected open val reporter: ReporterV2
         get() {
             data class ReporterTemplate(
                 val id: String,
@@ -93,14 +102,14 @@ internal abstract class AbstractCheckSupport(
                     }
                     .distinct()
 
-            val reporterLoader = ServiceLoader.load(ReporterProvider::class.java)
+            val reporterLoader = ServiceLoader.load(ReporterProviderV2::class.java)
 
-            val reporterProviderById = reporterLoader.associateBy { it.id }
+            val reporterProviderById = reporterLoader.associateBy(ReporterProviderV2<*>::id)
             for ((id) in reporterProviderById) {
                 log.debug("Discovered reporter '$id'")
             }
 
-            fun ReporterTemplate.toReporter(): Reporter {
+            fun ReporterTemplate.toReporter(): ReporterV2 {
                 val reporterProvider = reporterProviderById[id]
                 if (reporterProvider == null) {
                     val availableReporters = reporterProviderById.keys.sorted()
@@ -132,18 +141,41 @@ internal abstract class AbstractCheckSupport(
                     return reporter
                 }
 
-                return object : Reporter by reporter {
+                return object : ReporterV2 by reporter {
                     override fun afterAll() {
                         reporter.afterAll()
                         stream.close()
                     }
                 }
             }
-            return Reporter.from(*templates.map(ReporterTemplate::toReporter).toTypedArray())
+            return AggregatedReporter(templates.map(ReporterTemplate::toReporter))
         }
 
-    protected fun hasErrors(reporter: Reporter): Boolean {
+    protected fun hasErrors(reporter: ReporterV2): Boolean {
+        val editorConfigOverride =
+            EditorConfigOverride
+                .EMPTY_EDITOR_CONFIG_OVERRIDE
+                .applyIf(enableExperimentalRules) {
+                    log.debug("Add editor config override to allow the experimental rule set")
+                    plus(EXPERIMENTAL_RULES_EXECUTION_PROPERTY to RuleExecution.enabled)
+                }.applyIf(android) {
+                    log.debug("Add editor config override to set code style to 'android_studio'")
+                    plus(CODE_STYLE_PROPERTY to CodeStyleValue.android_studio)
+                }
+
+        val editorConfigDefaults = EditorConfigDefaults.load(null, ruleProviders.propertyTypes())
+
+        val ktLintRuleEngine =
+            KtLintRuleEngine(
+                ruleProviders = ruleProviders,
+                editorConfigDefaults = editorConfigDefaults,
+                editorConfigOverride = editorConfigOverride,
+                isInvokedFromCli = false,
+                enableKotlinCompilerExtensionPoint = true,
+            )
+
         var hasErrors = false
+        reporter.beforeAll()
         val checkedFiles = mutableSetOf<File>()
         for ((isIncluded, sourceRoots, includes, excludes) in sources) {
             if (!isIncluded) {
@@ -188,36 +220,21 @@ internal abstract class AbstractCheckSupport(
                         return@forEach
                     }
 
-                    val absolutePath = file.absolutePath
                     val baseRelativePath = file.toRelativeString(basedir)
-                    reporter.before(baseRelativePath)
-
                     log.debug("checking: $baseRelativePath")
 
-                    val editorConfigOverride = EditorConfigOverride.emptyEditorConfigOverride
-                    if (android) {
-                        editorConfigOverride.plus(DefaultEditorConfigProperties.codeStyleSetProperty to android)
-                    }
-
-                    val sourceText = file.readText(charset)
-
-                    lintFile(
-                        absolutePath,
-                        sourceText,
-                        ruleProviders,
-                        { error ->
-                            reporter.onLintError(baseRelativePath, error, false)
-
-                            val lintError =
-                                "$baseRelativePath:${error.line}:${error.col}: ${error.detail}"
-                            log.debug("Style error > $lintError")
-
-                            hasErrors = true
-                        },
-                        editorConfigOverride,
+                    val ktlintCliErrors = lint(
+                        ktLintRuleEngine = ktLintRuleEngine,
+                        code = Code.fromFile(file),
                     )
-
-                    reporter.after(baseRelativePath)
+                    report(baseRelativePath, ktlintCliErrors, reporter)
+                    ktlintCliErrors
+                        .asSequence()
+                        .map { "$baseRelativePath:${it.line}:${it.col}: ${it.detail}" }
+                        .forEach { log.debug("Style error > $it") }
+                    if (!ktlintCliErrors.isEmpty()) {
+                        hasErrors = true
+                    }
                 }
             }
         }
@@ -225,20 +242,50 @@ internal abstract class AbstractCheckSupport(
         return hasErrors
     }
 
-    private fun lintFile(
-        fileName: String,
-        sourceText: String,
-        ruleProviders: Set<RuleProvider>,
-        onError: (error: LintError) -> Unit,
-        editorConfigOverride: EditorConfigOverride,
-    ) = KtLint.lint(
-        KtLint.ExperimentalParams(
-            fileName = fileName,
-            text = sourceText,
-            ruleProviders = ruleProviders,
-            script = !fileName.endsWith(".kt", ignoreCase = true),
-            cb = { e, _ -> onError(e) },
-            editorConfigOverride = editorConfigOverride,
-        ),
-    )
+    private fun report(
+        relativeRoute: String,
+        ktlintCliErrors: List<KtlintCliError>,
+        reporter: ReporterV2,
+    ) {
+        if (!adviseToUseFormat.get() && ktlintCliErrors.containsErrorThatCanBeAutocorrected()) {
+            adviseToUseFormat.set(true)
+        }
+
+        reporter.before(relativeRoute)
+        ktlintCliErrors
+            .forEach { reporter.onLintError(relativeRoute, it) }
+        reporter.after(relativeRoute)
+    }
+
+    private fun List<KtlintCliError>.containsErrorThatCanBeAutocorrected() = any {
+        it.status == LINT_CAN_BE_AUTOCORRECTED
+    }
+
+    private fun lint(
+        ktLintRuleEngine: KtLintRuleEngine,
+        code: Code,
+    ): List<KtlintCliError> {
+        val ktlintCliErrors = mutableListOf<KtlintCliError>()
+        try {
+            ktLintRuleEngine.lint(code) { lintError ->
+                val ktlintCliError =
+                    KtlintCliError(
+                        line = lintError.line,
+                        col = lintError.col,
+                        ruleId = lintError.ruleId.value,
+                        detail = lintError.detail,
+                        status =
+                        if (lintError.canBeAutoCorrected) {
+                            LINT_CAN_BE_AUTOCORRECTED
+                        } else {
+                            LINT_CAN_NOT_BE_AUTOCORRECTED
+                        },
+                    )
+                ktlintCliErrors.add(ktlintCliError)
+            }
+        } catch (e: Exception) {
+            ktlintCliErrors.add(e.toKtlintCliError(code))
+        }
+        return ktlintCliErrors.toList()
+    }
 }

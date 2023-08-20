@@ -28,7 +28,6 @@ package com.github.gantsign.maven.plugin.ktlint.internal
 import com.github.gantsign.maven.plugin.ktlint.MavenLogReporter
 import com.github.gantsign.maven.plugin.ktlint.ReporterConfig
 import java.io.File
-import java.nio.charset.Charset
 import org.apache.maven.plugin.MojoFailureException
 import org.apache.maven.plugin.logging.Log
 
@@ -37,7 +36,6 @@ internal class Check(
     basedir: File,
     modulePackaging: String,
     sources: List<Sources>,
-    charset: Charset,
     android: Boolean,
     reporterConfig: Set<ReporterConfig>,
     verbose: Boolean,
@@ -50,7 +48,6 @@ internal class Check(
     basedir,
     modulePackaging,
     sources,
-    charset,
     android,
     addMavenReporter(reporterConfig),
     verbose,

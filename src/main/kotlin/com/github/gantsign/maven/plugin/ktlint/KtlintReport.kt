@@ -30,8 +30,6 @@ import com.github.gantsign.maven.plugin.ktlint.internal.Report
 import com.github.gantsign.maven.plugin.ktlint.internal.Sources
 import com.github.gantsign.maven.plugin.ktlint.internal.get
 import java.io.File
-import java.nio.charset.Charset
-import java.nio.charset.StandardCharsets.UTF_8
 import java.util.Locale
 import java.util.ResourceBundle
 import org.apache.maven.plugins.annotations.LifecyclePhase
@@ -206,9 +204,6 @@ class KtlintReport : AbstractMavenReport() {
                     excludes = scriptsExcludes,
                 ),
             ),
-            charset = encoding?.trim()?.takeUnless(String::isEmpty)
-                ?.let { Charset.forName(it) }
-                ?: UTF_8,
             android = android,
             reporterConfig = reporters ?: emptySet(),
             verbose = verbose,

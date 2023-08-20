@@ -63,15 +63,8 @@ class FormatMojoTest {
         formatMojo.execute()
 
         verify(atLeast = 1) { log.isDebugEnabled }
-        verify { log.debug("Disabled RuleSetProviderV2 'experimental'") }
         verify { log.debug("checking format: $source") }
-        verify {
-            log.debug(
-                "Format could not fix > src/main/kotlin/example/Example.kt:30:8: " +
-                    "Missing trailing comma before \")\"",
-            )
-        }
-        verify { log.debug("Format fixed > $source:30:39: Unnecessary semicolon") }
+        verify { log.debug("Format fixed > $source:1:1: Unnecessary semicolon") }
         verify {
             log.debug(
                 "Format fixed > $source:29:13: Argument should be on a separate line " +
@@ -79,6 +72,7 @@ class FormatMojoTest {
             )
         }
         verify { log.debug("Format fixed > $source:30:8: Missing newline before \")\"") }
+        verify { log.debug("Format fixed > $source:30:8: Missing trailing comma before \")\"") }
         verify { log.debug("Format could not fix > $source:29:14: Exceeded max line length (80)") }
         verify { log.debug("Format fixed > $source") }
         verify { log.warn("Source root doesn't exist: $testRoot") }
@@ -103,9 +97,8 @@ class FormatMojoTest {
         formatMojo.execute()
 
         verify(atLeast = 1) { log.isDebugEnabled }
-        verify { log.debug("Disabled RuleSetProviderV2 'experimental'") }
         verify { log.debug("checking format: $scriptSource") }
-        verify { log.debug("Format fixed > $scriptSource:30:39: Unnecessary semicolon") }
+        verify { log.debug("Format fixed > $scriptSource:1:1: Unnecessary semicolon") }
         verify {
             log.debug(
                 "Format fixed > $scriptSource:29:13: Argument should be on a separate line " +
@@ -136,6 +129,7 @@ class FormatMojoTest {
         assertThat(formatMojo).isNotNull
         formatMojo.execute()
 
+        verify(atLeast = 1) { log.isDebugEnabled }
         verify { log.warn("Source root doesn't exist: $mainRoot") }
         verify { log.warn("Source root doesn't exist: $testRoot") }
         verify { log.info("0 file(s) formatted.") }

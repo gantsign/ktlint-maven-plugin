@@ -25,25 +25,29 @@
  */
 package com.github.gantsign.maven.plugin.ktlint.internal
 
-import com.pinterest.ktlint.core.KtLint
-import com.pinterest.ktlint.core.LintError
-import com.pinterest.ktlint.core.RuleProvider
-import com.pinterest.ktlint.core.api.DefaultEditorConfigProperties.codeStyleSetProperty
-import com.pinterest.ktlint.core.api.EditorConfigOverride
-import com.pinterest.ktlint.core.api.EditorConfigOverride.Companion.plus
+import com.pinterest.ktlint.rule.engine.api.Code
+import com.pinterest.ktlint.rule.engine.api.EditorConfigDefaults
+import com.pinterest.ktlint.rule.engine.api.EditorConfigOverride
+import com.pinterest.ktlint.rule.engine.api.EditorConfigOverride.Companion.plus
+import com.pinterest.ktlint.rule.engine.api.KtLintRuleEngine
+import com.pinterest.ktlint.rule.engine.core.api.editorconfig.CODE_STYLE_PROPERTY
+import com.pinterest.ktlint.rule.engine.core.api.editorconfig.CodeStyleValue
+import com.pinterest.ktlint.rule.engine.core.api.editorconfig.EXPERIMENTAL_RULES_EXECUTION_PROPERTY
+import com.pinterest.ktlint.rule.engine.core.api.editorconfig.RuleExecution
+import com.pinterest.ktlint.rule.engine.core.api.propertyTypes
 import java.io.File
-import java.nio.charset.Charset
+import java.nio.charset.StandardCharsets
 import java.util.concurrent.atomic.AtomicInteger
 import org.apache.maven.plugin.MojoFailureException
 import org.apache.maven.plugin.logging.Log
 import org.apache.maven.shared.utils.io.DirectoryScanner
+import org.jetbrains.kotlin.utils.addToStdlib.applyIf
 
 internal class Format(
     log: Log,
     basedir: File,
     private val modulePackaging: String,
     private val sources: List<Sources>,
-    private val charset: Charset,
     android: Boolean,
     enableExperimentalRules: Boolean,
 ) : AbstractLintSupport(log, basedir, android, enableExperimentalRules) {
@@ -51,6 +55,28 @@ internal class Format(
     private val formattedFileCount = AtomicInteger()
 
     operator fun invoke() {
+        val editorConfigOverride =
+            EditorConfigOverride
+                .EMPTY_EDITOR_CONFIG_OVERRIDE
+                .applyIf(enableExperimentalRules) {
+                    log.debug("Add editor config override to allow the experimental rule set")
+                    plus(EXPERIMENTAL_RULES_EXECUTION_PROPERTY to RuleExecution.enabled)
+                }.applyIf(android) {
+                    log.debug("Add editor config override to set code style to 'android_studio'")
+                    plus(CODE_STYLE_PROPERTY to CodeStyleValue.android_studio)
+                }
+
+        val editorConfigDefaults = EditorConfigDefaults.load(null, ruleProviders.propertyTypes())
+
+        val ktLintRuleEngine =
+            KtLintRuleEngine(
+                ruleProviders = ruleProviders,
+                editorConfigDefaults = editorConfigDefaults,
+                editorConfigOverride = editorConfigOverride,
+                isInvokedFromCli = false,
+                enableKotlinCompilerExtensionPoint = true,
+            )
+
         val checkedFiles = mutableSetOf<File>()
         for ((isIncluded, sourceRoots, includes, excludes) in sources) {
             if (!isIncluded) {
@@ -92,33 +118,10 @@ internal class Format(
                         return@forEach
                     }
 
-                    val absolutePath = file.absolutePath
-                    val baseRelativePath = file.toRelativeString(basedir)
-
-                    log.debug("checking format: $baseRelativePath")
-
-                    val editorConfigOverride = EditorConfigOverride.emptyEditorConfigOverride
-                    if (android) {
-                        editorConfigOverride.plus(codeStyleSetProperty to android)
-                    }
-
-                    val sourceText = file.readText(charset)
-
-                    val formattedText = formatFile(
-                        absolutePath,
-                        sourceText,
-                        ruleProviders,
-                        { (line, col, _, detail), corrected ->
-                            val lintError = "$baseRelativePath:$line:$col: $detail"
-                            log.debug("Format ${if (corrected) "fixed" else "could not fix"} > $lintError")
-                        },
-                        editorConfigOverride,
+                    formatFile(
+                        ktLintRuleEngine = ktLintRuleEngine,
+                        code = Code.fromFile(file),
                     )
-                    if (formattedText !== sourceText) {
-                        log.debug("Format fixed > $baseRelativePath")
-                        file.writeText(formattedText, charset)
-                        formattedFileCount.incrementAndGet()
-                    }
                 }
             }
         }
@@ -126,19 +129,29 @@ internal class Format(
     }
 
     private fun formatFile(
-        fileName: String,
-        sourceText: String,
-        ruleProviders: Set<RuleProvider>,
-        onError: (err: LintError, corrected: Boolean) -> Unit,
-        editorConfigOverride: EditorConfigOverride,
-    ): String = KtLint.format(
-        KtLint.ExperimentalParams(
-            fileName = fileName,
-            text = sourceText,
-            ruleProviders = ruleProviders,
-            script = !fileName.endsWith(".kt", ignoreCase = true),
-            cb = onError,
-            editorConfigOverride = editorConfigOverride,
-        ),
-    )
+        ktLintRuleEngine: KtLintRuleEngine,
+        code: Code,
+    ) {
+        val baseRelativePath = code.filePath!!.toFile().toRelativeString(basedir)
+        log.debug("checking format: $baseRelativePath")
+        val beforeFileContent = code.content
+        try {
+            ktLintRuleEngine
+                .format(code) { lintError, corrected ->
+                    val errMsg = "$baseRelativePath:${lintError.line}:${lintError.col}: ${lintError.detail}"
+                    log.debug("Format ${if (corrected) "fixed" else "could not fix"} > $errMsg")
+                }.also { formattedFileContent ->
+                    code
+                        .filePath
+                        ?.toFile()
+                        ?.writeText(formattedFileContent, StandardCharsets.UTF_8)
+                    if (beforeFileContent != formattedFileContent) {
+                        log.debug("Format fixed > $baseRelativePath")
+                        formattedFileCount.incrementAndGet()
+                    }
+                }
+        } catch (e: Exception) {
+            log.error(e.message, e)
+        }
+    }
 }

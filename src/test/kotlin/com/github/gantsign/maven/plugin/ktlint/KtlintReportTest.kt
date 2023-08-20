@@ -62,10 +62,9 @@ class KtlintReportTest {
         ktlintReport.execute()
 
         verify(atLeast = 1) { log.isDebugEnabled }
-        verify { log.debug("Discovered RuleSetProviderV2 'standard'") }
-        verify { log.debug("Discovered RuleSetProviderV2 'experimental'") }
-        verify { log.debug("Disabled RuleSetProviderV2 'experimental'") }
+        verify { log.debug("Discovered RuleSetProviderV3 'RuleSetId(value=standard)'") }
         verify { log.debug("Discovered reporter 'maven'") }
+        verify { log.debug("Discovered reporter 'baseline'") }
         verify { log.debug("Discovered reporter 'plain'") }
         verify { log.debug("Discovered reporter 'json'") }
         verify { log.debug("Discovered reporter 'checkstyle'") }

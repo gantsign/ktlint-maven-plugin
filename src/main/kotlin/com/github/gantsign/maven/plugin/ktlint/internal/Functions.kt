@@ -27,7 +27,42 @@
 
 package com.github.gantsign.maven.plugin.ktlint.internal
 
+import com.pinterest.ktlint.cli.reporter.core.api.KtlintCliError
+import com.pinterest.ktlint.rule.engine.api.Code
+import com.pinterest.ktlint.rule.engine.api.KtLintParseException
+import com.pinterest.ktlint.rule.engine.api.KtLintRuleException
+import java.util.Locale
 import java.util.ResourceBundle
 
 internal operator fun ResourceBundle.get(key: String): String =
     if (containsKey(key)) getString(key) else key
+
+internal fun Exception.toKtlintCliError(code: Code): KtlintCliError =
+    let { e ->
+        when (e) {
+            is KtLintParseException ->
+                KtlintCliError(
+                    line = e.line,
+                    col = e.col,
+                    ruleId = "",
+                    detail = "Not a valid Kotlin file (${e.message?.lowercase(Locale.getDefault())})",
+                    status = KtlintCliError.Status.KOTLIN_PARSE_EXCEPTION,
+                )
+
+            is KtLintRuleException -> {
+                KtlintCliError(
+                    line = e.line,
+                    col = e.col,
+                    ruleId = "",
+                    detail =
+                    "Internal Error (rule '${e.ruleId}') in ${code.fileNameOrStdin()} at position '${e.line}:${e.col}" +
+                        ". Please create a ticket at https://github.com/pinterest/ktlint/issues and provide the " +
+                        "source code that triggered an error.\n" +
+                        e.stackTraceToString(),
+                    status = KtlintCliError.Status.KTLINT_RULE_ENGINE_EXCEPTION,
+                )
+            }
+
+            else -> throw e
+        }
+    }

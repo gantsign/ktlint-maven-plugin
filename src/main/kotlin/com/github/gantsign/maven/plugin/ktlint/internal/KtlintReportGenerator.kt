@@ -26,7 +26,7 @@
 package com.github.gantsign.maven.plugin.ktlint.internal
 
 import com.github.gantsign.maven.doxia.sink.kotlin.invoke
-import com.pinterest.ktlint.core.KtLint
+import com.pinterest.ktlint.rule.engine.api.KtLintRuleEngine
 import java.util.ResourceBundle
 import org.apache.maven.doxia.sink.Sink
 
@@ -38,7 +38,7 @@ internal class KtlintReportGenerator(
     private val title = bundle["report.ktlint.title"]
 
     private val ktlintVersion: String? =
-        KtLint::class.java.`package`?.implementationVersion
+        KtLintRuleEngine::class.java.`package`?.implementationVersion
 
     fun generatorReport(results: CheckResults) {
         sink {
