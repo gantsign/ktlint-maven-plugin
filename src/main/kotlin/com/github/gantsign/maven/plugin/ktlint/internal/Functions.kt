@@ -23,7 +23,7 @@
  * THE SOFTWARE.
  * #L%
  */
-@file:Suppress("ktlint:filename")
+@file:Suppress("ktlint:standard:filename")
 
 package com.github.gantsign.maven.plugin.ktlint.internal
 
