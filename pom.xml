@@ -552,7 +552,7 @@
             <configuration>
               <rules>
                 <requireMavenVersion>
-                  <version>[3.5.4,3.9)</version>
+                  <version>[3.5.4,3.10)</version>
                 </requireMavenVersion>
                 <requireJavaVersion>
                   <version>[11,12)</version>
