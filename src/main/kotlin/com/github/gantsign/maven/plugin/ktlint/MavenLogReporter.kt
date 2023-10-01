@@ -42,7 +42,10 @@ class MavenLogReporter(
     private val acc = ConcurrentHashMap<String, MutableList<KtlintCliError>>()
 
     override fun onLintError(file: String, ktlintCliError: KtlintCliError) {
-        val (line, col, ruleId, detail) = ktlintCliError
+        val line = ktlintCliError.line
+        val col = ktlintCliError.col
+        val ruleId = ktlintCliError.ruleId
+        val detail = ktlintCliError.detail
 
         if (groupByFile) {
             acc.getOrPut<String?, MutableList<KtlintCliError>?>(file, ::ArrayList)!!.add(ktlintCliError)
@@ -70,7 +73,11 @@ class MavenLogReporter(
 
         log.error(MessageUtils.buffer().a(file.dir()).strong(file.name()).toString())
 
-        for ((line, col, ruleId, detail) in errList) {
+        for (err in errList) {
+            val line = err.line
+            val col = err.col
+            val ruleId = err.ruleId
+            val detail = err.detail
             val buf = MessageUtils.buffer()
                 .a(" ")
                 .strong(line)

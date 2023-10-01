@@ -171,7 +171,6 @@ internal abstract class AbstractCheckSupport(
                 editorConfigDefaults = editorConfigDefaults,
                 editorConfigOverride = editorConfigOverride,
                 isInvokedFromCli = false,
-                enableKotlinCompilerExtensionPoint = true,
             )
 
         var hasErrors = false

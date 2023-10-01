@@ -74,7 +74,6 @@ internal class Format(
                 editorConfigDefaults = editorConfigDefaults,
                 editorConfigOverride = editorConfigOverride,
                 isInvokedFromCli = false,
-                enableKotlinCompilerExtensionPoint = true,
             )
 
         val checkedFiles = mutableSetOf<File>()

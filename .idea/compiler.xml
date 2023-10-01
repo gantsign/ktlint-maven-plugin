@@ -9,8 +9,5 @@
         <module name="ktlint-maven-plugin" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="ktlint-maven-plugin" target="1.8" />
-    </bytecodeTargetLevel>
   </component>
 </project>
