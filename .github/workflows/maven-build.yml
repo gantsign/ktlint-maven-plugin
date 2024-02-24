@@ -77,4 +77,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Code coverage report
         if: matrix.maven-version == '3.9.4'
-        uses: codecov/codecov-action@v4.0.1
+        uses: codecov/codecov-action@v4.0.2
