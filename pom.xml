@@ -847,7 +847,7 @@
 
   <scm>
     <connection>scm:git:https://github.com/gantsign/ktlint-maven-plugin.git</connection>
-    <developerConnection>scm:git:git@github.com:gantsign/ktlint-maven-plugin.git</developerConnection>
+    <developerConnection>scm:git:https://github.com/gantsign/ktlint-maven-plugin.git</developerConnection>
     <url>https://github.com/gantsign/ktlint-maven-plugin</url>
     <tag>HEAD</tag>
   </scm>
