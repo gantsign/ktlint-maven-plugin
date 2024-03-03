@@ -63,3 +63,8 @@ updates:
   schedule:
     interval: weekly
     day: saturday
+- package-ecosystem: devcontainers
+  directory: "/"
+  schedule:
+    interval: weekly
+    day: saturday
