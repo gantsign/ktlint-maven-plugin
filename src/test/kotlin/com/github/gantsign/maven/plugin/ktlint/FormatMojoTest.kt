@@ -73,7 +73,7 @@ class FormatMojoTest {
         }
         verify { log.debug("Format fixed > $source:30:8: Missing newline before \")\"") }
         verify { log.debug("Format fixed > $source:30:8: Missing trailing comma before \")\"") }
-        verify { log.debug("Format could not fix > $source:29:14: Exceeded max line length (80)") }
+        verify { log.debug("Format could not fix > $source:29:94: Exceeded max line length (80)") }
         verify { log.debug("Format fixed > $source") }
         verify { log.warn("Source root doesn't exist: $testRoot") }
         verify { log.info("1 file(s) formatted.") }
@@ -106,7 +106,7 @@ class FormatMojoTest {
             )
         }
         verify { log.debug("Format fixed > $scriptSource:30:8: Missing newline before \")\"") }
-        verify { log.debug("Format could not fix > $scriptSource:29:14: Exceeded max line length (80)") }
+        verify { log.debug("Format could not fix > $scriptSource:29:94: Exceeded max line length (80)") }
         verify { log.debug("Format fixed > $scriptSource") }
         verify { log.warn("Source root doesn't exist: $testRoot") }
         verify { log.info("1 file(s) formatted.") }
