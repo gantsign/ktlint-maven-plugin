@@ -425,3 +425,6 @@ $RECYCLE.BIN/
 
 # To reduce churn
 .idea/kotlinc.xml
+
+# Devpod
+.devpod-internal

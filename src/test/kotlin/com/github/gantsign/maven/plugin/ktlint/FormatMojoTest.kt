@@ -64,7 +64,7 @@ class FormatMojoTest {
 
         verify(atLeast = 1) { log.isDebugEnabled }
         verify { log.debug("checking format: $source") }
-        verify { log.debug("Format fixed > $source:1:1: Unnecessary semicolon") }
+        verify { log.debug("Format fixed > $source:30:39: Unnecessary semicolon") }
         verify {
             log.debug(
                 "Format fixed > $source:29:13: Argument should be on a separate line " +
@@ -98,7 +98,7 @@ class FormatMojoTest {
 
         verify(atLeast = 1) { log.isDebugEnabled }
         verify { log.debug("checking format: $scriptSource") }
-        verify { log.debug("Format fixed > $scriptSource:1:1: Unnecessary semicolon") }
+        verify { log.debug("Format fixed > $scriptSource:30:39: Unnecessary semicolon") }
         verify {
             log.debug(
                 "Format fixed > $scriptSource:29:13: Argument should be on a separate line " +
