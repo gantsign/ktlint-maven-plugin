@@ -71,7 +71,11 @@ class KtlintReportTest {
         verify { log.debug("Discovered reporter 'json'") }
         verify { log.debug("Discovered reporter 'checkstyle'") }
         verify { log.debug("checking: $basepath/src/main/kotlin/example/Example.kt") }
-        verify { log.debug("Style error > $basepath/src/main/kotlin/example/Example.kt:[29,39] Unnecessary semicolon") }
+        verify {
+            log.debug(
+                "Style error > $basepath/src/main/kotlin/example/Example.kt: (29, 39) Unnecessary semicolon",
+            )
+        }
         verify { log.warn("Source root doesn't exist: src/test/kotlin") }
         confirmVerified(log)
     }

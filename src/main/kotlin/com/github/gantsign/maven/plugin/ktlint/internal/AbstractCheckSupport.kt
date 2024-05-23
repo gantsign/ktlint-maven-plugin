@@ -229,7 +229,7 @@ internal abstract class AbstractCheckSupport(
                     report(absolutePath, ktlintCliErrors, reporter)
                     ktlintCliErrors
                         .asSequence()
-                        .map { "$absolutePath:[${it.line},${it.col}] ${it.detail}" }
+                        .map { "$absolutePath: (${it.line}, ${it.col}) ${it.detail}" }
                         .forEach { log.debug("Style error > $it") }
                     if (!ktlintCliErrors.isEmpty()) {
                         hasErrors = true

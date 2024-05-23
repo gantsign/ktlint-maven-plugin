@@ -81,8 +81,12 @@ class CheckMojoTest {
         verify { log.debug("Discovered reporter 'checkstyle'") }
         verify { log.debug("Initializing 'maven' reporter with {verbose=false, color=false, color_name=DARK_GRAY}") }
         verify { log.debug("checking: $basepath/src/main/kotlin/example/Example.kt") }
-        verify { log.debug("Style error > $basepath/src/main/kotlin/example/Example.kt:[29,39] Unnecessary semicolon") }
-        verify { log.error("$basepath/src/main/kotlin/example/Example.kt:[29,39] Unnecessary semicolon") }
+        verify {
+            log.debug(
+                "Style error > $basepath/src/main/kotlin/example/Example.kt: (29, 39) Unnecessary semicolon",
+            )
+        }
+        verify { log.error("$basepath/src/main/kotlin/example/Example.kt: (29, 39) Unnecessary semicolon") }
         verify { log.warn("Source root doesn't exist: src/test/kotlin") }
         confirmVerified(log)
     }
@@ -125,7 +129,11 @@ class CheckMojoTest {
             )
         }
         verify { log.debug("checking: $basepath/src/main/kotlin/example/Example.kt") }
-        verify { log.debug("Style error > $basepath/src/main/kotlin/example/Example.kt:[29,39] Unnecessary semicolon") }
+        verify {
+            log.debug(
+                "Style error > $basepath/src/main/kotlin/example/Example.kt: (29, 39) Unnecessary semicolon",
+            )
+        }
         verify { log.error("$basepath/src/main/kotlin/example/Example.kt") }
         verify { log.error(" 29:39 Unnecessary semicolon (standard:no-semi)") }
         verify { log.warn("Source root doesn't exist: src/test/kotlin") }
@@ -160,8 +168,12 @@ class CheckMojoTest {
         verify { log.debug("Discovered reporter 'checkstyle'") }
         verify { log.debug("Initializing 'maven' reporter with {verbose=false, color=false, color_name=DARK_GRAY}") }
         verify { log.debug("checking: $basepath/src/main/kotlin/example/Example.kt") }
-        verify { log.debug("Style error > $basepath/src/main/kotlin/example/Example.kt:[29,39] Unnecessary semicolon") }
-        verify { log.error("$basepath/src/main/kotlin/example/Example.kt:[29,39] Unnecessary semicolon") }
+        verify {
+            log.debug(
+                "Style error > $basepath/src/main/kotlin/example/Example.kt: (29, 39) Unnecessary semicolon",
+            )
+        }
+        verify { log.error("$basepath/src/main/kotlin/example/Example.kt: (29, 39) Unnecessary semicolon") }
         verify { log.warn("Source root doesn't exist: src/test/kotlin") }
         confirmVerified(log)
     }
