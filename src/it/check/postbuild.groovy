@@ -24,5 +24,5 @@
  * #L%
  */
 String buildLog = new File(basedir, 'build.log').text
-assert buildLog.contains('[ERROR] src/main/kotlin/example/Example.kt:29:39: Unnecessary semicolon')
+assert buildLog =~ /\[ERROR] .*\/src\/main\/kotlin\/example\/Example.kt:\[29,39] Unnecessary semicolon/
 assert buildLog =~ /\Q[ERROR] Failed to execute goal com.github.gantsign.maven:ktlint-maven-plugin:\E[0-9.]+(-SNAPSHOT)?\Q:check (check) on project test-project: Kotlin source failed ktlint check. -> [Help 1]\E/
