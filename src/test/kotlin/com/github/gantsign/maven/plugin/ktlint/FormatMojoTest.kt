@@ -64,16 +64,20 @@ class FormatMojoTest {
 
         verify(atLeast = 1) { log.isDebugEnabled }
         verify { log.debug("checking format: $source") }
-        verify { log.debug("Format fixed > $source:30:39: Unnecessary semicolon") }
+        verify { log.debug("Format fixed > $source:1:1: Unnecessary semicolon") }
         verify {
             log.debug(
-                "Format fixed > $source:29:13: Argument should be on a separate line " +
-                    "(unless all arguments can fit a single line)",
+                "Format fixed > $source:29:13: Line is exceeding max line length. Break line before expression",
             )
         }
-        verify { log.debug("Format fixed > $source:30:8: Missing newline before \")\"") }
-        verify { log.debug("Format fixed > $source:30:8: Missing trailing comma before \")\"") }
-        verify { log.debug("Format could not fix > $source:29:94: Exceeded max line length (80)") }
+        verify {
+            log.debug(
+                "Format fixed > $source:29:47: Line is exceeding max line length. Break line after '+' " +
+                    "in binary expression",
+            )
+        }
+        verify { log.debug("Format fixed > $source:30:19: Missing newline before \")\"") }
+        verify { log.debug("Format fixed > $source:30:20: Missing trailing comma before \")\"") }
         verify { log.debug("Format fixed > $source") }
         verify { log.warn("Source root doesn't exist: $testRoot") }
         verify { log.info("1 file(s) formatted.") }
@@ -98,15 +102,19 @@ class FormatMojoTest {
 
         verify(atLeast = 1) { log.isDebugEnabled }
         verify { log.debug("checking format: $scriptSource") }
-        verify { log.debug("Format fixed > $scriptSource:30:39: Unnecessary semicolon") }
+        verify { log.debug("Format fixed > $scriptSource:1:1: Unnecessary semicolon") }
         verify {
             log.debug(
-                "Format fixed > $scriptSource:29:13: Argument should be on a separate line " +
-                    "(unless all arguments can fit a single line)",
+                "Format fixed > $scriptSource:29:13: Line is exceeding max line length. Break line before expression",
             )
         }
-        verify { log.debug("Format fixed > $scriptSource:30:8: Missing newline before \")\"") }
-        verify { log.debug("Format could not fix > $scriptSource:29:94: Exceeded max line length (80)") }
+        verify {
+            log.debug(
+                "Format fixed > $scriptSource:29:47: Line is exceeding max line length. Break line after '+' " +
+                    "in binary expression",
+            )
+        }
+        verify { log.debug("Format fixed > $scriptSource:30:19: Missing newline before \")\"") }
         verify { log.debug("Format fixed > $scriptSource") }
         verify { log.warn("Source root doesn't exist: $testRoot") }
         verify { log.info("1 file(s) formatted.") }
