@@ -50,7 +50,9 @@ class CheckMojoTest {
 
     @Test
     fun hasErrors() {
-        val pom = File("target/test-scenarios/check-with-errors/pom.xml")
+        val basedir = File("target/test-scenarios/check-with-errors")
+        val basepath = basedir.absolutePath
+        val pom = File(basedir, "pom.xml")
 
         assertThat(pom.isFile).isTrue()
 
@@ -78,16 +80,22 @@ class CheckMojoTest {
         verify { log.debug("Discovered reporter 'json'") }
         verify { log.debug("Discovered reporter 'checkstyle'") }
         verify { log.debug("Initializing 'maven' reporter with {verbose=false, color=false, color_name=DARK_GRAY}") }
-        verify { log.debug("checking: src/main/kotlin/example/Example.kt") }
-        verify { log.debug("Style error > src/main/kotlin/example/Example.kt:29:39: Unnecessary semicolon") }
-        verify { log.error("src/main/kotlin/example/Example.kt:29:39: Unnecessary semicolon") }
+        verify { log.debug("checking: $basepath/src/main/kotlin/example/Example.kt") }
+        verify {
+            log.debug(
+                "Style error > $basepath/src/main/kotlin/example/Example.kt: (29, 39) Unnecessary semicolon",
+            )
+        }
+        verify { log.error("$basepath/src/main/kotlin/example/Example.kt: (29, 39) Unnecessary semicolon") }
         verify { log.warn("Source root doesn't exist: src/test/kotlin") }
         confirmVerified(log)
     }
 
     @Test
     fun groupByFile() {
-        val pom = File("target/test-scenarios/check-group-by-file/pom.xml")
+        val basedir = File("target/test-scenarios/check-group-by-file")
+        val basepath = basedir.absolutePath
+        val pom = File(basedir, "pom.xml")
 
         assertThat(pom.isFile).isTrue()
 
@@ -120,9 +128,13 @@ class CheckMojoTest {
                     "group_by_file=true}",
             )
         }
-        verify { log.debug("checking: src/main/kotlin/example/Example.kt") }
-        verify { log.debug("Style error > src/main/kotlin/example/Example.kt:29:39: Unnecessary semicolon") }
-        verify { log.error("src/main/kotlin/example/Example.kt") }
+        verify { log.debug("checking: $basepath/src/main/kotlin/example/Example.kt") }
+        verify {
+            log.debug(
+                "Style error > $basepath/src/main/kotlin/example/Example.kt: (29, 39) Unnecessary semicolon",
+            )
+        }
+        verify { log.error("$basepath/src/main/kotlin/example/Example.kt") }
         verify { log.error(" 29:39 Unnecessary semicolon (standard:no-semi)") }
         verify { log.warn("Source root doesn't exist: src/test/kotlin") }
         confirmVerified(log)
@@ -130,7 +142,9 @@ class CheckMojoTest {
 
     @Test
     fun proceedWithErrors() {
-        val pom = File("target/test-scenarios/check-proceed-with-errors/pom.xml")
+        val basedir = File("target/test-scenarios/check-proceed-with-errors")
+        val basepath = basedir.absolutePath
+        val pom = File(basedir, "pom.xml")
 
         assertThat(pom.isFile).isTrue()
 
@@ -153,9 +167,13 @@ class CheckMojoTest {
         verify { log.debug("Discovered reporter 'json'") }
         verify { log.debug("Discovered reporter 'checkstyle'") }
         verify { log.debug("Initializing 'maven' reporter with {verbose=false, color=false, color_name=DARK_GRAY}") }
-        verify { log.debug("checking: src/main/kotlin/example/Example.kt") }
-        verify { log.debug("Style error > src/main/kotlin/example/Example.kt:29:39: Unnecessary semicolon") }
-        verify { log.error("src/main/kotlin/example/Example.kt:29:39: Unnecessary semicolon") }
+        verify { log.debug("checking: $basepath/src/main/kotlin/example/Example.kt") }
+        verify {
+            log.debug(
+                "Style error > $basepath/src/main/kotlin/example/Example.kt: (29, 39) Unnecessary semicolon",
+            )
+        }
+        verify { log.error("$basepath/src/main/kotlin/example/Example.kt: (29, 39) Unnecessary semicolon") }
         verify { log.warn("Source root doesn't exist: src/test/kotlin") }
         confirmVerified(log)
     }
@@ -163,6 +181,7 @@ class CheckMojoTest {
     @Test
     fun outputFile() {
         val basedir = File("target/test-scenarios/check-output-file")
+        val basepath = basedir.absolutePath
         val pom = File(basedir, "pom.xml")
 
         assertThat(pom.isFile).isTrue()
@@ -188,7 +207,7 @@ class CheckMojoTest {
             """
             [
                 {
-                    "file": "src/main/kotlin/example/Example.kt",
+                    "file": "$basepath/src/main/kotlin/example/Example.kt",
                     "errors": [
                         {
                             "line": 29,
@@ -199,7 +218,7 @@ class CheckMojoTest {
                     ]
                 },
                 {
-                    "file": "src/test/kotlin/example/TestExample.kt",
+                    "file": "$basepath/src/test/kotlin/example/TestExample.kt",
                     "errors": [
                         {
                             "line": 29,

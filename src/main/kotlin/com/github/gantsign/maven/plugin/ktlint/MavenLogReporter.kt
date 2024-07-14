@@ -55,9 +55,9 @@ class MavenLogReporter(
         val buf = MessageUtils.buffer()
             .a(file.dir())
             .strong(file.name())
-            .a(":")
+            .a(": (")
             .strong(line)
-            .a(":$col:".pad(4))
+            .a(", $col)".pad(4))
             .a(" ")
             .failure(detail)
         if (verbose) {

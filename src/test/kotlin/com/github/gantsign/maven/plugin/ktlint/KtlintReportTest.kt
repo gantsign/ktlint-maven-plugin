@@ -45,7 +45,9 @@ class KtlintReportTest {
 
     @Test
     fun hasErrors() {
-        val pom = File("target/test-scenarios/check-with-errors/pom.xml")
+        val basedir = File("target/test-scenarios/check-with-errors")
+        val basepath = basedir.absolutePath
+        val pom = File(basedir, "pom.xml")
 
         assertThat(pom.isFile).isTrue()
 
@@ -68,8 +70,12 @@ class KtlintReportTest {
         verify { log.debug("Discovered reporter 'plain'") }
         verify { log.debug("Discovered reporter 'json'") }
         verify { log.debug("Discovered reporter 'checkstyle'") }
-        verify { log.debug("checking: src/main/kotlin/example/Example.kt") }
-        verify { log.debug("Style error > src/main/kotlin/example/Example.kt:29:39: Unnecessary semicolon") }
+        verify { log.debug("checking: $basepath/src/main/kotlin/example/Example.kt") }
+        verify {
+            log.debug(
+                "Style error > $basepath/src/main/kotlin/example/Example.kt: (29, 39) Unnecessary semicolon",
+            )
+        }
         verify { log.warn("Source root doesn't exist: src/test/kotlin") }
         confirmVerified(log)
     }

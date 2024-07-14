@@ -219,17 +219,17 @@ internal abstract class AbstractCheckSupport(
                         return@forEach
                     }
 
-                    val baseRelativePath = file.toRelativeString(basedir)
-                    log.debug("checking: $baseRelativePath")
+                    val absolutePath = file.absolutePath
+                    log.debug("checking: $absolutePath")
 
                     val ktlintCliErrors = lint(
                         ktLintRuleEngine = ktLintRuleEngine,
                         code = Code.fromFile(file),
                     )
-                    report(baseRelativePath, ktlintCliErrors, reporter)
+                    report(absolutePath, ktlintCliErrors, reporter)
                     ktlintCliErrors
                         .asSequence()
-                        .map { "$baseRelativePath:${it.line}:${it.col}: ${it.detail}" }
+                        .map { "$absolutePath: (${it.line}, ${it.col}) ${it.detail}" }
                         .forEach { log.debug("Style error > $it") }
                     if (!ktlintCliErrors.isEmpty()) {
                         hasErrors = true
@@ -242,7 +242,7 @@ internal abstract class AbstractCheckSupport(
     }
 
     private fun report(
-        relativeRoute: String,
+        absolutePath: String,
         ktlintCliErrors: List<KtlintCliError>,
         reporter: ReporterV2,
     ) {
@@ -250,10 +250,10 @@ internal abstract class AbstractCheckSupport(
             adviseToUseFormat.set(true)
         }
 
-        reporter.before(relativeRoute)
+        reporter.before(absolutePath)
         ktlintCliErrors
-            .forEach { reporter.onLintError(relativeRoute, it) }
-        reporter.after(relativeRoute)
+            .forEach { reporter.onLintError(absolutePath, it) }
+        reporter.after(absolutePath)
     }
 
     private fun List<KtlintCliError>.containsErrorThatCanBeAutocorrected() = any {
