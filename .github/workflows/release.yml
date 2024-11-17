@@ -66,6 +66,11 @@ jobs:
         run: >-
           git config --global user.name 'John Freeman' &&
           git config --global user.email '17984707+freemanjp@users.noreply.github.com'
+      - name: Set env
+        run: |
+          if [[ "$GITHUB_REF" == 'refs/tags/'* ]]; then
+            echo "GIT_TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+          fi
       - name: Build Maven site
         run: |
           ./mvnw site \
