@@ -36,7 +36,7 @@
 
   <groupId>com.github.gantsign.maven</groupId>
   <artifactId>ktlint-maven-plugin</artifactId>
-  <version>3.3.1-SNAPSHOT</version>
+  <version>${revision}</version>
 
   <packaging>maven-plugin</packaging>
 
