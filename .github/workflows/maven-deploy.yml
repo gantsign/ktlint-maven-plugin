@@ -53,6 +53,11 @@ jobs:
         with:
           key-suffix: '-deploy'
           additional-path: '!~/.m2/repository/com/github/gantsign/maven'
+      - name: Set env
+        run: |
+          if [[ "$GITHUB_REF" == 'refs/tags/'* ]]; then
+            echo "GIT_TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+          fi
       - name: Deploy with Maven
         run: |
           ./mvnw deploy \
