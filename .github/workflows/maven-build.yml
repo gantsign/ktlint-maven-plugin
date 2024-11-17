@@ -69,6 +69,7 @@ jobs:
       - name: Build with Maven
         run: |
           "$M2_HOME/bin/mvn" install \
+              "-Drevision=${GIT_TAG:-development-SNAPSHOT}" \
               --batch-mode \
               --show-version \
               -Dinvoker.streamLogs=true \
