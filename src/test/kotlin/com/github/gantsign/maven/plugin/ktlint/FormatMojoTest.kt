@@ -69,6 +69,8 @@ class FormatMojoTest {
                 "Format fixed > $source:29:13: Line is exceeding max line length. Break line before expression",
             )
         }
+        verify { log.debug("Format fixed > $source:29:13: Unexpected spacing after \"(\"") }
+        verify { log.debug("Format fixed > $source:29:13: Missing newline after \"(\"") }
         verify {
             log.debug(
                 "Format fixed > $source:29:47: Line is exceeding max line length. Break line after '+' " +
@@ -107,6 +109,8 @@ class FormatMojoTest {
                 "Format fixed > $scriptSource:29:13: Line is exceeding max line length. Break line before expression",
             )
         }
+        verify { log.debug("Format fixed > $scriptSource:29:13: Unexpected spacing after \"(\"") }
+        verify { log.debug("Format fixed > $scriptSource:29:13: Missing newline after \"(\"") }
         verify {
             log.debug(
                 "Format fixed > $scriptSource:29:47: Line is exceeding max line length. Break line after '+' " +
