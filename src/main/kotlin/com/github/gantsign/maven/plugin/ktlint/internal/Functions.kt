@@ -34,8 +34,7 @@ import com.pinterest.ktlint.rule.engine.api.KtLintRuleException
 import java.util.Locale
 import java.util.ResourceBundle
 
-internal operator fun ResourceBundle.get(key: String): String =
-    if (containsKey(key)) getString(key) else key
+internal operator fun ResourceBundle.get(key: String): String = if (containsKey(key)) getString(key) else key
 
 internal fun Exception.toKtlintCliError(code: Code): KtlintCliError =
     let { e ->
@@ -55,10 +54,11 @@ internal fun Exception.toKtlintCliError(code: Code): KtlintCliError =
                     col = e.col,
                     ruleId = "",
                     detail =
-                    "Internal Error (rule '${e.ruleId}') in ${code.fileNameOrStdin()} at position '${e.line}:${e.col}" +
-                        ". Please create a ticket at https://github.com/pinterest/ktlint/issues and provide the " +
-                        "source code that triggered an error.\n" +
-                        e.stackTraceToString(),
+                        "Internal Error (rule '${e.ruleId}') " +
+                            "in ${code.fileNameOrStdin()} at position '${e.line}:${e.col}" +
+                            ". Please create a ticket at https://github.com/pinterest/ktlint/issues and provide the " +
+                            "source code that triggered an error.\n" +
+                            e.stackTraceToString(),
                     status = KtlintCliError.Status.KTLINT_RULE_ENGINE_EXCEPTION,
                 )
             }

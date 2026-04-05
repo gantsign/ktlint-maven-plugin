@@ -38,7 +38,6 @@ import org.junit.Rule
 import org.junit.Test
 
 class KtlintReportTest {
-
     @Rule
     @JvmField
     var rule = MojoRule()

@@ -45,7 +45,10 @@ class AggregatedReporter(private val reporters: List<ReporterV2>) : ReporterV2 {
         reporters.forEach(ReporterV2::beforeAll)
     }
 
-    override fun onLintError(file: String, ktlintCliError: KtlintCliError) {
+    override fun onLintError(
+        file: String,
+        ktlintCliError: KtlintCliError,
+    ) {
         reporters.forEach { it.onLintError(file, ktlintCliError) }
     }
 }

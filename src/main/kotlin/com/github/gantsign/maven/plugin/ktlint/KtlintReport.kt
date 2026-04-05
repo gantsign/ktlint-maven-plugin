@@ -47,7 +47,6 @@ import org.apache.maven.reporting.AbstractMavenReport
     threadSafe = true,
 )
 class KtlintReport : AbstractMavenReport() {
-
     @Parameter(defaultValue = "\${project.basedir}", readonly = true, required = true)
     private lateinit var basedir: File
 
@@ -168,47 +167,46 @@ class KtlintReport : AbstractMavenReport() {
         )
     }
 
-    override fun getName(locale: Locale): String =
-        getBundle(locale)["report.ktlint.name"]
+    override fun getName(locale: Locale): String = getBundle(locale)["report.ktlint.name"]
 
-    override fun getDescription(locale: Locale): String =
-        getBundle(locale)["report.ktlint.description"]
+    override fun getDescription(locale: Locale): String = getBundle(locale)["report.ktlint.description"]
 
     override fun getOutputName(): String = "ktlint"
 
-    override fun canGenerateReport(): Boolean =
-        !skip && sourceRoots.asSequence().map(::File).any { it.isDirectory }
+    override fun canGenerateReport(): Boolean = !skip && sourceRoots.asSequence().map(::File).any { it.isDirectory }
 
     override fun executeReport(locale: Locale) {
-        val results = Report(
-            log = log,
-            basedir = basedir,
-            modulePackaging = packaging,
-            sources = listOf(
-                Sources(
-                    isIncluded = includeSources,
-                    sourceRoots = sourceRoots,
-                    includes = sourcesIncludes,
-                    excludes = sourcesExcludes,
-                ),
-                Sources(
-                    isIncluded = includeTestSources,
-                    sourceRoots = testSourceRoots,
-                    includes = testSourcesIncludes,
-                    excludes = testSourcesExcludes,
-                ),
-                Sources(
-                    isIncluded = includeScripts,
-                    sourceRoots = scriptRoots,
-                    includes = scriptsIncludes,
-                    excludes = scriptsExcludes,
-                ),
-            ),
-            android = android,
-            reporterConfig = reporters ?: emptySet(),
-            verbose = verbose,
-            enableExperimentalRules = experimental,
-        )()
+        val results =
+            Report(
+                log = log,
+                basedir = basedir,
+                modulePackaging = packaging,
+                sources =
+                    listOf(
+                        Sources(
+                            isIncluded = includeSources,
+                            sourceRoots = sourceRoots,
+                            includes = sourcesIncludes,
+                            excludes = sourcesExcludes,
+                        ),
+                        Sources(
+                            isIncluded = includeTestSources,
+                            sourceRoots = testSourceRoots,
+                            includes = testSourcesIncludes,
+                            excludes = testSourcesExcludes,
+                        ),
+                        Sources(
+                            isIncluded = includeScripts,
+                            sourceRoots = scriptRoots,
+                            includes = scriptsIncludes,
+                            excludes = scriptsExcludes,
+                        ),
+                    ),
+                android = android,
+                reporterConfig = reporters ?: emptySet(),
+                verbose = verbose,
+                enableExperimentalRules = experimental,
+            )()
         KtlintReportGenerator(sink, getBundle(locale)).generatorReport(results)
     }
 }

@@ -51,7 +51,6 @@ internal class Format(
     android: Boolean,
     enableExperimentalRules: Boolean,
 ) : AbstractLintSupport(log, basedir, android, enableExperimentalRules) {
-
     private val formattedFileCount = AtomicInteger()
 
     operator fun invoke() {
@@ -102,12 +101,13 @@ internal class Format(
                     includes.takeUnless(Set<String>::isEmpty)?.toTypedArray() ?: arrayOf("**/*.kt")
                 val excludesArray = excludes.toTypedArray()
 
-                val ds = DirectoryScanner().apply {
-                    setIncludes(*includesArray)
-                    setExcludes(*excludesArray)
-                    basedir = sourceRoot
-                    setCaseSensitive(true)
-                }
+                val ds =
+                    DirectoryScanner().apply {
+                        setIncludes(*includesArray)
+                        setExcludes(*excludesArray)
+                        basedir = sourceRoot
+                        setCaseSensitive(true)
+                    }
                 ds.scan()
 
                 val sourceFiles = ds.includedFiles.map { File(sourceRoot, it) }

@@ -30,13 +30,18 @@ import java.io.PrintStream
 import org.apache.maven.plugin.logging.Log
 
 class MavenLogReporterProvider : ReporterProviderV2<MavenLogReporter> {
-
     override val id: String = "maven"
 
-    override fun get(out: PrintStream, opt: Map<String, String>): MavenLogReporter =
+    override fun get(
+        out: PrintStream,
+        opt: Map<String, String>,
+    ): MavenLogReporter =
         throw UnsupportedOperationException("Use MavenLogReporterProvider.get(Log, Map<String, String>) instead.")
 
-    fun get(log: Log, opt: Map<String, String>): MavenLogReporter =
+    fun get(
+        log: Log,
+        opt: Map<String, String>,
+    ): MavenLogReporter =
         MavenLogReporter(
             log = log,
             verbose = opt["verbose"].emptyOrTrue(),

@@ -44,17 +44,17 @@ internal class Check(
     enableExperimentalRules: Boolean,
     private val failOnViolation: Boolean,
 ) : AbstractCheckSupport(
-    log,
-    basedir,
-    modulePackaging,
-    sources,
-    android,
-    addMavenReporter(reporterConfig),
-    verbose,
-    reporterColor,
-    reporterColorName,
-    enableExperimentalRules,
-) {
+        log,
+        basedir,
+        modulePackaging,
+        sources,
+        android,
+        addMavenReporter(reporterConfig),
+        verbose,
+        reporterColor,
+        reporterColorName,
+        enableExperimentalRules,
+    ) {
     operator fun invoke() {
         val reporter = reporter
 
@@ -65,7 +65,6 @@ internal class Check(
     }
 
     companion object {
-
         @JvmStatic
         fun addMavenReporter(reporterConfig: Set<ReporterConfig>): Set<ReporterConfig> {
             return if (reporterConfig.any { it.name == MavenLogReporter.NAME }) {
