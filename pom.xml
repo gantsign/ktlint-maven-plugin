@@ -30,7 +30,7 @@
   <parent>
     <groupId>com.github.gantsign.parent</groupId>
     <artifactId>kotlin-parent</artifactId>
-    <version>3.7.0</version>
+    <version>3.8.0</version>
     <relativePath/>
   </parent>
 
@@ -51,7 +51,6 @@
     <doxia.version>1.12.0</doxia.version>
     <guice.version>4.2.0</guice.version>
     <jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
-    <central-publishing-maven-plugin.version>0.10.0</central-publishing-maven-plugin.version>
     <java.require.version>11</java.require.version>
     <jdeps.multiRelease>11</jdeps.multiRelease>
     <kotlin.version>2.1.0</kotlin.version>
@@ -918,17 +917,6 @@
                 <phase>package</phase>
               </execution>
             </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.sonatype.central</groupId>
-            <artifactId>central-publishing-maven-plugin</artifactId>
-            <version>${central-publishing-maven-plugin.version}</version>
-            <extensions>true</extensions>
-            <configuration>
-              <publishingServerId>central</publishingServerId>
-              <autoPublish>true</autoPublish>
-              <waitUntil>published</waitUntil>
-            </configuration>
           </plugin>
         </plugins>
       </build>

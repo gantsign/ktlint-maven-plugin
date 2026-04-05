@@ -61,7 +61,7 @@ jobs:
       - name: Deploy with Maven
         run: |
           ./mvnw deploy \
-              -P publish-artifacts,sign-artifacts \
+              -P publish-artifacts,sign-artifacts,central-deploy \
               "-Drevision=${GIT_TAG:-development-SNAPSHOT}" \
               -DskipTests \
               -Dinvoker.skip=true \
