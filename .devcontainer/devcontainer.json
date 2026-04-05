@@ -2,7 +2,7 @@
 // README at: https://github.com/devcontainers/templates/tree/main/src/java
 {
 	"name": "ktlin-maven-plugin",
-	"image": "mcr.microsoft.com/devcontainers/java:1-11-bookworm",
+	"image": "mcr.microsoft.com/devcontainers/java:3-11-trixie",
 
 	"features": {
 		"ghcr.io/devcontainers/features/java:1": {
