@@ -19,11 +19,11 @@
 		"ghcr.io/devcontainers-contrib/features/apt-get-packages:1": {
 			"packages": "fzf grc shellcheck zoxide"
 		},
-		"ghcr.io/devcontainers-contrib/features/fd:1": {},
-		"ghcr.io/devcontainers-contrib/features/ripgrep:1": {},
-		"ghcr.io/devcontainers-contrib/features/shfmt:1": {},
-		"ghcr.io/devcontainers-contrib/features/starship:1": {},
-		"ghcr.io/devcontainers-contrib/features/zsh-plugins:0": {
+		"ghcr.io/devcontainers-extra/features/fd:1": {},
+		"ghcr.io/devcontainers-extra/features/ripgrep:1": {},
+		"ghcr.io/devcontainers-extra/features/shfmt:1": {},
+		"ghcr.io/devcontainers-extra/features/starship:1": {},
+		"ghcr.io/devcontainers-extra/features/zsh-plugins:0": {
 			"plugins": "dirhistory fd fzf git-escape-magic gh git grc ripgrep starship sudo zoxide zsh-autosuggestions zsh-syntax-highlighting",
 			"omzPlugins": "https://github.com/zsh-users/zsh-autosuggestions https://github.com/zsh-users/zsh-syntax-highlighting.git"
 		}
