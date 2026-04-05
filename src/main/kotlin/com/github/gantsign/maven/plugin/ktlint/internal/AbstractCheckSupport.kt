@@ -65,7 +65,6 @@ internal abstract class AbstractCheckSupport(
     private var reporterColorName: String,
     enableExperimentalRules: Boolean,
 ) : AbstractLintSupport(log, basedir, android, enableExperimentalRules) {
-
     private val adviseToUseFormat = AtomicBoolean()
 
     protected open val reporter: ReporterV2
@@ -92,11 +91,12 @@ internal abstract class AbstractCheckSupport(
 
                         ReporterTemplate(
                             id = reporterId,
-                            config = mapOf(
-                                "verbose" to verbose.toString(),
-                                "color" to reporterColor.toString(),
-                                "color_name" to reporterColorName,
-                            ) + properties,
+                            config =
+                                mapOf(
+                                    "verbose" to verbose.toString(),
+                                    "color" to reporterColor.toString(),
+                                    "color_name" to reporterColorName,
+                                ) + properties,
                             output = output?.toString(),
                         )
                     }
@@ -204,12 +204,13 @@ internal abstract class AbstractCheckSupport(
                     )
                 val excludesArray = excludes.toTypedArray()
 
-                val ds = DirectoryScanner().apply {
-                    setIncludes(*includesArray)
-                    setExcludes(*excludesArray)
-                    basedir = sourceRoot
-                    setCaseSensitive(true)
-                }
+                val ds =
+                    DirectoryScanner().apply {
+                        setIncludes(*includesArray)
+                        setExcludes(*excludesArray)
+                        basedir = sourceRoot
+                        setCaseSensitive(true)
+                    }
                 ds.scan()
 
                 val sourceFiles = ds.includedFiles.map { File(sourceRoot, it) }
@@ -222,10 +223,11 @@ internal abstract class AbstractCheckSupport(
                     val baseRelativePath = file.toRelativeString(basedir)
                     log.debug("checking: $baseRelativePath")
 
-                    val ktlintCliErrors = lint(
-                        ktLintRuleEngine = ktLintRuleEngine,
-                        code = Code.fromFile(file),
-                    )
+                    val ktlintCliErrors =
+                        lint(
+                            ktLintRuleEngine = ktLintRuleEngine,
+                            code = Code.fromFile(file),
+                        )
                     report(baseRelativePath, ktlintCliErrors, reporter)
                     ktlintCliErrors
                         .asSequence()
@@ -256,9 +258,10 @@ internal abstract class AbstractCheckSupport(
         reporter.after(relativeRoute)
     }
 
-    private fun List<KtlintCliError>.containsErrorThatCanBeAutocorrected() = any {
-        it.status == LINT_CAN_BE_AUTOCORRECTED
-    }
+    private fun List<KtlintCliError>.containsErrorThatCanBeAutocorrected() =
+        any {
+            it.status == LINT_CAN_BE_AUTOCORRECTED
+        }
 
     private fun lint(
         ktLintRuleEngine: KtLintRuleEngine,
@@ -274,11 +277,11 @@ internal abstract class AbstractCheckSupport(
                         ruleId = lintError.ruleId.value,
                         detail = lintError.detail,
                         status =
-                        if (lintError.canBeAutoCorrected) {
-                            LINT_CAN_BE_AUTOCORRECTED
-                        } else {
-                            LINT_CAN_NOT_BE_AUTOCORRECTED
-                        },
+                            if (lintError.canBeAutoCorrected) {
+                                LINT_CAN_BE_AUTOCORRECTED
+                            } else {
+                                LINT_CAN_NOT_BE_AUTOCORRECTED
+                            },
                     )
                 ktlintCliErrors.add(ktlintCliError)
             }

@@ -31,7 +31,6 @@ import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.atomic.AtomicInteger
 
 internal class ModelReporter : ReporterV2 {
-
     private val _errors = CopyOnWriteArrayList<FileLintError>()
     private val _fileCount = AtomicInteger()
 
@@ -41,7 +40,10 @@ internal class ModelReporter : ReporterV2 {
     val errors: List<FileLintError>
         get() = _errors
 
-    override fun onLintError(file: String, ktlintCliError: KtlintCliError) {
+    override fun onLintError(
+        file: String,
+        ktlintCliError: KtlintCliError,
+    ) {
         _errors.add(FileLintError(file, ktlintCliError))
     }
 

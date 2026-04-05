@@ -40,17 +40,17 @@ internal class Report(
     verbose: Boolean,
     enableExperimentalRules: Boolean,
 ) : AbstractCheckSupport(
-    log,
-    basedir,
-    modulePackaging,
-    sources,
-    android,
-    reporterConfig,
-    verbose,
-    false,
-    Color.DARK_GRAY.name,
-    enableExperimentalRules,
-) {
+        log,
+        basedir,
+        modulePackaging,
+        sources,
+        android,
+        reporterConfig,
+        verbose,
+        false,
+        Color.DARK_GRAY.name,
+        enableExperimentalRules,
+    ) {
     operator fun invoke(): CheckResults {
         val modelReporter = ModelReporter()
         val reporter = AggregatedReporter(listOf(reporter, modelReporter))

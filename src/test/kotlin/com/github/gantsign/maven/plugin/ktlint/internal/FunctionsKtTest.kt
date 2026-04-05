@@ -36,7 +36,6 @@ import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.Test
 
 class FunctionsKtTest {
-
     @Test
     fun toKtlintCliError_KtLintParseException() {
         val parseException = KtLintParseException(line = 10, col = 15, message = "Test exception")
@@ -55,13 +54,14 @@ class FunctionsKtTest {
 
     @Test
     fun toKtlintCliError_KtLintRuleException() {
-        val ruleException = KtLintRuleException(
-            line = 5,
-            col = 20,
-            ruleId = "testRule",
-            message = "Rule exception",
-            cause = IllegalArgumentException(),
-        )
+        val ruleException =
+            KtLintRuleException(
+                line = 5,
+                col = 20,
+                ruleId = "testRule",
+                message = "Rule exception",
+                cause = IllegalArgumentException(),
+            )
 
         val code = mockk<Code>()
         every { code.fileNameOrStdin() } returns "Test.kt"

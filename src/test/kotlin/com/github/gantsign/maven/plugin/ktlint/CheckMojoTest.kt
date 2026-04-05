@@ -43,7 +43,6 @@ import org.skyscreamer.jsonassert.JSONCompareMode
 import org.skyscreamer.jsonassert.JSONParser
 
 class CheckMojoTest {
-
     @Rule
     @JvmField
     var rule = MojoRule()

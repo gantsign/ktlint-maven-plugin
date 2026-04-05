@@ -28,8 +28,10 @@ package com.github.gantsign.maven.plugin.ktlint
 import java.io.File
 import java.util.Properties
 
-data class ReporterConfig @JvmOverloads constructor(
-    var name: String? = null,
-    var output: File? = null,
-    var properties: Properties? = null,
-)
+data class ReporterConfig
+    @JvmOverloads
+    constructor(
+        var name: String? = null,
+        var output: File? = null,
+        var properties: Properties? = null,
+    )

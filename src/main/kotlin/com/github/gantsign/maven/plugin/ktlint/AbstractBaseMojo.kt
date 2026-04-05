@@ -30,7 +30,6 @@ import org.apache.maven.plugin.AbstractMojo
 import org.apache.maven.plugins.annotations.Parameter
 
 abstract class AbstractBaseMojo : AbstractMojo() {
-
     @Parameter(defaultValue = "\${project.basedir}", readonly = true, required = true)
     protected lateinit var basedir: File
 

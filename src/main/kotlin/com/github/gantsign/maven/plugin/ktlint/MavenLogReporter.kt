@@ -38,10 +38,12 @@ class MavenLogReporter(
     val groupByFile: Boolean,
     val pad: Boolean,
 ) : ReporterV2 {
-
     private val acc = ConcurrentHashMap<String, MutableList<KtlintCliError>>()
 
-    override fun onLintError(file: String, ktlintCliError: KtlintCliError) {
+    override fun onLintError(
+        file: String,
+        ktlintCliError: KtlintCliError,
+    ) {
         val line = ktlintCliError.line
         val col = ktlintCliError.col
         val ruleId = ktlintCliError.ruleId
@@ -52,14 +54,15 @@ class MavenLogReporter(
             return
         }
 
-        val buf = MessageUtils.buffer()
-            .a(file.dir())
-            .strong(file.name())
-            .a(":")
-            .strong(line)
-            .a(":$col:".pad(4))
-            .a(" ")
-            .failure(detail)
+        val buf =
+            MessageUtils.buffer()
+                .a(file.dir())
+                .strong(file.name())
+                .a(":")
+                .strong(line)
+                .a(":$col:".pad(4))
+                .a(" ")
+                .failure(detail)
         if (verbose) {
             buf.a(" ($ruleId)")
         }
@@ -78,12 +81,13 @@ class MavenLogReporter(
             val col = err.col
             val ruleId = err.ruleId
             val detail = err.detail
-            val buf = MessageUtils.buffer()
-                .a(" ")
-                .strong(line)
-                .a(":$col".pad(4))
-                .a(" ")
-                .failure(detail)
+            val buf =
+                MessageUtils.buffer()
+                    .a(" ")
+                    .strong(line)
+                    .a(":$col".pad(4))
+                    .a(" ")
+                    .failure(detail)
             if (verbose) {
                 buf.a(" ($ruleId)")
             }
@@ -92,14 +96,11 @@ class MavenLogReporter(
         }
     }
 
-    private fun String.pad(length: Int): String =
-        if (pad) this.padEnd(length) else this
+    private fun String.pad(length: Int): String = if (pad) this.padEnd(length) else this
 
-    private fun String.dir(): String =
-        substringBeforeLast(File.separator) + File.separator
+    private fun String.dir(): String = substringBeforeLast(File.separator) + File.separator
 
-    private fun String.name(): String =
-        substringAfterLast(File.separator)
+    private fun String.name(): String = substringAfterLast(File.separator)
 
     companion object {
         @JvmStatic

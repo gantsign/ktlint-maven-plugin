@@ -42,7 +42,6 @@ import org.apache.maven.plugins.annotations.Parameter
     threadSafe = true,
 )
 class CheckMojo : AbstractBaseMojo() {
-
     /**
      * A set of reporters to output the results to.
      */
@@ -87,26 +86,27 @@ class CheckMojo : AbstractBaseMojo() {
             log = log,
             basedir = basedir,
             modulePackaging = packaging,
-            sources = listOf(
-                Sources(
-                    isIncluded = includeSources,
-                    sourceRoots = sourceRoots,
-                    includes = sourcesIncludes,
-                    excludes = sourcesExcludes,
+            sources =
+                listOf(
+                    Sources(
+                        isIncluded = includeSources,
+                        sourceRoots = sourceRoots,
+                        includes = sourcesIncludes,
+                        excludes = sourcesExcludes,
+                    ),
+                    Sources(
+                        isIncluded = includeTestSources,
+                        sourceRoots = testSourceRoots,
+                        includes = testSourcesIncludes,
+                        excludes = testSourcesExcludes,
+                    ),
+                    Sources(
+                        isIncluded = includeScripts,
+                        sourceRoots = scriptRoots,
+                        includes = scriptsIncludes,
+                        excludes = scriptsExcludes,
+                    ),
                 ),
-                Sources(
-                    isIncluded = includeTestSources,
-                    sourceRoots = testSourceRoots,
-                    includes = testSourcesIncludes,
-                    excludes = testSourcesExcludes,
-                ),
-                Sources(
-                    isIncluded = includeScripts,
-                    sourceRoots = scriptRoots,
-                    includes = scriptsIncludes,
-                    excludes = scriptsExcludes,
-                ),
-            ),
             android = android,
             reporterConfig = reporters ?: emptySet(),
             verbose = verbose,

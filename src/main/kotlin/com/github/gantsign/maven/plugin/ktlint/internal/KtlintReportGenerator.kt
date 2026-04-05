@@ -34,7 +34,6 @@ internal class KtlintReportGenerator(
     private val sink: Sink,
     private val bundle: ResourceBundle,
 ) {
-
     private val title = bundle["report.ktlint.title"]
 
     private val ktlintVersion: String? =
@@ -130,11 +129,12 @@ internal class KtlintReportGenerator(
                             +bundle["report.ktlint.details"]
                         }
                         for ((file, errors) in errorsByFile) {
-                            val sortedErrors = errors.sortedWith(
-                                Comparator.comparingInt(FileLintError::line)
-                                    .thenComparingInt(FileLintError::col)
-                                    .thenComparing(FileLintError::ruleId),
-                            )
+                            val sortedErrors =
+                                errors.sortedWith(
+                                    Comparator.comparingInt(FileLintError::line)
+                                        .thenComparingInt(FileLintError::col)
+                                        .thenComparing(FileLintError::ruleId),
+                                )
                             section(2, id = file.replace('/', '.')) {
                                 title {
                                     +file
