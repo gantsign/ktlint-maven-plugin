@@ -45,9 +45,9 @@ jobs:
           java-version: 11
           distribution: 'temurin'
           gpg-private-key: ${{ secrets.GPG_KEY }}
-          server-id: ossrh
-          server-username: OSSRH_USER
-          server-password: OSSRH_TOKEN
+          server-id: central
+          server-username: CENTRAL_PORTAL_USERNAME
+          server-password: CENTRAL_PORTAL_PASSWORD
       - name: Cache local Maven repository
         uses: gantsign/maven-periodic-cache-action@v1
         with:
@@ -61,7 +61,7 @@ jobs:
       - name: Deploy with Maven
         run: |
           ./mvnw deploy \
-              -P publish-artifacts,sign-artifacts,ossrh-deploy \
+              -P publish-artifacts,sign-artifacts \
               "-Drevision=${GIT_TAG:-development-SNAPSHOT}" \
               -DskipTests \
               -Dinvoker.skip=true \
@@ -69,7 +69,7 @@ jobs:
               --show-version \
               -Dstyle.color=always
         env:
-          OSSRH_USER: ${{ secrets.OSSRH_USER }}
-          OSSRH_TOKEN: ${{ secrets.OSSRH_TOKEN }}
+          CENTRAL_PORTAL_USERNAME: ${{ secrets.CENTRAL_PORTAL_USERNAME }}
+          CENTRAL_PORTAL_PASSWORD: ${{ secrets.CENTRAL_PORTAL_PASSWORD }}
           GPG_KEY_NAME: ${{ secrets.GPG_KEY_NAME }}
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
