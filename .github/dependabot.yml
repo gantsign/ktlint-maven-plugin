@@ -43,6 +43,9 @@ updates:
   - dependency-name: org.codehaus.plexus:plexus-classworlds
     versions:
     - ">= 2.10"
+  - dependency-name: org.apache.maven.plugin-testing:maven-plugin-testing-harness
+    versions:
+    - ">= 3.4.0"
   - dependency-name: org.apache.maven.reporting:maven-reporting-impl
     versions:
     - ">= 4"
