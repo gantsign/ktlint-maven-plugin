@@ -40,7 +40,7 @@ jobs:
       matrix:
         maven-version:
           - '3.8.8'
-          - '3.9.9'
+          - '3.9.14'
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -82,5 +82,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Code coverage report
-        if: matrix.maven-version == '3.9.9'
+        if: matrix.maven-version == '3.9.14'
         uses: codecov/codecov-action@v6.0.0
