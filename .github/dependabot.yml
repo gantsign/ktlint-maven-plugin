@@ -34,6 +34,9 @@ updates:
   - dependency-name: org.jetbrains.dokka:dokka-maven-plugin
     versions:
     - 1.4.20-dev-65
+  - dependency-name: org.dom4j:dom4j
+    versions:
+    - ">= 2.2.0"
 - package-ecosystem: github-actions
   directory: "/"
   schedule:
