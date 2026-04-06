@@ -37,6 +37,9 @@ updates:
   - dependency-name: org.dom4j:dom4j
     versions:
     - ">= 2.2.0"
+  - dependency-name: org.codehaus.plexus:plexus-xml
+    versions:
+    - ">= 4.1"
 - package-ecosystem: github-actions
   directory: "/"
   schedule:
