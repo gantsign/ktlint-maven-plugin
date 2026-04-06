@@ -40,6 +40,9 @@ updates:
   - dependency-name: org.codehaus.plexus:plexus-xml
     versions:
     - ">= 4.1"
+  - dependency-name: org.codehaus.plexus:plexus-classworlds
+    versions:
+    - ">= 2.10"
   - dependency-name: org.apache.maven.reporting:maven-reporting-impl
     versions:
     - ">= 4"
