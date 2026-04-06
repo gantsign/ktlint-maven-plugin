@@ -52,6 +52,9 @@ updates:
   - dependency-name: com.google.inject:guice
     versions:
     - ">= 5"
+  - dependency-name: com.github.hboutemy:doxia-sink-api-ktx
+    versions:
+    - ">= 1.7.0"
 - package-ecosystem: github-actions
   directory: "/"
   schedule:
