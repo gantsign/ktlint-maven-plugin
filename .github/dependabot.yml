@@ -49,6 +49,9 @@ updates:
   - dependency-name: org.apache.maven.reporting:maven-reporting-impl
     versions:
     - ">= 4"
+  - dependency-name: com.google.inject:guice
+    versions:
+    - ">= 5"
 - package-ecosystem: github-actions
   directory: "/"
   schedule:
